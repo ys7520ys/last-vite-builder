@@ -2983,7 +2983,7 @@ const NETLIFY_TOKEN = defineSecret("NETLIFY_TOKEN");
 initializeApp({ credential: applicationDefault() });
 const db = getFirestore();
 
-const SITE_ID = "c582cf04-18cd-497a-89c3-f2820c7ba85b";
+const SITE_ID = "a3732fb6-adfd-40fc-a60c-dd193abc9db8";
 
 exports.autoDeploy = onRequest(
   {

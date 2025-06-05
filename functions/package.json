@@ -13,6 +13,10 @@
     "node": "18"
   },
   "main": "index.js",
+  "files": [
+    "index.js",
+    "vite-template"
+  ],
   "dependencies": {
     "archiver": "^7.0.1",
     "cors": "^2.8.5",

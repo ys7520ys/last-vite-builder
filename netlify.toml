@@ -1,8 +1,8 @@
 [build]
-  base = "vite-template"
-  command = "npm run build"
-  publish = "vite-template/dist"
-  functions = "functions"
+base = ""                        
+command = "npm run build --prefix vite-template"
+publish = "vite-template/dist"
+functions = "functions"
 
 [[plugins]]
 package = "@netlify/plugin-functions-install-core"

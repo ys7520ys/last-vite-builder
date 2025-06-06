@@ -1,0 +1,13 @@
+[build]
+  base = "vite-template"
+  command = "npm run build"
+  publish = "vite-template/dist"
+  functions = "functions"
+
+[[plugins]]
+package = "@netlify/plugin-functions-install-core"
+
+[[redirects]]
+from = "/*"
+to = "/index.html"
+status = 200

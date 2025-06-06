@@ -1,0 +1,433 @@
+[debug] [2025-06-06T19:24:42.866Z] ----------------------------------------------------------------------
+[debug] [2025-06-06T19:24:42.867Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\김예성\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js deploy --only functions
+[debug] [2025-06-06T19:24:42.868Z] CLI Version:   13.35.1
+[debug] [2025-06-06T19:24:42.868Z] Platform:      win32
+[debug] [2025-06-06T19:24:42.868Z] Node Version:  v18.20.6
+[debug] [2025-06-06T19:24:42.869Z] Time:          Sat Jun 07 2025 04:24:42 GMT+0900 (대한민국 표준시)
+[debug] [2025-06-06T19:24:42.869Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2025-06-06T19:24:42.871Z] >>> [apiv2][query] GET https://firebase-public.firebaseio.com/cli.json [none]
+[debug] [2025-06-06T19:24:43.033Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2025-06-06T19:24:43.033Z] > authorizing via signed-in user (yesusanmulg@gmail.com)
+[debug] [2025-06-06T19:24:43.033Z] [iam] checking project salepage-f39a1 for permissions ["cloudfunctions.functions.create","cloudfunctions.functions.delete","cloudfunctions.functions.get","cloudfunctions.functions.list","cloudfunctions.functions.update","cloudfunctions.operations.get","firebase.projects.get"]
+[debug] [2025-06-06T19:24:43.034Z] Checked if tokens are valid: true, expires at: 1749240612766
+[debug] [2025-06-06T19:24:43.034Z] Checked if tokens are valid: true, expires at: 1749240612766
+[debug] [2025-06-06T19:24:43.034Z] >>> [apiv2][query] POST https://cloudresourcemanager.googleapis.com/v1/projects/salepage-f39a1:testIamPermissions [none]
+[debug] [2025-06-06T19:24:43.034Z] >>> [apiv2][(partial)header] POST https://cloudresourcemanager.googleapis.com/v1/projects/salepage-f39a1:testIamPermissions x-goog-quota-user=projects/salepage-f39a1
+[debug] [2025-06-06T19:24:43.034Z] >>> [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/salepage-f39a1:testIamPermissions {"permissions":["cloudfunctions.functions.create","cloudfunctions.functions.delete","cloudfunctions.functions.get","cloudfunctions.functions.list","cloudfunctions.functions.update","cloudfunctions.operations.get","firebase.projects.get"]}
+[debug] [2025-06-06T19:24:43.460Z] <<< [apiv2][status] GET https://firebase-public.firebaseio.com/cli.json 200
+[debug] [2025-06-06T19:24:43.460Z] <<< [apiv2][body] GET https://firebase-public.firebaseio.com/cli.json {"cloudBuildErrorAfter":1594252800000,"cloudBuildWarnAfter":1590019200000,"defaultNode10After":1594252800000,"minVersion":"3.0.5","node8DeploysDisabledAfter":1613390400000,"node8RuntimeDisabledAfter":1615809600000,"node8WarnAfter":1600128000000}
+[debug] [2025-06-06T19:24:43.984Z] <<< [apiv2][status] POST https://cloudresourcemanager.googleapis.com/v1/projects/salepage-f39a1:testIamPermissions 200
+[debug] [2025-06-06T19:24:43.984Z] <<< [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/salepage-f39a1:testIamPermissions {"permissions":["cloudfunctions.functions.create","cloudfunctions.functions.delete","cloudfunctions.functions.get","cloudfunctions.functions.list","cloudfunctions.functions.update","cloudfunctions.operations.get","firebase.projects.get"]}
+[debug] [2025-06-06T19:24:43.984Z] Checked if tokens are valid: true, expires at: 1749240612766
+[debug] [2025-06-06T19:24:43.984Z] Checked if tokens are valid: true, expires at: 1749240612766
+[debug] [2025-06-06T19:24:43.984Z] >>> [apiv2][query] POST https://iam.googleapis.com/v1/projects/salepage-f39a1/serviceAccounts/salepage-f39a1@appspot.gserviceaccount.com:testIamPermissions [none]
+[debug] [2025-06-06T19:24:43.984Z] >>> [apiv2][body] POST https://iam.googleapis.com/v1/projects/salepage-f39a1/serviceAccounts/salepage-f39a1@appspot.gserviceaccount.com:testIamPermissions {"permissions":["iam.serviceAccounts.actAs"]}
+[debug] [2025-06-06T19:24:45.267Z] <<< [apiv2][status] POST https://iam.googleapis.com/v1/projects/salepage-f39a1/serviceAccounts/salepage-f39a1@appspot.gserviceaccount.com:testIamPermissions 200
+[debug] [2025-06-06T19:24:45.267Z] <<< [apiv2][body] POST https://iam.googleapis.com/v1/projects/salepage-f39a1/serviceAccounts/salepage-f39a1@appspot.gserviceaccount.com:testIamPermissions {"permissions":["iam.serviceAccounts.actAs"]}
+[info] 
+[info] === Deploying to 'salepage-f39a1'...
+[info] 
+[info] i  deploying functions 
+[debug] [2025-06-06T19:24:45.271Z] Checked if tokens are valid: true, expires at: 1749240612766
+[debug] [2025-06-06T19:24:45.271Z] Checked if tokens are valid: true, expires at: 1749240612766
+[debug] [2025-06-06T19:24:45.271Z] >>> [apiv2][query] GET https://cloudresourcemanager.googleapis.com/v1/projects/salepage-f39a1 [none]
+[debug] [2025-06-06T19:24:46.199Z] <<< [apiv2][status] GET https://cloudresourcemanager.googleapis.com/v1/projects/salepage-f39a1 200
+[debug] [2025-06-06T19:24:46.200Z] <<< [apiv2][body] GET https://cloudresourcemanager.googleapis.com/v1/projects/salepage-f39a1 {"projectNumber":"237790668185","projectId":"salepage-f39a1","lifecycleState":"ACTIVE","name":"salePage","labels":{"firebase":"enabled","firebase-core":"disabled"},"createTime":"2025-04-16T11:32:45.312350Z"}
+[info] i  functions: preparing codebase default for deployment 
+[info] i  functions: ensuring required API cloudfunctions.googleapis.com is enabled... 
+[debug] [2025-06-06T19:24:46.202Z] Checked if tokens are valid: true, expires at: 1749240612766
+[debug] [2025-06-06T19:24:46.202Z] Checked if tokens are valid: true, expires at: 1749240612766
+[debug] [2025-06-06T19:24:46.202Z] Checked if tokens are valid: true, expires at: 1749240612766
+[debug] [2025-06-06T19:24:46.202Z] Checked if tokens are valid: true, expires at: 1749240612766
+[info] i  functions: ensuring required API cloudbuild.googleapis.com is enabled... 
+[debug] [2025-06-06T19:24:46.203Z] Checked if tokens are valid: true, expires at: 1749240612766
+[debug] [2025-06-06T19:24:46.203Z] Checked if tokens are valid: true, expires at: 1749240612766
+[info] i  artifactregistry: ensuring required API artifactregistry.googleapis.com is enabled... 
+[debug] [2025-06-06T19:24:46.203Z] Checked if tokens are valid: true, expires at: 1749240612766
+[debug] [2025-06-06T19:24:46.203Z] Checked if tokens are valid: true, expires at: 1749240612766
+[debug] [2025-06-06T19:24:46.203Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/salepage-f39a1/services/cloudfunctions.googleapis.com [none]
+[debug] [2025-06-06T19:24:46.203Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/salepage-f39a1/services/cloudfunctions.googleapis.com x-goog-quota-user=projects/salepage-f39a1
+[debug] [2025-06-06T19:24:46.204Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/salepage-f39a1/services/runtimeconfig.googleapis.com [none]
+[debug] [2025-06-06T19:24:46.204Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/salepage-f39a1/services/runtimeconfig.googleapis.com x-goog-quota-user=projects/salepage-f39a1
+[debug] [2025-06-06T19:24:46.205Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/salepage-f39a1/services/cloudbuild.googleapis.com [none]
+[debug] [2025-06-06T19:24:46.205Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/salepage-f39a1/services/cloudbuild.googleapis.com x-goog-quota-user=projects/salepage-f39a1
+[debug] [2025-06-06T19:24:46.206Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/salepage-f39a1/services/artifactregistry.googleapis.com [none]
+[debug] [2025-06-06T19:24:46.206Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/salepage-f39a1/services/artifactregistry.googleapis.com x-goog-quota-user=projects/salepage-f39a1
+[debug] [2025-06-06T19:24:47.471Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/salepage-f39a1/services/cloudbuild.googleapis.com 200
+[debug] [2025-06-06T19:24:47.471Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/salepage-f39a1/services/cloudbuild.googleapis.com [omitted]
+[info] +  functions: required API cloudbuild.googleapis.com is enabled 
+[debug] [2025-06-06T19:24:47.478Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/salepage-f39a1/services/runtimeconfig.googleapis.com 200
+[debug] [2025-06-06T19:24:47.478Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/salepage-f39a1/services/runtimeconfig.googleapis.com [omitted]
+[debug] [2025-06-06T19:24:47.479Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/salepage-f39a1/services/cloudfunctions.googleapis.com 200
+[debug] [2025-06-06T19:24:47.479Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/salepage-f39a1/services/cloudfunctions.googleapis.com [omitted]
+[info] +  functions: required API cloudfunctions.googleapis.com is enabled 
+[debug] [2025-06-06T19:24:47.482Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/salepage-f39a1/services/artifactregistry.googleapis.com 200
+[debug] [2025-06-06T19:24:47.482Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/salepage-f39a1/services/artifactregistry.googleapis.com [omitted]
+[info] +  artifactregistry: required API artifactregistry.googleapis.com is enabled 
+[debug] [2025-06-06T19:24:47.483Z] Checked if tokens are valid: true, expires at: 1749240612766
+[debug] [2025-06-06T19:24:47.483Z] Checked if tokens are valid: true, expires at: 1749240612766
+[debug] [2025-06-06T19:24:47.483Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/salepage-f39a1/adminSdkConfig [none]
+[debug] [2025-06-06T19:24:48.248Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/salepage-f39a1/adminSdkConfig 200
+[debug] [2025-06-06T19:24:48.248Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/salepage-f39a1/adminSdkConfig {"projectId":"salepage-f39a1","storageBucket":"salepage-f39a1.firebasestorage.app"}
+[debug] [2025-06-06T19:24:48.248Z] Checked if tokens are valid: true, expires at: 1749240612766
+[debug] [2025-06-06T19:24:48.248Z] Checked if tokens are valid: true, expires at: 1749240612766
+[debug] [2025-06-06T19:24:48.248Z] >>> [apiv2][query] GET https://runtimeconfig.googleapis.com/v1beta1/projects/salepage-f39a1/configs [none]
+[debug] [2025-06-06T19:24:48.853Z] <<< [apiv2][status] GET https://runtimeconfig.googleapis.com/v1beta1/projects/salepage-f39a1/configs 200
+[debug] [2025-06-06T19:24:48.854Z] <<< [apiv2][body] GET https://runtimeconfig.googleapis.com/v1beta1/projects/salepage-f39a1/configs {"configs":[{"name":"projects/salepage-f39a1/configs/netlify"}]}
+[debug] [2025-06-06T19:24:48.854Z] Checked if tokens are valid: true, expires at: 1749240612766
+[debug] [2025-06-06T19:24:48.854Z] Checked if tokens are valid: true, expires at: 1749240612766
+[debug] [2025-06-06T19:24:48.854Z] >>> [apiv2][query] GET https://runtimeconfig.googleapis.com/v1beta1/projects/salepage-f39a1/configs/netlify/variables [none]
+[debug] [2025-06-06T19:24:49.268Z] <<< [apiv2][status] GET https://runtimeconfig.googleapis.com/v1beta1/projects/salepage-f39a1/configs/netlify/variables 200
+[debug] [2025-06-06T19:24:49.269Z] <<< [apiv2][body] GET https://runtimeconfig.googleapis.com/v1beta1/projects/salepage-f39a1/configs/netlify/variables {"variables":[{"name":"projects/salepage-f39a1/configs/netlify/variables/token","updateTime":"2025-05-12T19:49:10.361734029Z"}]}
+[debug] [2025-06-06T19:24:49.269Z] Checked if tokens are valid: true, expires at: 1749240612766
+[debug] [2025-06-06T19:24:49.269Z] Checked if tokens are valid: true, expires at: 1749240612766
+[debug] [2025-06-06T19:24:49.269Z] >>> [apiv2][query] GET https://runtimeconfig.googleapis.com/v1beta1/projects/salepage-f39a1/configs/netlify/variables/token [none]
+[debug] [2025-06-06T19:24:49.677Z] <<< [apiv2][status] GET https://runtimeconfig.googleapis.com/v1beta1/projects/salepage-f39a1/configs/netlify/variables/token 200
+[debug] [2025-06-06T19:24:49.678Z] <<< [apiv2][body] GET https://runtimeconfig.googleapis.com/v1beta1/projects/salepage-f39a1/configs/netlify/variables/token {"name":"projects/salepage-f39a1/configs/netlify/variables/token","updateTime":"2025-05-12T19:49:10.361734029Z","text":"nfp_hqSUNvLBTZSVtEMDbuatBhFJMDU3S9qz3ca1"}
+[debug] [2025-06-06T19:24:49.681Z] Validating nodejs source
+[warn] !  functions: Runtime Node.js 18 was deprecated on 2025-04-30 and will be decommissioned on 2025-10-31, after which you will not be able to deploy without upgrading. Consider upgrading now to avoid disruption. See https://cloud.google.com/functions/docs/runtime-support for full details on the lifecycle policy 
+[debug] [2025-06-06T19:24:50.475Z] > [functions] package.json contents: {
+  "name": "functions",
+  "description": "Cloud Functions for Firebase",
+  "scripts": {
+    "serve": "firebase emulators:start --only functions",
+    "shell": "firebase functions:shell",
+    "start": "npm run shell",
+    "deploy": "firebase deploy --only functions",
+    "logs": "firebase functions:log",
+    "build": "vite build"
+  },
+  "engines": {
+    "node": "18"
+  },
+  "main": "index.js",
+  "files": [
+    "index.js",
+    "vite-template"
+  ],
+  "dependencies": {
+    "archiver": "^7.0.1",
+    "cors": "^2.8.5",
+    "firebase-admin": "^12.7.0",
+    "firebase-functions": "^6.3.2",
+    "fs-extra": "^11.3.0",
+    "node-fetch": "^2.7.0",
+    "tar-stream": "^3.1.7",
+    "vite": "^6.3.5",
+    "@vitejs/plugin-react": "^4.4.1"
+  },
+  "devDependencies": {
+    "firebase-functions-test": "^3.1.0"
+  },
+  "private": true,
+  "version": "1.0.0",
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
+[debug] [2025-06-06T19:24:50.475Z] Building nodejs source
+[info] i  functions: Loading and analyzing source code for codebase default to determine what to deploy 
+[debug] [2025-06-06T19:24:50.476Z] Could not find functions.yaml. Must use http discovery
+[debug] [2025-06-06T19:24:50.482Z] Found firebase-functions binary at 'C:\Users\김예성\Desktop\template-project\vite-template-functions\functions\node_modules\.bin\firebase-functions'
+[info] Serving at port 8366
+
+[debug] [2025-06-06T19:24:51.119Z] Got response from /__/functions.yaml {"endpoints":{"autoDeploy":{"availableMemoryMb":null,"timeoutSeconds":null,"minInstances":null,"maxInstances":null,"ingressSettings":null,"concurrency":null,"serviceAccountEmail":null,"vpc":null,"platform":"gcfv2","secretEnvironmentVariables":[{"key":"NETLIFY_TOKEN"}],"labels":{},"httpsTrigger":{},"entryPoint":"autoDeploy"}},"specVersion":"v1alpha1","requiredAPIs":[],"extensions":{},"params":[{"type":"secret","name":"NETLIFY_TOKEN"}]}
+[info] i  extensions: ensuring required API firebaseextensions.googleapis.com is enabled... 
+[debug] [2025-06-06T19:24:51.145Z] Checked if tokens are valid: true, expires at: 1749240612766
+[debug] [2025-06-06T19:24:51.145Z] Checked if tokens are valid: true, expires at: 1749240612766
+[debug] [2025-06-06T19:24:51.145Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/salepage-f39a1/services/firebaseextensions.googleapis.com [none]
+[debug] [2025-06-06T19:24:51.146Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/salepage-f39a1/services/firebaseextensions.googleapis.com x-goog-quota-user=projects/salepage-f39a1
+[debug] [2025-06-06T19:24:52.272Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/salepage-f39a1/services/firebaseextensions.googleapis.com 200
+[debug] [2025-06-06T19:24:52.272Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/salepage-f39a1/services/firebaseextensions.googleapis.com [omitted]
+[info] +  extensions: required API firebaseextensions.googleapis.com is enabled 
+[debug] [2025-06-06T19:24:52.273Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2025-06-06T19:24:52.273Z] > authorizing via signed-in user (yesusanmulg@gmail.com)
+[debug] [2025-06-06T19:24:52.274Z] [iam] checking project salepage-f39a1 for permissions ["firebase.projects.get","firebaseextensions.instances.list"]
+[debug] [2025-06-06T19:24:52.274Z] Checked if tokens are valid: true, expires at: 1749240612766
+[debug] [2025-06-06T19:24:52.274Z] Checked if tokens are valid: true, expires at: 1749240612766
+[debug] [2025-06-06T19:24:52.274Z] >>> [apiv2][query] POST https://cloudresourcemanager.googleapis.com/v1/projects/salepage-f39a1:testIamPermissions [none]
+[debug] [2025-06-06T19:24:52.274Z] >>> [apiv2][(partial)header] POST https://cloudresourcemanager.googleapis.com/v1/projects/salepage-f39a1:testIamPermissions x-goog-quota-user=projects/salepage-f39a1
+[debug] [2025-06-06T19:24:52.274Z] >>> [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/salepage-f39a1:testIamPermissions {"permissions":["firebase.projects.get","firebaseextensions.instances.list"]}
+[debug] [2025-06-06T19:24:53.164Z] <<< [apiv2][status] POST https://cloudresourcemanager.googleapis.com/v1/projects/salepage-f39a1:testIamPermissions 200
+[debug] [2025-06-06T19:24:53.164Z] <<< [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/salepage-f39a1:testIamPermissions {"permissions":["firebase.projects.get","firebaseextensions.instances.list"]}
+[debug] [2025-06-06T19:24:53.165Z] Checked if tokens are valid: true, expires at: 1749240612766
+[debug] [2025-06-06T19:24:53.165Z] Checked if tokens are valid: true, expires at: 1749240612766
+[debug] [2025-06-06T19:24:53.166Z] >>> [apiv2][query] GET https://firebaseextensions.googleapis.com/v1beta/projects/salepage-f39a1/instances pageSize=100&pageToken=
+[debug] [2025-06-06T19:24:54.183Z] <<< [apiv2][status] GET https://firebaseextensions.googleapis.com/v1beta/projects/salepage-f39a1/instances 200
+[debug] [2025-06-06T19:24:54.183Z] <<< [apiv2][body] GET https://firebaseextensions.googleapis.com/v1beta/projects/salepage-f39a1/instances {}
+[debug] [2025-06-06T19:24:54.185Z] Checked if tokens are valid: true, expires at: 1749240612766
+[debug] [2025-06-06T19:24:54.185Z] Checked if tokens are valid: true, expires at: 1749240612766
+[debug] [2025-06-06T19:24:54.186Z] >>> [apiv2][query] GET https://secretmanager.googleapis.com/v1/projects/salepage-f39a1/secrets/NETLIFY_TOKEN [none]
+[debug] [2025-06-06T19:24:54.610Z] <<< [apiv2][status] GET https://secretmanager.googleapis.com/v1/projects/salepage-f39a1/secrets/NETLIFY_TOKEN 200
+[debug] [2025-06-06T19:24:54.611Z] <<< [apiv2][body] GET https://secretmanager.googleapis.com/v1/projects/salepage-f39a1/secrets/NETLIFY_TOKEN {"name":"projects/237790668185/secrets/NETLIFY_TOKEN","replication":{"automatic":{}},"createTime":"2025-05-13T18:07:34.264906Z","labels":{"firebase-managed":"functions"},"etag":"\"1635084ea9e7ac\""}
+[debug] [2025-06-06T19:24:54.611Z] Checked if tokens are valid: true, expires at: 1749240612766
+[debug] [2025-06-06T19:24:54.611Z] Checked if tokens are valid: true, expires at: 1749240612766
+[debug] [2025-06-06T19:24:54.612Z] >>> [apiv2][query] GET https://secretmanager.googleapis.com/v1/projects/salepage-f39a1/secrets/NETLIFY_TOKEN/versions/latest [none]
+[debug] [2025-06-06T19:24:54.979Z] <<< [apiv2][status] GET https://secretmanager.googleapis.com/v1/projects/salepage-f39a1/secrets/NETLIFY_TOKEN/versions/latest 200
+[debug] [2025-06-06T19:24:54.979Z] <<< [apiv2][body] GET https://secretmanager.googleapis.com/v1/projects/salepage-f39a1/secrets/NETLIFY_TOKEN/versions/latest {"name":"projects/237790668185/secrets/NETLIFY_TOKEN/versions/13","createTime":"2025-06-05T18:39:23.640119Z","state":"ENABLED","replicationStatus":{"automatic":{}},"etag":"\"1636d76eb75137\""}
+[info] i  functions: preparing functions directory for uploading... 
+[info] i  functions: packaged C:\Users\김예성\Desktop\template-project\vite-template-functions\functions (230.05 KB) for uploading 
+[debug] [2025-06-06T19:24:55.063Z] Checked if tokens are valid: true, expires at: 1749240612766
+[debug] [2025-06-06T19:24:55.063Z] Checked if tokens are valid: true, expires at: 1749240612766
+[debug] [2025-06-06T19:24:55.063Z] >>> [apiv2][query] GET https://cloudfunctions.googleapis.com/v1/projects/salepage-f39a1/locations/-/functions [none]
+[debug] [2025-06-06T19:24:55.876Z] <<< [apiv2][status] GET https://cloudfunctions.googleapis.com/v1/projects/salepage-f39a1/locations/-/functions 200
+[debug] [2025-06-06T19:24:55.876Z] <<< [apiv2][body] GET https://cloudfunctions.googleapis.com/v1/projects/salepage-f39a1/locations/-/functions {}
+[debug] [2025-06-06T19:24:55.877Z] Checked if tokens are valid: true, expires at: 1749240612766
+[debug] [2025-06-06T19:24:55.877Z] Checked if tokens are valid: true, expires at: 1749240612766
+[debug] [2025-06-06T19:24:55.877Z] >>> [apiv2][query] GET https://cloudfunctions.googleapis.com/v2/projects/salepage-f39a1/locations/-/functions filter=environment%3D%22GEN_2%22
+[debug] [2025-06-06T19:24:57.416Z] <<< [apiv2][status] GET https://cloudfunctions.googleapis.com/v2/projects/salepage-f39a1/locations/-/functions 200
+[debug] [2025-06-06T19:24:57.417Z] <<< [apiv2][body] GET https://cloudfunctions.googleapis.com/v2/projects/salepage-f39a1/locations/-/functions {"functions":[{"name":"projects/salepage-f39a1/locations/us-central1/functions/autoDeploy","buildConfig":{"build":"projects/237790668185/locations/us-central1/builds/a53d8fe6-5a3b-4fb6-8d68-23c074726fb4","runtime":"nodejs18","entryPoint":"autoDeploy","source":{"storageSource":{"bucket":"gcf-v2-sources-237790668185-us-central1","object":"autoDeploy/function-source.zip","generation":"1749237042482739"}},"environmentVariables":{"GOOGLE_NODE_RUN_SCRIPTS":""},"dockerRepository":"projects/salepage-f39a1/locations/us-central1/repositories/gcf-artifacts","sourceProvenance":{"resolvedStorageSource":{"bucket":"gcf-v2-sources-237790668185-us-central1","object":"autoDeploy/function-source.zip","generation":"1749237042482739"}},"dockerRegistry":"ARTIFACT_REGISTRY","serviceAccount":"projects/salepage-f39a1/serviceAccounts/237790668185-compute@developer.gserviceaccount.com","automaticUpdatePolicy":{}},"serviceConfig":{"service":"projects/salepage-f39a1/locations/us-central1/services/autodeploy","timeoutSeconds":60,"environmentVariables":{"FIREBASE_CONFIG":"{\"projectId\":\"salepage-f39a1\",\"storageBucket\":\"salepage-f39a1.firebasestorage.app\"}","GCLOUD_PROJECT":"salepage-f39a1","EVENTARC_CLOUD_EVENT_SOURCE":"projects/salepage-f39a1/locations/us-central1/services/autoDeploy","FUNCTION_TARGET":"autoDeploy","LOG_EXECUTION_ID":"true","FUNCTION_SIGNATURE_TYPE":"http"},"maxInstanceCount":40,"ingressSettings":"ALLOW_ALL","uri":"https://autodeploy-zifyt4iutq-uc.a.run.app","serviceAccountEmail":"237790668185-compute@developer.gserviceaccount.com","availableMemory":"256Mi","allTrafficOnLatestRevision":true,"secretEnvironmentVariables":[{"key":"NETLIFY_TOKEN","projectId":"salepage-f39a1","secret":"NETLIFY_TOKEN","version":"13"}],"revision":"autodeploy-00184-lup","maxInstanceRequestConcurrency":80,"availableCpu":"1"},"state":"ACTIVE","updateTime":"2025-06-06T19:12:03.515827100Z","labels":{"deployment-tool":"cli-firebase","firebase-functions-hash":"60efda4393a7447fcf6f4ac2b41a5fc9102e8abb"},"environment":"GEN_2","url":"https://us-central1-salepage-f39a1.cloudfunctions.net/autoDeploy","createTime":"2025-05-18T14:33:58.962940077Z","satisfiesPzi":true}]}
+[info] i  functions: ensuring required API run.googleapis.com is enabled... 
+[debug] [2025-06-06T19:24:57.422Z] Checked if tokens are valid: true, expires at: 1749240612766
+[debug] [2025-06-06T19:24:57.422Z] Checked if tokens are valid: true, expires at: 1749240612766
+[info] i  functions: ensuring required API eventarc.googleapis.com is enabled... 
+[debug] [2025-06-06T19:24:57.422Z] Checked if tokens are valid: true, expires at: 1749240612766
+[debug] [2025-06-06T19:24:57.423Z] Checked if tokens are valid: true, expires at: 1749240612766
+[info] i  functions: ensuring required API pubsub.googleapis.com is enabled... 
+[debug] [2025-06-06T19:24:57.424Z] Checked if tokens are valid: true, expires at: 1749240612766
+[debug] [2025-06-06T19:24:57.424Z] Checked if tokens are valid: true, expires at: 1749240612766
+[info] i  functions: ensuring required API storage.googleapis.com is enabled... 
+[debug] [2025-06-06T19:24:57.424Z] Checked if tokens are valid: true, expires at: 1749240612766
+[debug] [2025-06-06T19:24:57.425Z] Checked if tokens are valid: true, expires at: 1749240612766
+[debug] [2025-06-06T19:24:57.425Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/salepage-f39a1/services/run.googleapis.com [none]
+[debug] [2025-06-06T19:24:57.425Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/salepage-f39a1/services/run.googleapis.com x-goog-quota-user=projects/salepage-f39a1
+[debug] [2025-06-06T19:24:57.427Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/salepage-f39a1/services/eventarc.googleapis.com [none]
+[debug] [2025-06-06T19:24:57.427Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/salepage-f39a1/services/eventarc.googleapis.com x-goog-quota-user=projects/salepage-f39a1
+[debug] [2025-06-06T19:24:57.429Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/salepage-f39a1/services/pubsub.googleapis.com [none]
+[debug] [2025-06-06T19:24:57.429Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/salepage-f39a1/services/pubsub.googleapis.com x-goog-quota-user=projects/salepage-f39a1
+[debug] [2025-06-06T19:24:57.432Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/salepage-f39a1/services/storage.googleapis.com [none]
+[debug] [2025-06-06T19:24:57.432Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/salepage-f39a1/services/storage.googleapis.com x-goog-quota-user=projects/salepage-f39a1
+[debug] [2025-06-06T19:24:58.568Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/salepage-f39a1/services/eventarc.googleapis.com 200
+[debug] [2025-06-06T19:24:58.568Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/salepage-f39a1/services/eventarc.googleapis.com [omitted]
+[info] +  functions: required API eventarc.googleapis.com is enabled 
+[debug] [2025-06-06T19:24:58.570Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/salepage-f39a1/services/run.googleapis.com 200
+[debug] [2025-06-06T19:24:58.570Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/salepage-f39a1/services/run.googleapis.com [omitted]
+[info] +  functions: required API run.googleapis.com is enabled 
+[debug] [2025-06-06T19:24:58.588Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/salepage-f39a1/services/storage.googleapis.com 200
+[debug] [2025-06-06T19:24:58.588Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/salepage-f39a1/services/storage.googleapis.com [omitted]
+[info] +  functions: required API storage.googleapis.com is enabled 
+[debug] [2025-06-06T19:24:58.591Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/salepage-f39a1/services/pubsub.googleapis.com 200
+[debug] [2025-06-06T19:24:58.591Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/salepage-f39a1/services/pubsub.googleapis.com [omitted]
+[info] +  functions: required API pubsub.googleapis.com is enabled 
+[info] i  functions: generating the service identity for pubsub.googleapis.com... 
+[debug] [2025-06-06T19:24:58.592Z] Checked if tokens are valid: true, expires at: 1749240612766
+[debug] [2025-06-06T19:24:58.592Z] Checked if tokens are valid: true, expires at: 1749240612766
+[info] i  functions: generating the service identity for eventarc.googleapis.com... 
+[debug] [2025-06-06T19:24:58.593Z] Checked if tokens are valid: true, expires at: 1749240612766
+[debug] [2025-06-06T19:24:58.593Z] Checked if tokens are valid: true, expires at: 1749240612766
+[debug] [2025-06-06T19:24:58.593Z] >>> [apiv2][query] POST https://serviceusage.googleapis.com/v1beta1/projects/237790668185/services/pubsub.googleapis.com:generateServiceIdentity [none]
+[debug] [2025-06-06T19:24:58.595Z] >>> [apiv2][query] POST https://serviceusage.googleapis.com/v1beta1/projects/237790668185/services/eventarc.googleapis.com:generateServiceIdentity [none]
+[debug] [2025-06-06T19:24:59.809Z] <<< [apiv2][status] POST https://serviceusage.googleapis.com/v1beta1/projects/237790668185/services/pubsub.googleapis.com:generateServiceIdentity 200
+[debug] [2025-06-06T19:24:59.809Z] <<< [apiv2][body] POST https://serviceusage.googleapis.com/v1beta1/projects/237790668185/services/pubsub.googleapis.com:generateServiceIdentity {"name":"operations/finished.DONE_OPERATION","done":true,"response":{"@type":"type.googleapis.com/google.api.serviceusage.v1beta1.ServiceIdentity","email":"service-237790668185@gcp-sa-pubsub.iam.gserviceaccount.com","uniqueId":"109863791058318222905"}}
+[debug] [2025-06-06T19:24:59.811Z] <<< [apiv2][status] POST https://serviceusage.googleapis.com/v1beta1/projects/237790668185/services/eventarc.googleapis.com:generateServiceIdentity 200
+[debug] [2025-06-06T19:24:59.811Z] <<< [apiv2][body] POST https://serviceusage.googleapis.com/v1beta1/projects/237790668185/services/eventarc.googleapis.com:generateServiceIdentity {"name":"operations/finished.DONE_OPERATION","done":true,"response":{"@type":"type.googleapis.com/google.api.serviceusage.v1beta1.ServiceIdentity","email":"service-237790668185@gcp-sa-eventarc.iam.gserviceaccount.com","uniqueId":"100281565061095295963"}}
+[debug] [2025-06-06T19:24:59.813Z] Checked if tokens are valid: true, expires at: 1749240612766
+[debug] [2025-06-06T19:24:59.813Z] Checked if tokens are valid: true, expires at: 1749240612766
+[debug] [2025-06-06T19:24:59.813Z] >>> [apiv2][query] GET https://secretmanager.googleapis.com/v1/projects/salepage-f39a1/secrets/NETLIFY_TOKEN/versions/latest [none]
+[debug] [2025-06-06T19:25:00.178Z] <<< [apiv2][status] GET https://secretmanager.googleapis.com/v1/projects/salepage-f39a1/secrets/NETLIFY_TOKEN/versions/latest 200
+[debug] [2025-06-06T19:25:00.178Z] <<< [apiv2][body] GET https://secretmanager.googleapis.com/v1/projects/salepage-f39a1/secrets/NETLIFY_TOKEN/versions/latest {"name":"projects/237790668185/secrets/NETLIFY_TOKEN/versions/13","createTime":"2025-06-05T18:39:23.640119Z","state":"ENABLED","replicationStatus":{"automatic":{}},"etag":"\"1636d76eb75137\""}
+[debug] [2025-06-06T19:25:00.179Z] Resolved secret version of NETLIFY_TOKEN to 13.
+[debug] [2025-06-06T19:25:00.180Z] Checked if tokens are valid: true, expires at: 1749240612766
+[debug] [2025-06-06T19:25:00.180Z] Checked if tokens are valid: true, expires at: 1749240612766
+[debug] [2025-06-06T19:25:00.180Z] >>> [apiv2][query] GET https://cloudresourcemanager.googleapis.com/v1/projects/salepage-f39a1 [none]
+[debug] [2025-06-06T19:25:01.115Z] <<< [apiv2][status] GET https://cloudresourcemanager.googleapis.com/v1/projects/salepage-f39a1 200
+[debug] [2025-06-06T19:25:01.115Z] <<< [apiv2][body] GET https://cloudresourcemanager.googleapis.com/v1/projects/salepage-f39a1 {"projectNumber":"237790668185","projectId":"salepage-f39a1","lifecycleState":"ACTIVE","name":"salePage","labels":{"firebase":"enabled","firebase-core":"disabled"},"createTime":"2025-04-16T11:32:45.312350Z"}
+[debug] [2025-06-06T19:25:01.117Z] Checked if tokens are valid: true, expires at: 1749240612766
+[debug] [2025-06-06T19:25:01.117Z] Checked if tokens are valid: true, expires at: 1749240612766
+[debug] [2025-06-06T19:25:01.117Z] >>> [apiv2][query] GET https://cloudbilling.googleapis.com/v1/projects/salepage-f39a1/billingInfo [none]
+[debug] [2025-06-06T19:25:02.355Z] <<< [apiv2][status] GET https://cloudbilling.googleapis.com/v1/projects/salepage-f39a1/billingInfo 200
+[debug] [2025-06-06T19:25:02.355Z] <<< [apiv2][body] GET https://cloudbilling.googleapis.com/v1/projects/salepage-f39a1/billingInfo {"name":"projects/salepage-f39a1/billingInfo","projectId":"salepage-f39a1","billingAccountName":"billingAccounts/017FA8-8E2710-40FD12","billingEnabled":true}
+[debug] [2025-06-06T19:25:02.357Z] Checked if tokens are valid: true, expires at: 1749240612766
+[debug] [2025-06-06T19:25:02.357Z] Checked if tokens are valid: true, expires at: 1749240612766
+[debug] [2025-06-06T19:25:02.357Z] >>> [apiv2][query] POST https://cloudfunctions.googleapis.com/v2/projects/salepage-f39a1/locations/us-central1/functions:generateUploadUrl [none]
+[debug] [2025-06-06T19:25:03.653Z] <<< [apiv2][status] POST https://cloudfunctions.googleapis.com/v2/projects/salepage-f39a1/locations/us-central1/functions:generateUploadUrl 200
+[debug] [2025-06-06T19:25:03.654Z] <<< [apiv2][body] POST https://cloudfunctions.googleapis.com/v2/projects/salepage-f39a1/locations/us-central1/functions:generateUploadUrl {"uploadUrl":"https://storage.googleapis.com/gcf-v2-uploads-237790668185.us-central1.cloudfunctions.appspot.com/9869d998-73df-4641-a1ac-5ff9408ea59b.zip?GoogleAccessId=service-237790668185@gcf-admin-robot.iam.gserviceaccount.com&Expires=1749239703&Signature=CmTO%2FzVMxD67%2B1ExCIanfKLISonsmdU9ldtR1vWxlNkvz5SxjvEHYMzAZxWEEXrt9Y0c45KoUOcDr5PuIEnTyRW0v9Kw%2BvbM8zTjkLyqiuLhVQXFsLNhEgkJHrS0Rr9XHZ0j07hc5Bgma4j0skPn%2B4U5z04rOFCwlTc%2FRqyyXgz12O69OUN8cCIjiHaJpoziIE%2FK6r20xU%2B0yZE8X7QkvBvU6K2pO0GF7vJzVyC6MrwhVtJInaqb6%2F9vAjvpLVSFt1P1FdKZtYowfvMZhQHA7CVY8Q5S9zV%2B9URMetjBJfEvGNuiMocWIsQPRqxRHJgKkMDA3ksAfyBVrlbafPc4ZQ%3D%3D","storageSource":{"bucket":"gcf-v2-uploads-237790668185.us-central1.cloudfunctions.appspot.com","object":"9869d998-73df-4641-a1ac-5ff9408ea59b.zip"}}
+[debug] [2025-06-06T19:25:03.656Z] >>> [apiv2][query] PUT https://storage.googleapis.com/gcf-v2-uploads-237790668185.us-central1.cloudfunctions.appspot.com/9869d998-73df-4641-a1ac-5ff9408ea59b.zip GoogleAccessId=service-237790668185%40gcf-admin-robot.iam.gserviceaccount.com&Expires=1749239703&Signature=CmTO%2FzVMxD67%2B1ExCIanfKLISonsmdU9ldtR1vWxlNkvz5SxjvEHYMzAZxWEEXrt9Y0c45KoUOcDr5PuIEnTyRW0v9Kw%2BvbM8zTjkLyqiuLhVQXFsLNhEgkJHrS0Rr9XHZ0j07hc5Bgma4j0skPn%2B4U5z04rOFCwlTc%2FRqyyXgz12O69OUN8cCIjiHaJpoziIE%2FK6r20xU%2B0yZE8X7QkvBvU6K2pO0GF7vJzVyC6MrwhVtJInaqb6%2F9vAjvpLVSFt1P1FdKZtYowfvMZhQHA7CVY8Q5S9zV%2B9URMetjBJfEvGNuiMocWIsQPRqxRHJgKkMDA3ksAfyBVrlbafPc4ZQ%3D%3D
+[debug] [2025-06-06T19:25:03.656Z] >>> [apiv2][body] PUT https://storage.googleapis.com/gcf-v2-uploads-237790668185.us-central1.cloudfunctions.appspot.com/9869d998-73df-4641-a1ac-5ff9408ea59b.zip [stream]
+[debug] [2025-06-06T19:25:04.843Z] <<< [apiv2][status] PUT https://storage.googleapis.com/gcf-v2-uploads-237790668185.us-central1.cloudfunctions.appspot.com/9869d998-73df-4641-a1ac-5ff9408ea59b.zip 200
+[debug] [2025-06-06T19:25:04.843Z] <<< [apiv2][body] PUT https://storage.googleapis.com/gcf-v2-uploads-237790668185.us-central1.cloudfunctions.appspot.com/9869d998-73df-4641-a1ac-5ff9408ea59b.zip [omitted]
+[info] +  functions: functions folder uploaded successfully 
+[info] i  functions: updating Node.js 18 (2nd Gen) function autoDeploy(us-central1)... 
+[debug] [2025-06-06T19:25:04.852Z] Checked if tokens are valid: true, expires at: 1749240612766
+[debug] [2025-06-06T19:25:04.852Z] Checked if tokens are valid: true, expires at: 1749240612766
+[debug] [2025-06-06T19:25:04.852Z] >>> [apiv2][query] PATCH https://cloudfunctions.googleapis.com/v2/projects/salepage-f39a1/locations/us-central1/functions/autoDeploy updateMask=name%2CbuildConfig.runtime%2CbuildConfig.entryPoint%2CbuildConfig.source.storageSource.bucket%2CbuildConfig.source.storageSource.object%2CbuildConfig.environmentVariables%2CbuildConfig.sourceToken%2CserviceConfig.environmentVariables%2CserviceConfig.secretEnvironmentVariables%2CserviceConfig.ingressSettings%2CserviceConfig.timeoutSeconds%2CserviceConfig.serviceAccountEmail%2CserviceConfig.availableMemory%2CserviceConfig.minInstanceCount%2CserviceConfig.maxInstanceCount%2CserviceConfig.maxInstanceRequestConcurrency%2CserviceConfig.availableCpu%2CserviceConfig.vpcConnector%2CserviceConfig.vpcConnectorEgressSettings%2Clabels%2CbuildConfig.buildEnvironmentVariables
+[debug] [2025-06-06T19:25:04.852Z] >>> [apiv2][body] PATCH https://cloudfunctions.googleapis.com/v2/projects/salepage-f39a1/locations/us-central1/functions/autoDeploy {"name":"projects/salepage-f39a1/locations/us-central1/functions/autoDeploy","buildConfig":{"runtime":"nodejs18","entryPoint":"autoDeploy","source":{"storageSource":{"bucket":"gcf-v2-uploads-237790668185.us-central1.cloudfunctions.appspot.com","object":"9869d998-73df-4641-a1ac-5ff9408ea59b.zip"}},"environmentVariables":{"GOOGLE_NODE_RUN_SCRIPTS":""}},"serviceConfig":{"environmentVariables":{"FIREBASE_CONFIG":"{\"projectId\":\"salepage-f39a1\",\"storageBucket\":\"salepage-f39a1.firebasestorage.app\"}","GCLOUD_PROJECT":"salepage-f39a1","EVENTARC_CLOUD_EVENT_SOURCE":"projects/salepage-f39a1/locations/us-central1/services/autoDeploy","FUNCTION_TARGET":"autoDeploy","LOG_EXECUTION_ID":"true","FUNCTION_SIGNATURE_TYPE":"http"},"secretEnvironmentVariables":[{"key":"NETLIFY_TOKEN","secret":"NETLIFY_TOKEN","projectId":"salepage-f39a1","version":"13"}],"ingressSettings":null,"timeoutSeconds":null,"serviceAccountEmail":null,"availableMemory":"256Mi","minInstanceCount":null,"maxInstanceCount":null,"maxInstanceRequestConcurrency":80,"availableCpu":"1","vpcConnector":null,"vpcConnectorEgressSettings":null},"labels":{"deployment-tool":"cli-firebase","firebase-functions-hash":"b51ce1400181d363679a7e5d64a17026c87c00c8"}}
+[debug] [2025-06-06T19:25:06.932Z] <<< [apiv2][status] PATCH https://cloudfunctions.googleapis.com/v2/projects/salepage-f39a1/locations/us-central1/functions/autoDeploy 200
+[debug] [2025-06-06T19:25:06.932Z] <<< [apiv2][body] PATCH https://cloudfunctions.googleapis.com/v2/projects/salepage-f39a1/locations/us-central1/functions/autoDeploy {"name":"projects/salepage-f39a1/locations/us-central1/operations/operation-1749237905765-636ec3000339b-b7fb9e8c-8e6fe9d5","metadata":{"@type":"type.googleapis.com/google.cloud.functions.v2.OperationMetadata","createTime":"2025-06-06T19:25:06.650386232Z","target":"projects/salepage-f39a1/locations/us-central1/functions/autoDeploy","verb":"update","cancelRequested":false,"apiVersion":"v2"},"done":false}
+[debug] [2025-06-06T19:25:06.933Z] Checked if tokens are valid: true, expires at: 1749240612766
+[debug] [2025-06-06T19:25:06.933Z] Checked if tokens are valid: true, expires at: 1749240612766
+[debug] [2025-06-06T19:25:06.934Z] >>> [apiv2][query] GET https://cloudfunctions.googleapis.com/v2/projects/salepage-f39a1/locations/us-central1/operations/operation-1749237905765-636ec3000339b-b7fb9e8c-8e6fe9d5 [none]
+[debug] [2025-06-06T19:25:08.117Z] <<< [apiv2][status] GET https://cloudfunctions.googleapis.com/v2/projects/salepage-f39a1/locations/us-central1/operations/operation-1749237905765-636ec3000339b-b7fb9e8c-8e6fe9d5 200
+[debug] [2025-06-06T19:25:08.117Z] <<< [apiv2][body] GET https://cloudfunctions.googleapis.com/v2/projects/salepage-f39a1/locations/us-central1/operations/operation-1749237905765-636ec3000339b-b7fb9e8c-8e6fe9d5 {"name":"projects/salepage-f39a1/locations/us-central1/operations/operation-1749237905765-636ec3000339b-b7fb9e8c-8e6fe9d5","metadata":{"@type":"type.googleapis.com/google.cloud.functions.v2.OperationMetadata","createTime":"2025-06-06T19:25:06.650386232Z","target":"projects/salepage-f39a1/locations/us-central1/functions/autoDeploy","verb":"update","cancelRequested":false,"apiVersion":"v2","requestResource":{"@type":"type.googleapis.com/google.cloud.functions.v2.Function","name":"projects/salepage-f39a1/locations/us-central1/functions/autoDeploy","buildConfig":{"runtime":"nodejs18","entryPoint":"autoDeploy","source":{"storageSource":{"bucket":"gcf-v2-sources-237790668185-us-central1","object":"autoDeploy/function-source.zip","generation":"1749237906602648"}},"environmentVariables":{"GOOGLE_NODE_RUN_SCRIPTS":""},"dockerRepository":"projects/salepage-f39a1/locations/us-central1/repositories/gcf-artifacts","sourceProvenance":{"resolvedStorageSource":{"bucket":"gcf-v2-sources-237790668185-us-central1","object":"autoDeploy/function-source.zip","generation":"1749237042482739"}},"dockerRegistry":"ARTIFACT_REGISTRY","serviceAccount":"projects/salepage-f39a1/serviceAccounts/237790668185-compute@developer.gserviceaccount.com","automaticUpdatePolicy":{}},"serviceConfig":{"service":"projects/salepage-f39a1/locations/us-central1/services/autodeploy","timeoutSeconds":60,"environmentVariables":{"FIREBASE_CONFIG":"{\"projectId\":\"salepage-f39a1\",\"storageBucket\":\"salepage-f39a1.firebasestorage.app\"}","GCLOUD_PROJECT":"salepage-f39a1","EVENTARC_CLOUD_EVENT_SOURCE":"projects/salepage-f39a1/locations/us-central1/services/autoDeploy","FUNCTION_TARGET":"autoDeploy","LOG_EXECUTION_ID":"true","FUNCTION_SIGNATURE_TYPE":"http"},"ingressSettings":"ALLOW_ALL","uri":"https://autodeploy-zifyt4iutq-uc.a.run.app","serviceAccountEmail":"237790668185-compute@developer.gserviceaccount.com","availableMemory":"256Mi","allTrafficOnLatestRevision":true,"secretEnvironmentVariables":[{"key":"NETLIFY_TOKEN","projectId":"salepage-f39a1","secret":"NETLIFY_TOKEN","version":"13"}],"revision":"autodeploy-00184-lup","maxInstanceRequestConcurrency":80,"availableCpu":"1"},"state":"ACTIVE","labels":{"deployment-tool":"cli-firebase","firebase-functions-hash":"b51ce1400181d363679a7e5d64a17026c87c00c8"},"environment":"GEN_2","url":"https://us-central1-salepage-f39a1.cloudfunctions.net/autoDeploy","satisfiesPzi":true},"stages":[{"name":"BUILD","message":"Build in progress","state":"IN_PROGRESS","resource":"projects/237790668185/locations/us-central1/builds/79d6cf9c-5616-4c06-a08e-aea481604b20","resourceUri":"https://console.cloud.google.com/cloud-build/builds;region=us-central1/79d6cf9c-5616-4c06-a08e-aea481604b20?project=237790668185"},{"name":"SERVICE","state":"NOT_STARTED"}],"operationType":"UPDATE_FUNCTION","buildName":"projects/237790668185/locations/us-central1/builds/79d6cf9c-5616-4c06-a08e-aea481604b20"},"done":false}
+[debug] [2025-06-06T19:25:08.619Z] [update-default-us-central1-autoDeploy] Retrying task index 0
+[debug] [2025-06-06T19:25:08.620Z] Checked if tokens are valid: true, expires at: 1749240612766
+[debug] [2025-06-06T19:25:08.620Z] Checked if tokens are valid: true, expires at: 1749240612766
+[debug] [2025-06-06T19:25:08.620Z] >>> [apiv2][query] GET https://cloudfunctions.googleapis.com/v2/projects/salepage-f39a1/locations/us-central1/operations/operation-1749237905765-636ec3000339b-b7fb9e8c-8e6fe9d5 [none]
+[debug] [2025-06-06T19:25:09.776Z] <<< [apiv2][status] GET https://cloudfunctions.googleapis.com/v2/projects/salepage-f39a1/locations/us-central1/operations/operation-1749237905765-636ec3000339b-b7fb9e8c-8e6fe9d5 200
+[debug] [2025-06-06T19:25:09.777Z] <<< [apiv2][body] GET https://cloudfunctions.googleapis.com/v2/projects/salepage-f39a1/locations/us-central1/operations/operation-1749237905765-636ec3000339b-b7fb9e8c-8e6fe9d5 {"name":"projects/salepage-f39a1/locations/us-central1/operations/operation-1749237905765-636ec3000339b-b7fb9e8c-8e6fe9d5","metadata":{"@type":"type.googleapis.com/google.cloud.functions.v2.OperationMetadata","createTime":"2025-06-06T19:25:06.650386232Z","target":"projects/salepage-f39a1/locations/us-central1/functions/autoDeploy","verb":"update","cancelRequested":false,"apiVersion":"v2","requestResource":{"@type":"type.googleapis.com/google.cloud.functions.v2.Function","name":"projects/salepage-f39a1/locations/us-central1/functions/autoDeploy","buildConfig":{"runtime":"nodejs18","entryPoint":"autoDeploy","source":{"storageSource":{"bucket":"gcf-v2-sources-237790668185-us-central1","object":"autoDeploy/function-source.zip","generation":"1749237906602648"}},"environmentVariables":{"GOOGLE_NODE_RUN_SCRIPTS":""},"dockerRepository":"projects/salepage-f39a1/locations/us-central1/repositories/gcf-artifacts","sourceProvenance":{"resolvedStorageSource":{"bucket":"gcf-v2-sources-237790668185-us-central1","object":"autoDeploy/function-source.zip","generation":"1749237042482739"}},"dockerRegistry":"ARTIFACT_REGISTRY","serviceAccount":"projects/salepage-f39a1/serviceAccounts/237790668185-compute@developer.gserviceaccount.com","automaticUpdatePolicy":{}},"serviceConfig":{"service":"projects/salepage-f39a1/locations/us-central1/services/autodeploy","timeoutSeconds":60,"environmentVariables":{"FIREBASE_CONFIG":"{\"projectId\":\"salepage-f39a1\",\"storageBucket\":\"salepage-f39a1.firebasestorage.app\"}","GCLOUD_PROJECT":"salepage-f39a1","EVENTARC_CLOUD_EVENT_SOURCE":"projects/salepage-f39a1/locations/us-central1/services/autoDeploy","FUNCTION_TARGET":"autoDeploy","LOG_EXECUTION_ID":"true","FUNCTION_SIGNATURE_TYPE":"http"},"ingressSettings":"ALLOW_ALL","uri":"https://autodeploy-zifyt4iutq-uc.a.run.app","serviceAccountEmail":"237790668185-compute@developer.gserviceaccount.com","availableMemory":"256Mi","allTrafficOnLatestRevision":true,"secretEnvironmentVariables":[{"key":"NETLIFY_TOKEN","projectId":"salepage-f39a1","secret":"NETLIFY_TOKEN","version":"13"}],"revision":"autodeploy-00184-lup","maxInstanceRequestConcurrency":80,"availableCpu":"1"},"state":"ACTIVE","labels":{"deployment-tool":"cli-firebase","firebase-functions-hash":"b51ce1400181d363679a7e5d64a17026c87c00c8"},"environment":"GEN_2","url":"https://us-central1-salepage-f39a1.cloudfunctions.net/autoDeploy","satisfiesPzi":true},"stages":[{"name":"BUILD","message":"Build in progress","state":"IN_PROGRESS","resource":"projects/237790668185/locations/us-central1/builds/79d6cf9c-5616-4c06-a08e-aea481604b20","resourceUri":"https://console.cloud.google.com/cloud-build/builds;region=us-central1/79d6cf9c-5616-4c06-a08e-aea481604b20?project=237790668185"},{"name":"SERVICE","state":"NOT_STARTED"}],"operationType":"UPDATE_FUNCTION","buildName":"projects/237790668185/locations/us-central1/builds/79d6cf9c-5616-4c06-a08e-aea481604b20"},"done":false}
+[debug] [2025-06-06T19:25:10.786Z] [update-default-us-central1-autoDeploy] Retrying task index 0
+[debug] [2025-06-06T19:25:10.786Z] Checked if tokens are valid: true, expires at: 1749240612766
+[debug] [2025-06-06T19:25:10.786Z] Checked if tokens are valid: true, expires at: 1749240612766
+[debug] [2025-06-06T19:25:10.786Z] >>> [apiv2][query] GET https://cloudfunctions.googleapis.com/v2/projects/salepage-f39a1/locations/us-central1/operations/operation-1749237905765-636ec3000339b-b7fb9e8c-8e6fe9d5 [none]
+[debug] [2025-06-06T19:25:11.966Z] <<< [apiv2][status] GET https://cloudfunctions.googleapis.com/v2/projects/salepage-f39a1/locations/us-central1/operations/operation-1749237905765-636ec3000339b-b7fb9e8c-8e6fe9d5 200
+[debug] [2025-06-06T19:25:11.966Z] <<< [apiv2][body] GET https://cloudfunctions.googleapis.com/v2/projects/salepage-f39a1/locations/us-central1/operations/operation-1749237905765-636ec3000339b-b7fb9e8c-8e6fe9d5 {"name":"projects/salepage-f39a1/locations/us-central1/operations/operation-1749237905765-636ec3000339b-b7fb9e8c-8e6fe9d5","metadata":{"@type":"type.googleapis.com/google.cloud.functions.v2.OperationMetadata","createTime":"2025-06-06T19:25:06.650386232Z","target":"projects/salepage-f39a1/locations/us-central1/functions/autoDeploy","verb":"update","cancelRequested":false,"apiVersion":"v2","requestResource":{"@type":"type.googleapis.com/google.cloud.functions.v2.Function","name":"projects/salepage-f39a1/locations/us-central1/functions/autoDeploy","buildConfig":{"runtime":"nodejs18","entryPoint":"autoDeploy","source":{"storageSource":{"bucket":"gcf-v2-sources-237790668185-us-central1","object":"autoDeploy/function-source.zip","generation":"1749237906602648"}},"environmentVariables":{"GOOGLE_NODE_RUN_SCRIPTS":""},"dockerRepository":"projects/salepage-f39a1/locations/us-central1/repositories/gcf-artifacts","sourceProvenance":{"resolvedStorageSource":{"bucket":"gcf-v2-sources-237790668185-us-central1","object":"autoDeploy/function-source.zip","generation":"1749237042482739"}},"dockerRegistry":"ARTIFACT_REGISTRY","serviceAccount":"projects/salepage-f39a1/serviceAccounts/237790668185-compute@developer.gserviceaccount.com","automaticUpdatePolicy":{}},"serviceConfig":{"service":"projects/salepage-f39a1/locations/us-central1/services/autodeploy","timeoutSeconds":60,"environmentVariables":{"FIREBASE_CONFIG":"{\"projectId\":\"salepage-f39a1\",\"storageBucket\":\"salepage-f39a1.firebasestorage.app\"}","GCLOUD_PROJECT":"salepage-f39a1","EVENTARC_CLOUD_EVENT_SOURCE":"projects/salepage-f39a1/locations/us-central1/services/autoDeploy","FUNCTION_TARGET":"autoDeploy","LOG_EXECUTION_ID":"true","FUNCTION_SIGNATURE_TYPE":"http"},"ingressSettings":"ALLOW_ALL","uri":"https://autodeploy-zifyt4iutq-uc.a.run.app","serviceAccountEmail":"237790668185-compute@developer.gserviceaccount.com","availableMemory":"256Mi","allTrafficOnLatestRevision":true,"secretEnvironmentVariables":[{"key":"NETLIFY_TOKEN","projectId":"salepage-f39a1","secret":"NETLIFY_TOKEN","version":"13"}],"revision":"autodeploy-00184-lup","maxInstanceRequestConcurrency":80,"availableCpu":"1"},"state":"ACTIVE","labels":{"deployment-tool":"cli-firebase","firebase-functions-hash":"b51ce1400181d363679a7e5d64a17026c87c00c8"},"environment":"GEN_2","url":"https://us-central1-salepage-f39a1.cloudfunctions.net/autoDeploy","satisfiesPzi":true},"stages":[{"name":"BUILD","message":"Build in progress","state":"IN_PROGRESS","resource":"projects/237790668185/locations/us-central1/builds/79d6cf9c-5616-4c06-a08e-aea481604b20","resourceUri":"https://console.cloud.google.com/cloud-build/builds;region=us-central1/79d6cf9c-5616-4c06-a08e-aea481604b20?project=237790668185"},{"name":"SERVICE","state":"NOT_STARTED"}],"operationType":"UPDATE_FUNCTION","buildName":"projects/237790668185/locations/us-central1/builds/79d6cf9c-5616-4c06-a08e-aea481604b20"},"done":false}
+[debug] [2025-06-06T19:25:13.973Z] [update-default-us-central1-autoDeploy] Retrying task index 0
+[debug] [2025-06-06T19:25:13.973Z] Checked if tokens are valid: true, expires at: 1749240612766
+[debug] [2025-06-06T19:25:13.973Z] Checked if tokens are valid: true, expires at: 1749240612766
+[debug] [2025-06-06T19:25:13.973Z] >>> [apiv2][query] GET https://cloudfunctions.googleapis.com/v2/projects/salepage-f39a1/locations/us-central1/operations/operation-1749237905765-636ec3000339b-b7fb9e8c-8e6fe9d5 [none]
+[debug] [2025-06-06T19:25:15.181Z] <<< [apiv2][status] GET https://cloudfunctions.googleapis.com/v2/projects/salepage-f39a1/locations/us-central1/operations/operation-1749237905765-636ec3000339b-b7fb9e8c-8e6fe9d5 200
+[debug] [2025-06-06T19:25:15.181Z] <<< [apiv2][body] GET https://cloudfunctions.googleapis.com/v2/projects/salepage-f39a1/locations/us-central1/operations/operation-1749237905765-636ec3000339b-b7fb9e8c-8e6fe9d5 {"name":"projects/salepage-f39a1/locations/us-central1/operations/operation-1749237905765-636ec3000339b-b7fb9e8c-8e6fe9d5","metadata":{"@type":"type.googleapis.com/google.cloud.functions.v2.OperationMetadata","createTime":"2025-06-06T19:25:06.650386232Z","target":"projects/salepage-f39a1/locations/us-central1/functions/autoDeploy","verb":"update","cancelRequested":false,"apiVersion":"v2","requestResource":{"@type":"type.googleapis.com/google.cloud.functions.v2.Function","name":"projects/salepage-f39a1/locations/us-central1/functions/autoDeploy","buildConfig":{"runtime":"nodejs18","entryPoint":"autoDeploy","source":{"storageSource":{"bucket":"gcf-v2-sources-237790668185-us-central1","object":"autoDeploy/function-source.zip","generation":"1749237906602648"}},"environmentVariables":{"GOOGLE_NODE_RUN_SCRIPTS":""},"dockerRepository":"projects/salepage-f39a1/locations/us-central1/repositories/gcf-artifacts","sourceProvenance":{"resolvedStorageSource":{"bucket":"gcf-v2-sources-237790668185-us-central1","object":"autoDeploy/function-source.zip","generation":"1749237042482739"}},"dockerRegistry":"ARTIFACT_REGISTRY","serviceAccount":"projects/salepage-f39a1/serviceAccounts/237790668185-compute@developer.gserviceaccount.com","automaticUpdatePolicy":{}},"serviceConfig":{"service":"projects/salepage-f39a1/locations/us-central1/services/autodeploy","timeoutSeconds":60,"environmentVariables":{"FIREBASE_CONFIG":"{\"projectId\":\"salepage-f39a1\",\"storageBucket\":\"salepage-f39a1.firebasestorage.app\"}","GCLOUD_PROJECT":"salepage-f39a1","EVENTARC_CLOUD_EVENT_SOURCE":"projects/salepage-f39a1/locations/us-central1/services/autoDeploy","FUNCTION_TARGET":"autoDeploy","LOG_EXECUTION_ID":"true","FUNCTION_SIGNATURE_TYPE":"http"},"ingressSettings":"ALLOW_ALL","uri":"https://autodeploy-zifyt4iutq-uc.a.run.app","serviceAccountEmail":"237790668185-compute@developer.gserviceaccount.com","availableMemory":"256Mi","allTrafficOnLatestRevision":true,"secretEnvironmentVariables":[{"key":"NETLIFY_TOKEN","projectId":"salepage-f39a1","secret":"NETLIFY_TOKEN","version":"13"}],"revision":"autodeploy-00184-lup","maxInstanceRequestConcurrency":80,"availableCpu":"1"},"state":"ACTIVE","labels":{"deployment-tool":"cli-firebase","firebase-functions-hash":"b51ce1400181d363679a7e5d64a17026c87c00c8"},"environment":"GEN_2","url":"https://us-central1-salepage-f39a1.cloudfunctions.net/autoDeploy","satisfiesPzi":true},"stages":[{"name":"BUILD","message":"Build in progress","state":"IN_PROGRESS","resource":"projects/237790668185/locations/us-central1/builds/79d6cf9c-5616-4c06-a08e-aea481604b20","resourceUri":"https://console.cloud.google.com/cloud-build/builds;region=us-central1/79d6cf9c-5616-4c06-a08e-aea481604b20?project=237790668185"},{"name":"SERVICE","state":"NOT_STARTED"}],"operationType":"UPDATE_FUNCTION","buildName":"projects/237790668185/locations/us-central1/builds/79d6cf9c-5616-4c06-a08e-aea481604b20"},"done":false}
+[debug] [2025-06-06T19:25:19.188Z] [update-default-us-central1-autoDeploy] Retrying task index 0
+[debug] [2025-06-06T19:25:19.188Z] Checked if tokens are valid: true, expires at: 1749240612766
+[debug] [2025-06-06T19:25:19.189Z] Checked if tokens are valid: true, expires at: 1749240612766
+[debug] [2025-06-06T19:25:19.189Z] >>> [apiv2][query] GET https://cloudfunctions.googleapis.com/v2/projects/salepage-f39a1/locations/us-central1/operations/operation-1749237905765-636ec3000339b-b7fb9e8c-8e6fe9d5 [none]
+[debug] [2025-06-06T19:25:20.607Z] <<< [apiv2][status] GET https://cloudfunctions.googleapis.com/v2/projects/salepage-f39a1/locations/us-central1/operations/operation-1749237905765-636ec3000339b-b7fb9e8c-8e6fe9d5 200
+[debug] [2025-06-06T19:25:20.607Z] <<< [apiv2][body] GET https://cloudfunctions.googleapis.com/v2/projects/salepage-f39a1/locations/us-central1/operations/operation-1749237905765-636ec3000339b-b7fb9e8c-8e6fe9d5 {"name":"projects/salepage-f39a1/locations/us-central1/operations/operation-1749237905765-636ec3000339b-b7fb9e8c-8e6fe9d5","metadata":{"@type":"type.googleapis.com/google.cloud.functions.v2.OperationMetadata","createTime":"2025-06-06T19:25:06.650386232Z","target":"projects/salepage-f39a1/locations/us-central1/functions/autoDeploy","verb":"update","cancelRequested":false,"apiVersion":"v2","requestResource":{"@type":"type.googleapis.com/google.cloud.functions.v2.Function","name":"projects/salepage-f39a1/locations/us-central1/functions/autoDeploy","buildConfig":{"runtime":"nodejs18","entryPoint":"autoDeploy","source":{"storageSource":{"bucket":"gcf-v2-sources-237790668185-us-central1","object":"autoDeploy/function-source.zip","generation":"1749237906602648"}},"environmentVariables":{"GOOGLE_NODE_RUN_SCRIPTS":""},"dockerRepository":"projects/salepage-f39a1/locations/us-central1/repositories/gcf-artifacts","sourceProvenance":{"resolvedStorageSource":{"bucket":"gcf-v2-sources-237790668185-us-central1","object":"autoDeploy/function-source.zip","generation":"1749237042482739"}},"dockerRegistry":"ARTIFACT_REGISTRY","serviceAccount":"projects/salepage-f39a1/serviceAccounts/237790668185-compute@developer.gserviceaccount.com","automaticUpdatePolicy":{}},"serviceConfig":{"service":"projects/salepage-f39a1/locations/us-central1/services/autodeploy","timeoutSeconds":60,"environmentVariables":{"FIREBASE_CONFIG":"{\"projectId\":\"salepage-f39a1\",\"storageBucket\":\"salepage-f39a1.firebasestorage.app\"}","GCLOUD_PROJECT":"salepage-f39a1","EVENTARC_CLOUD_EVENT_SOURCE":"projects/salepage-f39a1/locations/us-central1/services/autoDeploy","FUNCTION_TARGET":"autoDeploy","LOG_EXECUTION_ID":"true","FUNCTION_SIGNATURE_TYPE":"http"},"ingressSettings":"ALLOW_ALL","uri":"https://autodeploy-zifyt4iutq-uc.a.run.app","serviceAccountEmail":"237790668185-compute@developer.gserviceaccount.com","availableMemory":"256Mi","allTrafficOnLatestRevision":true,"secretEnvironmentVariables":[{"key":"NETLIFY_TOKEN","projectId":"salepage-f39a1","secret":"NETLIFY_TOKEN","version":"13"}],"revision":"autodeploy-00184-lup","maxInstanceRequestConcurrency":80,"availableCpu":"1"},"state":"ACTIVE","labels":{"deployment-tool":"cli-firebase","firebase-functions-hash":"b51ce1400181d363679a7e5d64a17026c87c00c8"},"environment":"GEN_2","url":"https://us-central1-salepage-f39a1.cloudfunctions.net/autoDeploy","satisfiesPzi":true},"stages":[{"name":"BUILD","message":"Build in progress","state":"IN_PROGRESS","resource":"projects/237790668185/locations/us-central1/builds/79d6cf9c-5616-4c06-a08e-aea481604b20","resourceUri":"https://console.cloud.google.com/cloud-build/builds;region=us-central1/79d6cf9c-5616-4c06-a08e-aea481604b20?project=237790668185"},{"name":"SERVICE","state":"NOT_STARTED"}],"operationType":"UPDATE_FUNCTION","buildName":"projects/237790668185/locations/us-central1/builds/79d6cf9c-5616-4c06-a08e-aea481604b20"},"done":false}
+[debug] [2025-06-06T19:25:28.613Z] [update-default-us-central1-autoDeploy] Retrying task index 0
+[debug] [2025-06-06T19:25:28.614Z] Checked if tokens are valid: true, expires at: 1749240612766
+[debug] [2025-06-06T19:25:28.614Z] Checked if tokens are valid: true, expires at: 1749240612766
+[debug] [2025-06-06T19:25:28.614Z] >>> [apiv2][query] GET https://cloudfunctions.googleapis.com/v2/projects/salepage-f39a1/locations/us-central1/operations/operation-1749237905765-636ec3000339b-b7fb9e8c-8e6fe9d5 [none]
+[debug] [2025-06-06T19:25:29.837Z] <<< [apiv2][status] GET https://cloudfunctions.googleapis.com/v2/projects/salepage-f39a1/locations/us-central1/operations/operation-1749237905765-636ec3000339b-b7fb9e8c-8e6fe9d5 200
+[debug] [2025-06-06T19:25:29.837Z] <<< [apiv2][body] GET https://cloudfunctions.googleapis.com/v2/projects/salepage-f39a1/locations/us-central1/operations/operation-1749237905765-636ec3000339b-b7fb9e8c-8e6fe9d5 {"name":"projects/salepage-f39a1/locations/us-central1/operations/operation-1749237905765-636ec3000339b-b7fb9e8c-8e6fe9d5","metadata":{"@type":"type.googleapis.com/google.cloud.functions.v2.OperationMetadata","createTime":"2025-06-06T19:25:06.650386232Z","target":"projects/salepage-f39a1/locations/us-central1/functions/autoDeploy","verb":"update","cancelRequested":false,"apiVersion":"v2","requestResource":{"@type":"type.googleapis.com/google.cloud.functions.v2.Function","name":"projects/salepage-f39a1/locations/us-central1/functions/autoDeploy","buildConfig":{"runtime":"nodejs18","entryPoint":"autoDeploy","source":{"storageSource":{"bucket":"gcf-v2-sources-237790668185-us-central1","object":"autoDeploy/function-source.zip","generation":"1749237906602648"}},"environmentVariables":{"GOOGLE_NODE_RUN_SCRIPTS":""},"dockerRepository":"projects/salepage-f39a1/locations/us-central1/repositories/gcf-artifacts","sourceProvenance":{"resolvedStorageSource":{"bucket":"gcf-v2-sources-237790668185-us-central1","object":"autoDeploy/function-source.zip","generation":"1749237042482739"}},"dockerRegistry":"ARTIFACT_REGISTRY","serviceAccount":"projects/salepage-f39a1/serviceAccounts/237790668185-compute@developer.gserviceaccount.com","automaticUpdatePolicy":{}},"serviceConfig":{"service":"projects/salepage-f39a1/locations/us-central1/services/autodeploy","timeoutSeconds":60,"environmentVariables":{"FIREBASE_CONFIG":"{\"projectId\":\"salepage-f39a1\",\"storageBucket\":\"salepage-f39a1.firebasestorage.app\"}","GCLOUD_PROJECT":"salepage-f39a1","EVENTARC_CLOUD_EVENT_SOURCE":"projects/salepage-f39a1/locations/us-central1/services/autoDeploy","FUNCTION_TARGET":"autoDeploy","LOG_EXECUTION_ID":"true","FUNCTION_SIGNATURE_TYPE":"http"},"ingressSettings":"ALLOW_ALL","uri":"https://autodeploy-zifyt4iutq-uc.a.run.app","serviceAccountEmail":"237790668185-compute@developer.gserviceaccount.com","availableMemory":"256Mi","allTrafficOnLatestRevision":true,"secretEnvironmentVariables":[{"key":"NETLIFY_TOKEN","projectId":"salepage-f39a1","secret":"NETLIFY_TOKEN","version":"13"}],"revision":"autodeploy-00184-lup","maxInstanceRequestConcurrency":80,"availableCpu":"1"},"state":"ACTIVE","labels":{"deployment-tool":"cli-firebase","firebase-functions-hash":"b51ce1400181d363679a7e5d64a17026c87c00c8"},"environment":"GEN_2","url":"https://us-central1-salepage-f39a1.cloudfunctions.net/autoDeploy","satisfiesPzi":true},"stages":[{"name":"BUILD","message":"Build in progress","state":"IN_PROGRESS","resource":"projects/237790668185/locations/us-central1/builds/79d6cf9c-5616-4c06-a08e-aea481604b20","resourceUri":"https://console.cloud.google.com/cloud-build/builds;region=us-central1/79d6cf9c-5616-4c06-a08e-aea481604b20?project=237790668185"},{"name":"SERVICE","state":"NOT_STARTED"}],"operationType":"UPDATE_FUNCTION","buildName":"projects/237790668185/locations/us-central1/builds/79d6cf9c-5616-4c06-a08e-aea481604b20"},"done":false}
+[debug] [2025-06-06T19:25:39.848Z] [update-default-us-central1-autoDeploy] Retrying task index 0
+[debug] [2025-06-06T19:25:39.848Z] Checked if tokens are valid: true, expires at: 1749240612766
+[debug] [2025-06-06T19:25:39.848Z] Checked if tokens are valid: true, expires at: 1749240612766
+[debug] [2025-06-06T19:25:39.849Z] >>> [apiv2][query] GET https://cloudfunctions.googleapis.com/v2/projects/salepage-f39a1/locations/us-central1/operations/operation-1749237905765-636ec3000339b-b7fb9e8c-8e6fe9d5 [none]
+[debug] [2025-06-06T19:25:41.016Z] <<< [apiv2][status] GET https://cloudfunctions.googleapis.com/v2/projects/salepage-f39a1/locations/us-central1/operations/operation-1749237905765-636ec3000339b-b7fb9e8c-8e6fe9d5 200
+[debug] [2025-06-06T19:25:41.016Z] <<< [apiv2][body] GET https://cloudfunctions.googleapis.com/v2/projects/salepage-f39a1/locations/us-central1/operations/operation-1749237905765-636ec3000339b-b7fb9e8c-8e6fe9d5 {"name":"projects/salepage-f39a1/locations/us-central1/operations/operation-1749237905765-636ec3000339b-b7fb9e8c-8e6fe9d5","metadata":{"@type":"type.googleapis.com/google.cloud.functions.v2.OperationMetadata","createTime":"2025-06-06T19:25:06.650386232Z","target":"projects/salepage-f39a1/locations/us-central1/functions/autoDeploy","verb":"update","cancelRequested":false,"apiVersion":"v2","requestResource":{"@type":"type.googleapis.com/google.cloud.functions.v2.Function","name":"projects/salepage-f39a1/locations/us-central1/functions/autoDeploy","buildConfig":{"runtime":"nodejs18","entryPoint":"autoDeploy","source":{"storageSource":{"bucket":"gcf-v2-sources-237790668185-us-central1","object":"autoDeploy/function-source.zip","generation":"1749237906602648"}},"environmentVariables":{"GOOGLE_NODE_RUN_SCRIPTS":""},"dockerRepository":"projects/salepage-f39a1/locations/us-central1/repositories/gcf-artifacts","sourceProvenance":{"resolvedStorageSource":{"bucket":"gcf-v2-sources-237790668185-us-central1","object":"autoDeploy/function-source.zip","generation":"1749237042482739"}},"dockerRegistry":"ARTIFACT_REGISTRY","serviceAccount":"projects/salepage-f39a1/serviceAccounts/237790668185-compute@developer.gserviceaccount.com","automaticUpdatePolicy":{}},"serviceConfig":{"service":"projects/salepage-f39a1/locations/us-central1/services/autodeploy","timeoutSeconds":60,"environmentVariables":{"FIREBASE_CONFIG":"{\"projectId\":\"salepage-f39a1\",\"storageBucket\":\"salepage-f39a1.firebasestorage.app\"}","GCLOUD_PROJECT":"salepage-f39a1","EVENTARC_CLOUD_EVENT_SOURCE":"projects/salepage-f39a1/locations/us-central1/services/autoDeploy","FUNCTION_TARGET":"autoDeploy","LOG_EXECUTION_ID":"true","FUNCTION_SIGNATURE_TYPE":"http"},"ingressSettings":"ALLOW_ALL","uri":"https://autodeploy-zifyt4iutq-uc.a.run.app","serviceAccountEmail":"237790668185-compute@developer.gserviceaccount.com","availableMemory":"256Mi","allTrafficOnLatestRevision":true,"secretEnvironmentVariables":[{"key":"NETLIFY_TOKEN","projectId":"salepage-f39a1","secret":"NETLIFY_TOKEN","version":"13"}],"revision":"autodeploy-00184-lup","maxInstanceRequestConcurrency":80,"availableCpu":"1"},"state":"ACTIVE","labels":{"deployment-tool":"cli-firebase","firebase-functions-hash":"b51ce1400181d363679a7e5d64a17026c87c00c8"},"environment":"GEN_2","url":"https://us-central1-salepage-f39a1.cloudfunctions.net/autoDeploy","satisfiesPzi":true},"stages":[{"name":"BUILD","message":"Build in progress","state":"IN_PROGRESS","resource":"projects/237790668185/locations/us-central1/builds/79d6cf9c-5616-4c06-a08e-aea481604b20","resourceUri":"https://console.cloud.google.com/cloud-build/builds;region=us-central1/79d6cf9c-5616-4c06-a08e-aea481604b20?project=237790668185"},{"name":"SERVICE","state":"NOT_STARTED"}],"operationType":"UPDATE_FUNCTION","buildName":"projects/237790668185/locations/us-central1/builds/79d6cf9c-5616-4c06-a08e-aea481604b20"},"done":false}
+[debug] [2025-06-06T19:25:51.027Z] [update-default-us-central1-autoDeploy] Retrying task index 0
+[debug] [2025-06-06T19:25:51.028Z] Checked if tokens are valid: true, expires at: 1749240612766
+[debug] [2025-06-06T19:25:51.028Z] Checked if tokens are valid: true, expires at: 1749240612766
+[debug] [2025-06-06T19:25:51.028Z] >>> [apiv2][query] GET https://cloudfunctions.googleapis.com/v2/projects/salepage-f39a1/locations/us-central1/operations/operation-1749237905765-636ec3000339b-b7fb9e8c-8e6fe9d5 [none]
+[debug] [2025-06-06T19:25:52.195Z] <<< [apiv2][status] GET https://cloudfunctions.googleapis.com/v2/projects/salepage-f39a1/locations/us-central1/operations/operation-1749237905765-636ec3000339b-b7fb9e8c-8e6fe9d5 200
+[debug] [2025-06-06T19:25:52.195Z] <<< [apiv2][body] GET https://cloudfunctions.googleapis.com/v2/projects/salepage-f39a1/locations/us-central1/operations/operation-1749237905765-636ec3000339b-b7fb9e8c-8e6fe9d5 {"name":"projects/salepage-f39a1/locations/us-central1/operations/operation-1749237905765-636ec3000339b-b7fb9e8c-8e6fe9d5","metadata":{"@type":"type.googleapis.com/google.cloud.functions.v2.OperationMetadata","createTime":"2025-06-06T19:25:06.650386232Z","endTime":"2025-06-06T19:25:47.527108982Z","target":"projects/salepage-f39a1/locations/us-central1/functions/autoDeploy","verb":"update","cancelRequested":false,"apiVersion":"v2","requestResource":{"@type":"type.googleapis.com/google.cloud.functions.v2.Function","name":"projects/salepage-f39a1/locations/us-central1/functions/autoDeploy","buildConfig":{"runtime":"nodejs18","entryPoint":"autoDeploy","source":{"storageSource":{"bucket":"gcf-v2-sources-237790668185-us-central1","object":"autoDeploy/function-source.zip","generation":"1749237906602648"}},"environmentVariables":{"GOOGLE_NODE_RUN_SCRIPTS":""},"dockerRepository":"projects/salepage-f39a1/locations/us-central1/repositories/gcf-artifacts","sourceProvenance":{"resolvedStorageSource":{"bucket":"gcf-v2-sources-237790668185-us-central1","object":"autoDeploy/function-source.zip","generation":"1749237042482739"}},"dockerRegistry":"ARTIFACT_REGISTRY","serviceAccount":"projects/salepage-f39a1/serviceAccounts/237790668185-compute@developer.gserviceaccount.com","automaticUpdatePolicy":{}},"serviceConfig":{"service":"projects/salepage-f39a1/locations/us-central1/services/autodeploy","timeoutSeconds":60,"environmentVariables":{"FIREBASE_CONFIG":"{\"projectId\":\"salepage-f39a1\",\"storageBucket\":\"salepage-f39a1.firebasestorage.app\"}","GCLOUD_PROJECT":"salepage-f39a1","EVENTARC_CLOUD_EVENT_SOURCE":"projects/salepage-f39a1/locations/us-central1/services/autoDeploy","FUNCTION_TARGET":"autoDeploy","LOG_EXECUTION_ID":"true","FUNCTION_SIGNATURE_TYPE":"http"},"ingressSettings":"ALLOW_ALL","uri":"https://autodeploy-zifyt4iutq-uc.a.run.app","serviceAccountEmail":"237790668185-compute@developer.gserviceaccount.com","availableMemory":"256Mi","allTrafficOnLatestRevision":true,"secretEnvironmentVariables":[{"key":"NETLIFY_TOKEN","projectId":"salepage-f39a1","secret":"NETLIFY_TOKEN","version":"13"}],"revision":"autodeploy-00184-lup","maxInstanceRequestConcurrency":80,"availableCpu":"1"},"state":"ACTIVE","labels":{"deployment-tool":"cli-firebase","firebase-functions-hash":"b51ce1400181d363679a7e5d64a17026c87c00c8"},"environment":"GEN_2","url":"https://us-central1-salepage-f39a1.cloudfunctions.net/autoDeploy","satisfiesPzi":true},"stages":[{"name":"SERVICE","state":"NOT_STARTED"}],"operationType":"UPDATE_FUNCTION"},"done":true,"error":{"code":3,"message":"Build failed with status: FAILURE and message: npm error code EUSAGE\nnpm error\nnpm error `npm ci` can only install packages when your package.json and package-lock.json or npm-shrinkwrap.json are in sync. Please update your lock file with `npm install` before continuing.\nnpm error\nnpm error Missing: @vitejs/plugin-react@4.5.1 from lock file\nnpm error Missing: @babel/plugin-transform-react-jsx-self@7.27.1 from lock file\nnpm error Missing: @babel/plugin-transform-react-jsx-source@7.27.1 from lock file\nnpm error Missing: @rolldown/pluginutils@1.0.0-beta.9 from lock file\nnpm error Missing: react-refresh@0.17.0 from lock file\nnpm error\nnpm error Clean install a project\nnpm error\nnpm error Usage:\nnpm error npm ci\nnpm error\nnpm error Options:\nnpm error [--install-strategy <hoisted|nested|shallow|linked>] [--legacy-bundling]\nnpm error [--global-style] [--omit <dev|optional|peer> [--omit <dev|optional|peer> ...]]\nnpm error [--include <prod|dev|optional|peer> [--include <prod|dev|optional|peer> ...]]\nnpm error [--strict-peer-deps] [--foreground-scripts] [--ignore-scripts] [--no-audit]\nnpm error [--no-bin-links] [--no-fund] [--dry-run]\nnpm error [-w|--workspace <workspace-name> [-w|--workspace <workspace-name> ...]]\nnpm error [-ws|--workspaces] [--include-workspace-root] [--install-links]\nnpm error\nnpm error aliases: clean-install, ic, install-clean, isntall-clean\nnpm error\nnpm error Run \"npm help ci\" for more info\nnpm error A complete log of this run can be found in: /www-data-home/.npm/_logs/2025-06-06T19_25_30_082Z-debug-0.log. For more details see the logs at https://console.cloud.google.com/cloud-build/builds;region=us-central1/79d6cf9c-5616-4c06-a08e-aea481604b20?project=237790668185."}}
+[debug] [2025-06-06T19:25:52.197Z] Got source token undefined for region us-central1
+[error] Build failed with status: FAILURE and message: npm error code EUSAGE
+npm error
+npm error `npm ci` can only install packages when your package.json and package-lock.json or npm-shrinkwrap.json are in sync. Please update your lock file with `npm install` before continuing.
+npm error
+npm error Missing: @vitejs/plugin-react@4.5.1 from lock file
+npm error Missing: @babel/plugin-transform-react-jsx-self@7.27.1 from lock file
+npm error Missing: @babel/plugin-transform-react-jsx-source@7.27.1 from lock file
+npm error Missing: @rolldown/pluginutils@1.0.0-beta.9 from lock file
+npm error Missing: react-refresh@0.17.0 from lock file
+npm error
+npm error Clean install a project
+npm error
+npm error Usage:
+npm error npm ci
+npm error
+npm error Options:
+npm error [--install-strategy <hoisted|nested|shallow|linked>] [--legacy-bundling]
+npm error [--global-style] [--omit <dev|optional|peer> [--omit <dev|optional|peer> ...]]
+npm error [--include <prod|dev|optional|peer> [--include <prod|dev|optional|peer> ...]]
+npm error [--strict-peer-deps] [--foreground-scripts] [--ignore-scripts] [--no-audit]
+npm error [--no-bin-links] [--no-fund] [--dry-run]
+npm error [-w|--workspace <workspace-name> [-w|--workspace <workspace-name> ...]]
+npm error [-ws|--workspaces] [--include-workspace-root] [--install-links]
+npm error
+npm error aliases: clean-install, ic, install-clean, isntall-clean
+npm error
+npm error Run "npm help ci" for more info
+npm error A complete log of this run can be found in: /www-data-home/.npm/_logs/2025-06-06T19_25_30_082Z-debug-0.log. For more details see the logs at https://console.cloud.google.com/cloud-build/builds;region=us-central1/79d6cf9c-5616-4c06-a08e-aea481604b20?project=237790668185.
+[debug] [2025-06-06T19:25:52.207Z] Total Function Deployment time: 47361
+[debug] [2025-06-06T19:25:52.207Z] 1 Functions Deployed
+[debug] [2025-06-06T19:25:52.207Z] 1 Functions Errored
+[debug] [2025-06-06T19:25:52.207Z] 0 Function Deployments Aborted
+[debug] [2025-06-06T19:25:52.207Z] Average Function Deployment time: 47360
+[info] 
+[info] Functions deploy had errors with the following functions:
+	autoDeploy(us-central1)
+[debug] [2025-06-06T19:25:52.457Z] Not printing URL for HTTPS function. Typically this means it didn't match a filter or we failed deployment
+[info] i  functions: cleaning up build files... 
+[debug] [2025-06-06T19:25:52.459Z] Checked if tokens are valid: true, expires at: 1749240612766
+[debug] [2025-06-06T19:25:52.459Z] Checked if tokens are valid: true, expires at: 1749240612766
+[debug] [2025-06-06T19:25:52.460Z] Checked if tokens are valid: true, expires at: 1749240612766
+[debug] [2025-06-06T19:25:52.460Z] Checked if tokens are valid: true, expires at: 1749240612766
+[debug] [2025-06-06T19:25:52.460Z] >>> [apiv2][query] DELETE https://artifactregistry.googleapis.com/v1/projects/salepage-f39a1/locations/us-central1/repositories/gcf-artifacts/packages/salepage--f39a1__us--central1__auto_deploy [none]
+[debug] [2025-06-06T19:25:52.461Z] >>> [apiv2][query] GET https://us.gcr.io/v2/salepage-f39a1/gcf/us-central1/tags/list [none]
+[debug] [2025-06-06T19:25:53.104Z] <<< [apiv2][status] GET https://us.gcr.io/v2/salepage-f39a1/gcf/us-central1/tags/list 404
+[debug] [2025-06-06T19:25:53.104Z] <<< [apiv2][body] GET https://us.gcr.io/v2/salepage-f39a1/gcf/us-central1/tags/list {"errors":[{"code":"NAME_UNKNOWN","message":"Repository \"us.gcr.io\" not found"}]}
+[debug] [2025-06-06T19:25:53.105Z] Failed docker command with error  Request to https://us.gcr.io/v2/salepage-f39a1/gcf/us-central1/tags/list had HTTP Error: 404, Not Found {"name":"FirebaseError","children":[],"context":{"body":{"errors":[{"code":"NAME_UNKNOWN","message":"Repository \"us.gcr.io\" not found"}],"error":{"message":"Not Found"}},"response":{"statusCode":404}},"exit":1,"message":"Request to https://us.gcr.io/v2/salepage-f39a1/gcf/us-central1/tags/list had HTTP Error: 404, Not Found","status":404}
+[debug] [2025-06-06T19:25:53.113Z] Checked if tokens are valid: true, expires at: 1749240612766
+[debug] [2025-06-06T19:25:53.113Z] Checked if tokens are valid: true, expires at: 1749240612766
+[debug] [2025-06-06T19:25:53.113Z] >>> [apiv2][query] GET https://us.gcr.io/v2/salepage-f39a1/gcf/us-central1/tags/list [none]
+[debug] [2025-06-06T19:25:53.649Z] <<< [apiv2][status] GET https://us.gcr.io/v2/salepage-f39a1/gcf/us-central1/tags/list 404
+[debug] [2025-06-06T19:25:53.649Z] <<< [apiv2][body] GET https://us.gcr.io/v2/salepage-f39a1/gcf/us-central1/tags/list {"errors":[{"code":"NAME_UNKNOWN","message":"Repository \"us.gcr.io\" not found"}]}
+[debug] [2025-06-06T19:25:53.650Z] Failed docker command with error  Request to https://us.gcr.io/v2/salepage-f39a1/gcf/us-central1/tags/list had HTTP Error: 404, Not Found {"name":"FirebaseError","children":[],"context":{"body":{"errors":[{"code":"NAME_UNKNOWN","message":"Repository \"us.gcr.io\" not found"}],"error":{"message":"Not Found"}},"response":{"statusCode":404}},"exit":1,"message":"Request to https://us.gcr.io/v2/salepage-f39a1/gcf/us-central1/tags/list had HTTP Error: 404, Not Found","status":404}
+[debug] [2025-06-06T19:25:53.675Z] <<< [apiv2][status] DELETE https://artifactregistry.googleapis.com/v1/projects/salepage-f39a1/locations/us-central1/repositories/gcf-artifacts/packages/salepage--f39a1__us--central1__auto_deploy 404
+[debug] [2025-06-06T19:25:53.675Z] <<< [apiv2][body] DELETE https://artifactregistry.googleapis.com/v1/projects/salepage-f39a1/locations/us-central1/repositories/gcf-artifacts/packages/salepage--f39a1__us--central1__auto_deploy {"error":{"code":404,"message":"Package \"projects/salepage-f39a1/locations/us-central1/repositories/gcf-artifacts/packages/salepage--f39a1__us--central1__auto_deploy\" was not found.","status":"NOT_FOUND"}}
+[debug] [2025-06-06T19:25:53.758Z] Checked if tokens are valid: true, expires at: 1749240612766
+[debug] [2025-06-06T19:25:53.758Z] Checked if tokens are valid: true, expires at: 1749240612766
+[debug] [2025-06-06T19:25:53.758Z] >>> [apiv2][query] GET https://us.gcr.io/v2/salepage-f39a1/gcf/us-central1/tags/list [none]
+[debug] [2025-06-06T19:25:54.280Z] <<< [apiv2][status] GET https://us.gcr.io/v2/salepage-f39a1/gcf/us-central1/tags/list 404
+[debug] [2025-06-06T19:25:54.280Z] <<< [apiv2][body] GET https://us.gcr.io/v2/salepage-f39a1/gcf/us-central1/tags/list {"errors":[{"code":"NAME_UNKNOWN","message":"Repository \"us.gcr.io\" not found"}]}
+[debug] [2025-06-06T19:25:54.280Z] Failed docker command with error  Request to https://us.gcr.io/v2/salepage-f39a1/gcf/us-central1/tags/list had HTTP Error: 404, Not Found {"name":"FirebaseError","children":[],"context":{"body":{"errors":[{"code":"NAME_UNKNOWN","message":"Repository \"us.gcr.io\" not found"}],"error":{"message":"Not Found"}},"response":{"statusCode":404}},"exit":1,"message":"Request to https://us.gcr.io/v2/salepage-f39a1/gcf/us-central1/tags/list had HTTP Error: 404, Not Found","status":404}
+[warn] !  functions: Unhandled error cleaning up build images. This could result in a small monthly bill if not corrected. You can attempt to delete these images by redeploying or you can delete them manually at https://console.cloud.google.com/gcr/images/salepage-f39a1/us/gcf 
+[debug] [2025-06-06T19:25:54.281Z] Functions deploy failed.
+[debug] [2025-06-06T19:25:54.281Z] {
+  "endpoint": {
+    "id": "autoDeploy",
+    "project": "salepage-f39a1",
+    "region": "us-central1",
+    "entryPoint": "autoDeploy",
+    "platform": "gcfv2",
+    "runtime": "nodejs18",
+    "httpsTrigger": {},
+    "labels": {
+      "deployment-tool": "cli-firebase"
+    },
+    "secretEnvironmentVariables": [
+      {
+        "key": "NETLIFY_TOKEN",
+        "secret": "NETLIFY_TOKEN",
+        "projectId": "salepage-f39a1",
+        "version": "13"
+      }
+    ],
+    "ingressSettings": null,
+    "availableMemoryMb": null,
+    "serviceAccount": null,
+    "timeoutSeconds": null,
+    "maxInstances": null,
+    "minInstances": null,
+    "concurrency": 80,
+    "vpc": null,
+    "environmentVariables": {
+      "FIREBASE_CONFIG": "{\"projectId\":\"salepage-f39a1\",\"storageBucket\":\"salepage-f39a1.firebasestorage.app\"}",
+      "GCLOUD_PROJECT": "salepage-f39a1",
+      "EVENTARC_CLOUD_EVENT_SOURCE": "projects/salepage-f39a1/locations/us-central1/services/autoDeploy",
+      "FUNCTION_TARGET": "autoDeploy",
+      "LOG_EXECUTION_ID": "true",
+      "FUNCTION_SIGNATURE_TYPE": "http"
+    },
+    "codebase": "default",
+    "runServiceId": "autodeploy",
+    "cpu": 1,
+    "securityLevel": "SECURE_ALWAYS",
+    "targetedByOnly": false,
+    "hash": "b51ce1400181d363679a7e5d64a17026c87c00c8"
+  },
+  "op": "update",
+  "original": {
+    "name": "FirebaseError",
+    "children": [],
+    "exit": 1,
+    "message": "Build failed with status: FAILURE and message: npm error code EUSAGE\nnpm error\nnpm error `npm ci` can only install packages when your package.json and package-lock.json or npm-shrinkwrap.json are in sync. Please update your lock file with `npm install` before continuing.\nnpm error\nnpm error Missing: @vitejs/plugin-react@4.5.1 from lock file\nnpm error Missing: @babel/plugin-transform-react-jsx-self@7.27.1 from lock file\nnpm error Missing: @babel/plugin-transform-react-jsx-source@7.27.1 from lock file\nnpm error Missing: @rolldown/pluginutils@1.0.0-beta.9 from lock file\nnpm error Missing: react-refresh@0.17.0 from lock file\nnpm error\nnpm error Clean install a project\nnpm error\nnpm error Usage:\nnpm error npm ci\nnpm error\nnpm error Options:\nnpm error [--install-strategy <hoisted|nested|shallow|linked>] [--legacy-bundling]\nnpm error [--global-style] [--omit <dev|optional|peer> [--omit <dev|optional|peer> ...]]\nnpm error [--include <prod|dev|optional|peer> [--include <prod|dev|optional|peer> ...]]\nnpm error [--strict-peer-deps] [--foreground-scripts] [--ignore-scripts] [--no-audit]\nnpm error [--no-bin-links] [--no-fund] [--dry-run]\nnpm error [-w|--workspace <workspace-name> [-w|--workspace <workspace-name> ...]]\nnpm error [-ws|--workspaces] [--include-workspace-root] [--install-links]\nnpm error\nnpm error aliases: clean-install, ic, install-clean, isntall-clean\nnpm error\nnpm error Run \"npm help ci\" for more info\nnpm error A complete log of this run can be found in: /www-data-home/.npm/_logs/2025-06-06T19_25_30_082Z-debug-0.log. For more details see the logs at https://console.cloud.google.com/cloud-build/builds;region=us-central1/79d6cf9c-5616-4c06-a08e-aea481604b20?project=237790668185.",
+    "original": {
+      "code": 3,
+      "message": "Build failed with status: FAILURE and message: npm error code EUSAGE\nnpm error\nnpm error `npm ci` can only install packages when your package.json and package-lock.json or npm-shrinkwrap.json are in sync. Please update your lock file with `npm install` before continuing.\nnpm error\nnpm error Missing: @vitejs/plugin-react@4.5.1 from lock file\nnpm error Missing: @babel/plugin-transform-react-jsx-self@7.27.1 from lock file\nnpm error Missing: @babel/plugin-transform-react-jsx-source@7.27.1 from lock file\nnpm error Missing: @rolldown/pluginutils@1.0.0-beta.9 from lock file\nnpm error Missing: react-refresh@0.17.0 from lock file\nnpm error\nnpm error Clean install a project\nnpm error\nnpm error Usage:\nnpm error npm ci\nnpm error\nnpm error Options:\nnpm error [--install-strategy <hoisted|nested|shallow|linked>] [--legacy-bundling]\nnpm error [--global-style] [--omit <dev|optional|peer> [--omit <dev|optional|peer> ...]]\nnpm error [--include <prod|dev|optional|peer> [--include <prod|dev|optional|peer> ...]]\nnpm error [--strict-peer-deps] [--foreground-scripts] [--ignore-scripts] [--no-audit]\nnpm error [--no-bin-links] [--no-fund] [--dry-run]\nnpm error [-w|--workspace <workspace-name> [-w|--workspace <workspace-name> ...]]\nnpm error [-ws|--workspaces] [--include-workspace-root] [--install-links]\nnpm error\nnpm error aliases: clean-install, ic, install-clean, isntall-clean\nnpm error\nnpm error Run \"npm help ci\" for more info\nnpm error A complete log of this run can be found in: /www-data-home/.npm/_logs/2025-06-06T19_25_30_082Z-debug-0.log. For more details see the logs at https://console.cloud.google.com/cloud-build/builds;region=us-central1/79d6cf9c-5616-4c06-a08e-aea481604b20?project=237790668185."
+    },
+    "status": 3,
+    "code": 3
+  }
+}
+[debug] [2025-06-06T19:25:54.488Z] Error: Failed to update function autoDeploy in region us-central1
+    at C:\Users\김예성\AppData\Roaming\npm\node_modules\firebase-tools\lib\deploy\functions\release\fabricator.js:399:19
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async Fabricator.updateV2Function (C:\Users\김예성\AppData\Roaming\npm\node_modules\firebase-tools\lib\deploy\functions\release\fabricator.js:388:32)
+    at async Fabricator.updateEndpoint (C:\Users\김예성\AppData\Roaming\npm\node_modules\firebase-tools\lib\deploy\functions\release\fabricator.js:155:13)
+    at async handle (C:\Users\김예성\AppData\Roaming\npm\node_modules\firebase-tools\lib\deploy\functions\release\fabricator.js:89:17)
+[error] 
+[error] Error: There was an error deploying functions

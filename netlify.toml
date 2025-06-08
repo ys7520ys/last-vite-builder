@@ -1,5 +1,5 @@
 [build]
-base = "vite-template"
+base = "functions/vite-template"
 command = "npm run build"
 publish = "dist"
 

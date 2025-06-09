@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
-import TpHeader02 from "./components/TpHeader02";
-import TpBanner04 from "./components/TpBanner04";
+import TpHeader02 from "./components/TpHeader/TpHeader02";
+import TpBanner04 from "./components/TpBanner/TpBanner04";
 import AnimatedPage from "./components/AnimatedPage";
 
 // ✅ 등록된 컴포넌트 매핑

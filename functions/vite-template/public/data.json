@@ -1,17 +1,18 @@
 {
-  "shopName": "코딱지 마켓",
-  "description": "코딱지님이 만든 자동 판매 사이트입니다.",
-  "bannerImage": "/banner.jpg",
-  "products": [
+  "domain": "idh.droppy.kr",
+  "headerType": "헤더02",
+  "menuItems": [
+    { "id": 1, "label": "홈", "link": "/preview?page=0" }
+  ],
+  "pages": [
     {
-      "name": "멋진 코딱지 티셔츠",
-      "image": "/shirt.jpg",
-      "price": 19900
-    },
-    {
-      "name": "편한 코딱지 바지",
-      "image": "/pants.jpg",
-      "price": 25900
+      "components": [
+        { "id": 1234567890, "type": "배너04", "title": "Welcome", "subtitle": "어서오세요" }
+      ]
     }
-  ]
+  ],
+  "user": {
+    "email": "ys7520y@naver.com",
+    "name": "김예성"
+  }
 }

@@ -11,6 +11,7 @@
   "dependencies": {
     "@vitejs/plugin-react": "^4.5.1",
     "framer-motion": "^12.16.0",
+    "gsap": "^3.13.0",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
     "react-refresh": "^0.17.0",

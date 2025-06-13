@@ -1,0 +1,78 @@
+.tpSection04 {
+  box-sizing: border-box;
+  width: 100%;
+  padding: 0px 40px;
+
+  &__titleArea {
+    text-align: center;
+    padding: clamp(20px, 4vw, 60px) 0;
+
+    .titleText {
+      font-size: clamp(24px, 5vw, 48px);
+      font-weight: 700;
+      line-height: 1.2;
+      color: white;
+      word-break: keep-all;
+      margin-bottom: clamp(12px, 2vw, 20px);
+    }
+
+    .subTitleText {
+      font-size: clamp(14px, 3.5vw, 20px);
+      font-weight: 400;
+      line-height: 1.6;
+      color: #bbbbbb;
+      word-break: keep-all;
+    }
+  }
+
+  &__container {
+    margin: auto;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: clamp(16px, 2vw, 30px);
+    padding-top: 40px;
+
+    @media (max-width: 1024px) {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    @media (max-width: 600px) {
+      grid-template-columns: 1fr;
+    }
+
+    .box {
+      width: 100%;
+      margin-bottom: clamp(20px, 4vw, 60px);
+
+      &__img {
+        width: 100%;
+        height: clamp(270px, 30vw, 350px);
+        border-radius: 10px;
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: cover;
+        background-color: #333333;
+        transition: scale 0.3s ease;
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+      }
+
+      &__title {
+        padding: 0px 10px;
+        margin-top: 1.2rem;
+        font-size: clamp(18px, 2.5vw, 24px);
+        font-weight: 600;
+        color: white;
+      }
+
+      &__subTitle {
+        padding: 0px 10px;
+        margin-top: 1rem;
+        font-size: clamp(14px, 2vw, 16px);
+        font-weight: 400;
+        line-height: 140%;
+        letter-spacing: -0.03px;
+        color: #cccccc;
+      }
+    }
+  }
+}

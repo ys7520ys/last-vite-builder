@@ -2,12 +2,203 @@
   "domain": "idh.droppy.kr",
   "headerType": "헤더02",
   "menuItems": [
-    { "id": 1, "label": "홈", "link": "/preview?page=0" }
+    { "id": 1, "label": "홈", "link": "/preview?page=0" },
+    { "id": 2, "label": "서비스", "link": "/preview?page=1" },
+    { "id": 3, "label": "문의하기", "link": "/preview?page=2" }
   ],
   "pages": [
     {
       "components": [
-        { "id": 1234567890, "type": "배너04", "title": "Welcome", "subtitle": "어서오세요" }
+        {
+          "id": 101,
+          "type": "배너04",
+          "title": "TOSS와 함께 시작하세요",
+          "subtitle": "어서오세요",
+          "mediaUrl": "/assets/1390942-hd_2048_1080_24fps.mp4",
+          "mediaType": "video"
+        },
+        {
+          "id": 107,
+          "type": "섹션04",
+          "titleText": "추천 상품",
+          "subTitleText": "많이 찾는 인기 아이템이에요",
+          "boxes": [
+            {
+              "title": "무선 이어폰",
+              "subtitle": "₩129,000",
+              "imageClass": "/assets/ssd위치.png"
+            },
+                      {
+              "title": "무선 이어폰",
+              "subtitle": "₩129,000",
+              "imageClass": "/assets/ssd위치.png"
+            },
+                      {
+              "title": "무선 이어폰",
+              "subtitle": "₩129,000",
+              "imageClass": "/assets/ssd위치.png"
+            },
+                      {
+              "title": "무선 이어폰",
+              "subtitle": "₩129,000",
+              "imageClass": "/assets/ssd위치.png"
+            },
+                      {
+              "title": "무선 이어폰",
+              "subtitle": "₩129,000",
+              "imageClass": "/assets/ssd위치.png"
+            },
+                      {
+              "title": "무선 이어폰",
+              "subtitle": "₩129,000",
+              "imageClass": "/assets/ssd위치.png"
+            }
+          ]
+        },
+        {
+          "id": 201,
+          "type": "섹션02",
+          "titleText": "건강한 한끼를 위해서\n제대로된 식사를 제공합니다.",
+          "align": "center",
+          "boxes": [
+            {
+              "num": "01",
+              "title": "식사에 진심인\n사람들을 위해",
+              "description1": "빠르게 끝내는 식사가 아닌, 영양과 균형을 생각한 식사입니다.",
+              "description2": "진짜 식사는 준비부터 다릅니다."
+            },
+            {
+              "num": "02",
+              "title": "매일 반복되는 식사,\n지루하지 않게",
+              "description1": "다양한 식단으로 식사의 즐거움을 더합니다.",
+              "description2": "매일 다른 메뉴, 매일 새로운 활력."
+            },
+            {
+              "num": "03",
+              "title": "편리함과 건강,\n두 마리 토끼를 동시에",
+              "description1": "간편함을 원해도 건강은 포기금지.",
+              "description2": "집에서도, 사무실에서도 완벽한 한 끼."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "components": [
+        {
+          "id": 103,
+          "type": "배너04",
+          "title": "서비스 영상 소개",
+          "subtitle": "저희의 서비스를 영상으로 만나보세요",
+          "mediaUrl": "/assets/1390942-hd_2048_1080_24fps.mp4",
+          "mediaType": "video"
+        },
+        {
+          "id": 104,
+          "type": "배너04",
+          "title": "서비스 이미지 소개",
+          "subtitle": "한 눈에 보는 서비스 요약",
+          "mediaUrl": "/assets/ssd위치.png",
+          "mediaType": "image"
+        },
+        {
+          "id": 108,
+          "type": "섹션04",
+          "titleText": "주요 서비스",
+          "subTitleText": "고객님이 자주 이용하는 기능",
+          "boxes": [
+            {
+              "title": "온라인 송금",
+              "subtitle": "빠르고 안전하게",
+              "imageClass": "/assets/ssd위치.png"
+            }
+          ]
+        },
+        {
+          "id": 202,
+          "type": "섹션02",
+          "titleText": "매일 새롭게, 즐거운 식사시간",
+          "align": "center",
+          "boxes": [
+            {
+              "num": "01",
+              "title": "다양한 메뉴 제공",
+              "description1": "매일 다른 구성으로 식사의 재미를 더합니다.",
+              "description2": "오늘은 어떤 맛일까요?"
+            },
+            {
+              "num": "02",
+              "title": "영양까지 챙긴 구성",
+              "description1": "단백질, 비타민 등 필수 영양소까지 고려한 식단.",
+              "description2": "몸이 가벼워지는 느낌을 경험하세요."
+            },
+            {
+              "num": "03",
+              "title": "누구나 쉽게 이용",
+              "description1": "간편하게 주문하고 받는 건강식.",
+              "description2": "회사에서도 집에서도 편하게!"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "components": [
+        {
+          "id": 105,
+          "type": "배너04",
+          "title": "문의하기 영상",
+          "subtitle": "영상으로 안내드려요",
+          "mediaUrl": "/assets/1390942-hd_2048_1080_24fps.mp4",
+          "mediaType": "video"
+        },
+        {
+          "id": 106,
+          "type": "배너04",
+          "title": "문의 이미지",
+          "subtitle": "간단히 확인하세요",
+          "mediaUrl": "/assets/ssd위치.png",
+          "mediaType": "image"
+        },
+        {
+          "id": 109,
+          "type": "섹션04",
+          "titleText": "자주 묻는 질문",
+          "subTitleText": "문의 전 빠르게 확인해보세요",
+          "boxes": [
+            {
+              "title": "결제 오류 해결 방법",
+              "subtitle": "3단계로 쉽게 해결",
+              "imageClass": "/assets/ssd위치.png"
+            }
+          ]
+        },
+        {
+          "id": 203,
+          "type": "섹션02",
+          "titleText": "편리하게 문의하는 방법",
+          "align": "center",
+          "boxes": [
+            {
+              "num": "01",
+              "title": "FAQ 먼저 확인",
+              "description1": "자주 묻는 질문으로 빠르게 해결하세요.",
+              "description2": "문의 전 꼭 확인!"
+            },
+            {
+              "num": "02",
+              "title": "1:1 문의 가능",
+              "description1": "개별 문의를 통해 빠른 답변을 받아보세요.",
+              "description2": "담당자가 직접 응대합니다."
+            },
+            {
+              "num": "03",
+              "title": "간단한 양식",
+              "description1": "복잡한 절차 없이 쉽게 작성 가능합니다.",
+              "description2": "간결하게 문의하고 빠르게 해결받기"
+            }
+          ]
+        }
       ]
     }
   ],

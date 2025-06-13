@@ -3561,7 +3561,503 @@
 
 
 
-//public data.json의 값을 기존의 firbase의 값과 동일하게 구성함
+// //public data.json의 값을 기존의 firbase의 값과 동일하게 구성함
+// const { onRequest } = require("firebase-functions/v2/https");
+// const { defineSecret } = require("firebase-functions/params");
+// const logger = require("firebase-functions/logger");
+// const { initializeApp, applicationDefault } = require("firebase-admin/app");
+// const { getFirestore } = require("firebase-admin/firestore");
+// const fs = require("fs");
+// const fsExtra = require("fs-extra");
+// const path = require("path");
+// const fetch = require("node-fetch");
+// const archiver = require("archiver");
+// const { spawnSync } = require("child_process");
+// const os = require("os");
+
+// const NETLIFY_TOKEN = defineSecret("NETLIFY_TOKEN");
+
+// initializeApp({ credential: applicationDefault() });
+// const db = getFirestore();
+
+// const SITE_ID = "bf15094f-14af-4c5d-abac-9842bba9bb3a"; // 수정 필요 시 여기에
+
+// exports.autoDeploy = onRequest(
+//   {
+//     cors: true,
+//     secrets: [NETLIFY_TOKEN],
+//     memory: "512Mi",
+//   },
+//   async (req, res) => {
+//     try {
+//       const body = typeof req.body === "string" ? JSON.parse(req.body) : req.body;
+//       const { domain, orderId } = body;
+
+//       if (!domain || !orderId) {
+//         return res.status(400).json({ message: "❗ domain 또는 orderId 누락됨" });
+//       }
+
+//       logger.info(`📦 주문 도메인: ${domain}, 주문 ID: ${orderId}`);
+
+//       // 🔍 orderId 기준 Firestore 조회
+//       const orderDoc = await db.collection("orders").doc(orderId).get();
+//       if (!orderDoc.exists) {
+//         return res.status(404).json({ message: "❌ 해당 orderId의 주문 정보 없음" });
+//       }
+//       const orderData = orderDoc.data();
+
+//       // 🔧 경로 설정
+//       const TEMPLATE_SRC = path.join(__dirname, "vite-template");
+//       const TEMP_DIR = path.join(os.tmpdir(), `template-${orderId}`);
+//       fsExtra.copySync(TEMPLATE_SRC, TEMP_DIR);
+
+//       const PUBLIC_DIR = path.join(TEMP_DIR, "public");
+//       const DIST_DIR = path.join(TEMP_DIR, "dist");
+//       fsExtra.ensureDirSync(PUBLIC_DIR);
+
+//       // ✅ data.json 생성
+//       fs.writeFileSync(path.join(PUBLIC_DIR, "data.json"), JSON.stringify(orderData, null, 2), "utf-8");
+//       logger.info("✅ data.json 저장 완료");
+
+//       // ✅ _redirects 생성
+//       fs.writeFileSync(path.join(PUBLIC_DIR, "_redirects"), "/*    /index.html   200\n", "utf-8");
+//       logger.info("✅ _redirects 파일 저장 완료");
+
+//       // 📦 의존성 설치
+//       logger.info("📦 npm install 실행...");
+//       const install = spawnSync("npm", ["install"], {
+//         cwd: TEMP_DIR,
+//         stdio: "inherit",
+//         shell: true,
+//       });
+//       if (install.status !== 0) {
+//         return res.status(500).json({ message: "❌ npm install 실패" });
+//       }
+
+//       // 🛠️ Vite 빌드
+//       logger.info("🛠️ vite build 실행...");
+//       const build = spawnSync("npm", ["run", "build"], {
+//         cwd: TEMP_DIR,
+//         stdio: "inherit",
+//         shell: true,
+//       });
+//       if (build.status !== 0) {
+//         return res.status(500).json({ message: "❌ Vite 빌드 실패" });
+//       }
+
+//       // 📦 ZIP 압축
+//       const zipPath = path.join(os.tmpdir(), `${orderId}.zip`);
+//       const output = fs.createWriteStream(zipPath);
+//       const archive = archiver("zip", { zlib: { level: 9 } });
+
+//       archive.pipe(output);
+//       archive.directory(DIST_DIR, false);
+//       await new Promise((resolve, reject) => {
+//         output.on("close", resolve);
+//         output.on("error", reject);
+//         archive.finalize();
+//       });
+
+//       logger.info(`📦 ZIP 압축 완료 → ${zipPath}`);
+
+//       // 🌐 Netlify 도메인 등록
+//       logger.info(`🌐 Netlify 도메인 등록 중: ${domain}`);
+//       await fetch(`https://api.netlify.com/api/v1/sites/${SITE_ID}/domains`, {
+//         method: "POST",
+//         headers: {
+//           Authorization: `Bearer ${NETLIFY_TOKEN.value()}`,
+//           "Content-Type": "application/json",
+//         },
+//         body: JSON.stringify({ name: domain }),
+//       });
+//       logger.info("✅ 도메인 등록 완료");
+
+//       // 🚀 Netlify 배포
+//       logger.info("🚀 Netlify에 배포 중...");
+//       const zipBuffer = fs.readFileSync(zipPath);
+//       const deployRes = await fetch(`https://api.netlify.com/api/v1/sites/${SITE_ID}/deploys`, {
+//         method: "POST",
+//         headers: {
+//           Authorization: `Bearer ${NETLIFY_TOKEN.value()}`,
+//           "Content-Type": "application/zip",
+//         },
+//         body: zipBuffer,
+//       });
+
+//       const deployJson = await deployRes.json();
+//       if (!deployRes.ok) {
+//         logger.error("❌ Netlify 배포 실패:", deployJson);
+//         console.error("❌ Netlify 배포 실패:", deployJson);
+//         return res.status(500).json({ message: "Netlify 배포 실패", detail: deployJson });
+//       }
+
+//       logger.info(`✅ Netlify 배포 완료: ${deployJson.deploy_ssl_url}`);
+
+//       // 🔗 도메인 연결 (aliases)
+//       logger.info(`🔗 Netlify 사이트에 도메인 연결 중 (aliases 사용): ${domain}`);
+//       const aliasRes = await fetch(`https://api.netlify.com/api/v1/sites/${SITE_ID}`, {
+//         method: "PATCH",
+//         headers: {
+//           Authorization: `Bearer ${NETLIFY_TOKEN.value()}`,
+//           "Content-Type": "application/json",
+//         },
+//         body: JSON.stringify({ aliases: [domain] }),
+//       });
+
+//       if (!aliasRes.ok) {
+//         const aliasErr = await aliasRes.json();
+//         logger.error("❌ 도메인 연결 실패:", aliasErr);
+//         return res.status(500).json({ message: "도메인 연결 실패", detail: aliasErr });
+//       }
+
+//       logger.info("✅ Netlify 사이트에 도메인 연결 완료");
+
+//       // 🧹 zip 파일 삭제
+//       fs.unlinkSync(zipPath);
+//       logger.info("🧹 ZIP 파일 삭제 완료");
+
+//       return res.status(200).json({
+//         message: "🎉 배포 성공!",
+//         previewUrl: deployJson.deploy_ssl_url,
+//         customerUrl: `https://${domain}`,
+//       });
+//     } catch (err) {
+//       logger.error("🔥 오류 발생:", err.stack || err);
+//       console.error("🔥 오류 발생:", err.stack || err);
+//       return res.status(500).json({ message: "서버 오류", error: err.message });
+//     }
+//   }
+// );
+
+
+
+
+
+
+
+
+
+// 수동으로 동작하던 시절절
+// const { onRequest } = require("firebase-functions/v2/https");
+// const { defineSecret } = require("firebase-functions/params");
+// const logger = require("firebase-functions/logger");
+// const { initializeApp, applicationDefault } = require("firebase-admin/app");
+// const { getFirestore } = require("firebase-admin/firestore");
+// const fs = require("fs");
+// const fsExtra = require("fs-extra");
+// const path = require("path");
+// const fetch = require("node-fetch");
+// const archiver = require("archiver");
+// const { spawnSync } = require("child_process");
+// const os = require("os");
+// require("dotenv").config(); // ✅ .env 로컬용 불러오기
+
+// const NETLIFY_TOKEN = defineSecret("NETLIFY_TOKEN");
+
+// initializeApp({ credential: applicationDefault() });
+// const db = getFirestore();
+
+// const SITE_ID = "bf15094f-14af-4c5d-abac-9842bba9bb3a";
+
+// exports.autoDeploy = onRequest(
+//   {
+//     cors: true,
+//     secrets: [NETLIFY_TOKEN],
+//     memory: "512Mi",
+//   },
+//   async (req, res) => {
+//     try {
+//       const body = typeof req.body === "string" ? JSON.parse(req.body) : req.body;
+//       const { domain, orderId } = body;
+
+//       if (!domain || !orderId) {
+//         return res.status(400).json({ message: "❗ domain 또는 orderId 누락됨" });
+//       }
+
+//       logger.info(`📦 주문 도메인: ${domain}, 주문 ID: ${orderId}`);
+
+//       // ✅ 토큰 불러오기 (Cloud 또는 로컬)
+//       const token = NETLIFY_TOKEN.value?.() || process.env.NETLIFY_TOKEN;
+//       if (!token) throw new Error("❌ NETLIFY_TOKEN 누락됨");
+
+//       const orderDoc = await db.collection("orders").doc(orderId).get();
+//       if (!orderDoc.exists) {
+//         return res.status(404).json({ message: "❌ 해당 orderId의 주문 정보 없음" });
+//       }
+//       const orderData = orderDoc.data();
+
+//       const TEMPLATE_SRC = path.join(__dirname, "vite-template");
+//       const TEMP_DIR = path.join(os.tmpdir(), `template-${orderId}`);
+//       fsExtra.copySync(TEMPLATE_SRC, TEMP_DIR);
+
+//       const PUBLIC_DIR = path.join(TEMP_DIR, "public");
+//       const DIST_DIR = path.join(TEMP_DIR, "dist");
+//       fsExtra.ensureDirSync(PUBLIC_DIR);
+
+//       fs.writeFileSync(path.join(PUBLIC_DIR, "data.json"), JSON.stringify(orderData, null, 2), "utf-8");
+//       fs.writeFileSync(path.join(PUBLIC_DIR, "_redirects"), "/*    /index.html   200\n", "utf-8");
+
+//       logger.info("📦 npm install 실행...");
+//       const install = spawnSync("npm", ["install"], {
+//         cwd: TEMP_DIR,
+//         stdio: "inherit",
+//         shell: true,
+//       });
+//       if (install.status !== 0) {
+//         return res.status(500).json({ message: "❌ npm install 실패" });
+//       }
+
+//       logger.info("🛠️ vite build 실행...");
+//       const build = spawnSync("npm", ["run", "build"], {
+//         cwd: TEMP_DIR,
+//         stdio: "inherit",
+//         shell: true,
+//       });
+//       if (build.status !== 0) {
+//         return res.status(500).json({ message: "❌ Vite 빌드 실패" });
+//       }
+
+//       const zipPath = path.join(os.tmpdir(), `${orderId}.zip`);
+//       const output = fs.createWriteStream(zipPath);
+//       const archive = archiver("zip", { zlib: { level: 9 } });
+
+//       archive.pipe(output);
+//       archive.directory(DIST_DIR, false);
+//       await new Promise((resolve, reject) => {
+//         output.on("close", resolve);
+//         output.on("error", reject);
+//         archive.finalize();
+//       });
+
+//       logger.info(`📦 ZIP 압축 완료 → ${zipPath}`);
+
+//       logger.info(`🌐 Netlify 도메인 등록 중: ${domain}`);
+//       await fetch(`https://api.netlify.com/api/v1/sites/${SITE_ID}/domains`, {
+//         method: "POST",
+//         headers: {
+//           Authorization: `Bearer ${token}`,
+//           "Content-Type": "application/json",
+//         },
+//         body: JSON.stringify({ name: domain }),
+//       });
+
+//       logger.info("✅ 도메인 등록 완료");
+
+//       logger.info("🚀 Netlify에 배포 중...");
+//       const zipBuffer = fs.readFileSync(zipPath);
+//       const deployRes = await fetch(`https://api.netlify.com/api/v1/sites/${SITE_ID}/deploys`, {
+//         method: "POST",
+//         headers: {
+//           Authorization: `Bearer ${token}`,
+//           "Content-Type": "application/zip",
+//         },
+//         body: zipBuffer,
+//       });
+
+//       const deployJson = await deployRes.json();
+//       if (!deployRes.ok) {
+//         logger.error("❌ Netlify 배포 실패:", deployJson);
+//         return res.status(500).json({ message: "Netlify 배포 실패", detail: deployJson });
+//       }
+
+//       logger.info(`✅ Netlify 배포 완료: ${deployJson.deploy_ssl_url}`);
+
+//       logger.info(`🔗 Netlify 사이트에 도메인 연결 중 (aliases 사용): ${domain}`);
+//       const aliasRes = await fetch(`https://api.netlify.com/api/v1/sites/${SITE_ID}`, {
+//         method: "PATCH",
+//         headers: {
+//           Authorization: `Bearer ${token}`,
+//           "Content-Type": "application/json",
+//         },
+//         body: JSON.stringify({ aliases: [domain] }),
+//       });
+
+//       if (!aliasRes.ok) {
+//         const aliasErr = await aliasRes.json();
+//         logger.error("❌ 도메인 연결 실패:", aliasErr);
+//         return res.status(500).json({ message: "도메인 연결 실패", detail: aliasErr });
+//       }
+
+//       logger.info("✅ Netlify 사이트에 도메인 연결 완료");
+
+//       fs.unlinkSync(zipPath);
+//       logger.info("🧹 ZIP 파일 삭제 완료");
+
+//       return res.status(200).json({
+//         message: "🎉 배포 성공!",
+//         previewUrl: deployJson.deploy_ssl_url,
+//         customerUrl: `https://${domain}`,
+//       });
+//     } catch (err) {
+//       logger.error("🔥 오류 발생:", err.stack || err);
+//       return res.status(500).json({ message: "서버 오류", error: err.message });
+//     }
+//   }
+// );
+
+
+
+
+// 완전히 성공하였지만 겹쳐서 포기기
+// const { onRequest } = require("firebase-functions/v2/https");
+// const { defineSecret } = require("firebase-functions/params");
+// const logger = require("firebase-functions/logger");
+// const { initializeApp, applicationDefault } = require("firebase-admin/app");
+// const { getFirestore } = require("firebase-admin/firestore");
+// const fs = require("fs");
+// const fsExtra = require("fs-extra");
+// const path = require("path");
+// const fetch = require("node-fetch");
+// const archiver = require("archiver");
+// const { spawnSync } = require("child_process");
+// const os = require("os");
+// require("dotenv").config();
+
+// const NETLIFY_TOKEN = defineSecret("NETLIFY_TOKEN");
+// initializeApp({ credential: applicationDefault() });
+// const db = getFirestore();
+
+// const SITE_ID = "bf15094f-14af-4c5d-abac-9842bba9bb3a";
+
+// exports.autoDeploy = onRequest(
+//   {
+//     cors: true,
+//     secrets: [NETLIFY_TOKEN],
+//     memory: "512Mi",
+//   },
+//   async (req, res) => {
+//     try {
+//       const body = typeof req.body === "string" ? JSON.parse(req.body) : req.body;
+//       const { domain, orderId } = body;
+
+//       if (!domain || !orderId) {
+//         return res.status(400).json({ message: "❗ domain 또는 orderId 누락됨" });
+//       }
+
+//       logger.info(`📦 주문 도메인: ${domain}, 주문 ID: ${orderId}`);
+
+//       const token = NETLIFY_TOKEN.value?.() || process.env.NETLIFY_TOKEN;
+//       if (!token) throw new Error("❌ NETLIFY_TOKEN 누락됨");
+
+//       const orderDoc = await db.collection("orders").doc(orderId).get();
+//       if (!orderDoc.exists) {
+//         return res.status(404).json({ message: "❌ 해당 orderId의 주문 정보 없음" });
+//       }
+
+//       const orderData = orderDoc.data();
+
+//       const TEMPLATE_SRC = path.join(__dirname, "vite-template");
+//       const TEMP_DIR = path.join(os.tmpdir(), `template-${orderId}`);
+//       fsExtra.copySync(TEMPLATE_SRC, TEMP_DIR);
+
+//       const PUBLIC_DIR = path.join(TEMP_DIR, "public");
+//       const DIST_DIR = path.join(TEMP_DIR, "dist");
+//       fsExtra.ensureDirSync(PUBLIC_DIR);
+
+//       fs.writeFileSync(path.join(PUBLIC_DIR, "data.json"), JSON.stringify(orderData, null, 2), "utf-8");
+//       fs.writeFileSync(path.join(PUBLIC_DIR, "_redirects"), "/*    /index.html   200\n", "utf-8");
+
+//       logger.info("📦 npm install 실행...");
+//       const install = spawnSync("npm", ["install"], {
+//         cwd: TEMP_DIR,
+//         stdio: "inherit",
+//         shell: true,
+//       });
+//       if (install.status !== 0) {
+//         return res.status(500).json({ message: "❌ npm install 실패" });
+//       }
+
+//       logger.info("🛠️ vite build 실행...");
+//       const build = spawnSync("npm", ["run", "build"], {
+//         cwd: TEMP_DIR,
+//         stdio: "inherit",
+//         shell: true,
+//       });
+//       if (build.status !== 0) {
+//         return res.status(500).json({ message: "❌ Vite 빌드 실패" });
+//       }
+
+//       const zipPath = path.join(os.tmpdir(), `${orderId}.zip`);
+//       const output = fs.createWriteStream(zipPath);
+//       const archive = archiver("zip", { zlib: { level: 9 } });
+
+//       archive.pipe(output);
+//       archive.directory(DIST_DIR, false);
+//       await new Promise((resolve, reject) => {
+//         output.on("close", resolve);
+//         output.on("error", reject);
+//         archive.finalize();
+//       });
+
+//       logger.info(`📦 ZIP 압축 완료 → ${zipPath}`);
+
+//       logger.info("🚀 Netlify에 배포 중...");
+//       const zipBuffer = fs.readFileSync(zipPath);
+//       const deployRes = await fetch(`https://api.netlify.com/api/v1/sites/${SITE_ID}/deploys`, {
+//         method: "POST",
+//         headers: {
+//           Authorization: `Bearer ${token}`,
+//           "Content-Type": "application/zip",
+//         },
+//         body: zipBuffer,
+//       });
+
+//       const deployJson = await deployRes.json();
+//       if (!deployRes.ok) {
+//         logger.error("❌ Netlify 배포 실패:", deployJson);
+//         return res.status(500).json({ message: "Netlify 배포 실패", detail: deployJson });
+//       }
+
+//       logger.info(`✅ Netlify 배포 완료: ${deployJson.deploy_ssl_url}`);
+
+//       // ✅ Netlify 도메인 연결 (PATCH 방식)
+//       logger.info(`🔗 Netlify 사이트에 도메인 연결 중 (PATCH 방식): ${domain}`);
+//       const aliasRes = await fetch(`https://api.netlify.com/api/v1/sites/${SITE_ID}`, {
+//         method: "PATCH",
+//         headers: {
+//           Authorization: `Bearer ${token}`,
+//           "Content-Type": "application/json",
+//         },
+//         body: JSON.stringify({
+//           custom_domain: domain,
+//           aliases: [domain],
+//           domain_aliases: [domain],
+//         }),
+//       });
+
+//       if (!aliasRes.ok) {
+//         const aliasErr = await aliasRes.json();
+//         logger.error("❌ 도메인 연결 실패:", aliasErr);
+//         return res.status(500).json({ message: "도메인 연결 실패", detail: aliasErr });
+//       }
+
+//       logger.info("✅ Netlify 사이트에 도메인 연결 완료");
+
+//       fs.unlinkSync(zipPath);
+//       logger.info("🧹 ZIP 파일 삭제 완료");
+
+//       return res.status(200).json({
+//         message: "🎉 배포 성공!",
+//         previewUrl: deployJson.deploy_ssl_url,
+//         customerUrl: `https://${domain}`,
+//       });
+//     } catch (err) {
+//       logger.error("🔥 오류 발생:", err.stack || err);
+//       return res.status(500).json({ message: "서버 오류", error: err.message });
+//     }
+//   }
+// );
+
+
+
+
+
+
+
+
+
+
+
 const { onRequest } = require("firebase-functions/v2/https");
 const { defineSecret } = require("firebase-functions/params");
 const logger = require("firebase-functions/logger");
@@ -3574,13 +4070,11 @@ const fetch = require("node-fetch");
 const archiver = require("archiver");
 const { spawnSync } = require("child_process");
 const os = require("os");
+require("dotenv").config();
 
 const NETLIFY_TOKEN = defineSecret("NETLIFY_TOKEN");
-
 initializeApp({ credential: applicationDefault() });
 const db = getFirestore();
-
-const SITE_ID = "bf15094f-14af-4c5d-abac-9842bba9bb3a"; // 수정 필요 시 여기에
 
 exports.autoDeploy = onRequest(
   {
@@ -3599,14 +4093,16 @@ exports.autoDeploy = onRequest(
 
       logger.info(`📦 주문 도메인: ${domain}, 주문 ID: ${orderId}`);
 
-      // 🔍 orderId 기준 Firestore 조회
+      const token = NETLIFY_TOKEN.value?.() || process.env.NETLIFY_TOKEN;
+      if (!token) throw new Error("❌ NETLIFY_TOKEN 누락됨");
+
       const orderDoc = await db.collection("orders").doc(orderId).get();
       if (!orderDoc.exists) {
         return res.status(404).json({ message: "❌ 해당 orderId의 주문 정보 없음" });
       }
+
       const orderData = orderDoc.data();
 
-      // 🔧 경로 설정
       const TEMPLATE_SRC = path.join(__dirname, "vite-template");
       const TEMP_DIR = path.join(os.tmpdir(), `template-${orderId}`);
       fsExtra.copySync(TEMPLATE_SRC, TEMP_DIR);
@@ -3615,15 +4111,9 @@ exports.autoDeploy = onRequest(
       const DIST_DIR = path.join(TEMP_DIR, "dist");
       fsExtra.ensureDirSync(PUBLIC_DIR);
 
-      // ✅ data.json 생성
       fs.writeFileSync(path.join(PUBLIC_DIR, "data.json"), JSON.stringify(orderData, null, 2), "utf-8");
-      logger.info("✅ data.json 저장 완료");
-
-      // ✅ _redirects 생성
       fs.writeFileSync(path.join(PUBLIC_DIR, "_redirects"), "/*    /index.html   200\n", "utf-8");
-      logger.info("✅ _redirects 파일 저장 완료");
 
-      // 📦 의존성 설치
       logger.info("📦 npm install 실행...");
       const install = spawnSync("npm", ["install"], {
         cwd: TEMP_DIR,
@@ -3634,7 +4124,6 @@ exports.autoDeploy = onRequest(
         return res.status(500).json({ message: "❌ npm install 실패" });
       }
 
-      // 🛠️ Vite 빌드
       logger.info("🛠️ vite build 실행...");
       const build = spawnSync("npm", ["run", "build"], {
         cwd: TEMP_DIR,
@@ -3645,7 +4134,6 @@ exports.autoDeploy = onRequest(
         return res.status(500).json({ message: "❌ Vite 빌드 실패" });
       }
 
-      // 📦 ZIP 압축
       const zipPath = path.join(os.tmpdir(), `${orderId}.zip`);
       const output = fs.createWriteStream(zipPath);
       const archive = archiver("zip", { zlib: { level: 9 } });
@@ -3660,25 +4148,35 @@ exports.autoDeploy = onRequest(
 
       logger.info(`📦 ZIP 압축 완료 → ${zipPath}`);
 
-      // 🌐 Netlify 도메인 등록
-      logger.info(`🌐 Netlify 도메인 등록 중: ${domain}`);
-      await fetch(`https://api.netlify.com/api/v1/sites/${SITE_ID}/domains`, {
+      // ✅ [1] Netlify 새 사이트 생성
+      logger.info("🆕 Netlify 새 사이트 생성 중...");
+      const siteRes = await fetch(`https://api.netlify.com/api/v1/sites`, {
         method: "POST",
         headers: {
-          Authorization: `Bearer ${NETLIFY_TOKEN.value()}`,
+          Authorization: `Bearer ${token}`,
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ name: domain }),
+        body: JSON.stringify({
+          name: `droppy-${orderId}`,
+        }),
       });
-      logger.info("✅ 도메인 등록 완료");
 
-      // 🚀 Netlify 배포
+      const siteJson = await siteRes.json();
+      if (!siteRes.ok) {
+        logger.error("❌ Netlify 사이트 생성 실패:", siteJson);
+        return res.status(500).json({ message: "Netlify 사이트 생성 실패", detail: siteJson });
+      }
+
+      const newSiteId = siteJson.id;
+      logger.info(`✅ 새 site 생성됨 → site_id: ${newSiteId}`);
+
+      // ✅ [2] 사이트에 ZIP 배포
       logger.info("🚀 Netlify에 배포 중...");
       const zipBuffer = fs.readFileSync(zipPath);
-      const deployRes = await fetch(`https://api.netlify.com/api/v1/sites/${SITE_ID}/deploys`, {
+      const deployRes = await fetch(`https://api.netlify.com/api/v1/sites/${newSiteId}/deploys`, {
         method: "POST",
         headers: {
-          Authorization: `Bearer ${NETLIFY_TOKEN.value()}`,
+          Authorization: `Bearer ${token}`,
           "Content-Type": "application/zip",
         },
         body: zipBuffer,
@@ -3687,45 +4185,44 @@ exports.autoDeploy = onRequest(
       const deployJson = await deployRes.json();
       if (!deployRes.ok) {
         logger.error("❌ Netlify 배포 실패:", deployJson);
-        console.error("❌ Netlify 배포 실패:", deployJson);
         return res.status(500).json({ message: "Netlify 배포 실패", detail: deployJson });
       }
 
       logger.info(`✅ Netlify 배포 완료: ${deployJson.deploy_ssl_url}`);
 
-      // 🔗 도메인 연결 (aliases)
-      logger.info(`🔗 Netlify 사이트에 도메인 연결 중 (aliases 사용): ${domain}`);
-      const aliasRes = await fetch(`https://api.netlify.com/api/v1/sites/${SITE_ID}`, {
+      // ✅ [3] PATCH 방식으로 도메인 연결
+      logger.info(`🔗 도메인 연결 중 (PATCH): ${domain}`);
+      const patchRes = await fetch(`https://api.netlify.com/api/v1/sites/${newSiteId}`, {
         method: "PATCH",
         headers: {
-          Authorization: `Bearer ${NETLIFY_TOKEN.value()}`,
+          Authorization: `Bearer ${token}`,
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ aliases: [domain] }),
+        body: JSON.stringify({
+          custom_domain: domain,
+          aliases: [domain],
+          domain_aliases: [domain],
+        }),
       });
-
-      if (!aliasRes.ok) {
-        const aliasErr = await aliasRes.json();
-        logger.error("❌ 도메인 연결 실패:", aliasErr);
-        return res.status(500).json({ message: "도메인 연결 실패", detail: aliasErr });
+      const patchJson = await patchRes.json();
+      if (!patchRes.ok) {
+        logger.error("❌ 도메인 연결 실패:", patchJson);
+        return res.status(500).json({ message: "도메인 연결 실패", detail: patchJson });
       }
 
-      logger.info("✅ Netlify 사이트에 도메인 연결 완료");
+      logger.info("✅ 도메인 연결 완료");
 
-      // 🧹 zip 파일 삭제
       fs.unlinkSync(zipPath);
       logger.info("🧹 ZIP 파일 삭제 완료");
 
       return res.status(200).json({
-        message: "🎉 배포 성공!",
+        message: "🎉 새 사이트 배포 성공!",
         previewUrl: deployJson.deploy_ssl_url,
         customerUrl: `https://${domain}`,
       });
     } catch (err) {
       logger.error("🔥 오류 발생:", err.stack || err);
-      console.error("🔥 오류 발생:", err.stack || err);
       return res.status(500).json({ message: "서버 오류", error: err.message });
     }
   }
 );
-

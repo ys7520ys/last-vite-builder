@@ -27,7 +27,7 @@ module.exports = defineConfig({
   plugins: [react()],
   build: {
     rollupOptions: {
-      external: ['react-router-dom'], // 🔥 요 줄 추가!
+      external: ['react-router-dom', 'react-beautiful-dnd'], // ✅ 둘 다 명시!
     },
   },
 });

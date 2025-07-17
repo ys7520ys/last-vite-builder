@@ -37,7 +37,7 @@
 "use client";
 
 import React, { useEffect, useRef } from "react";
-// import styles from "./TpSection04.module.scss";
+import styles from "./TpSection04.module.scss";
 import { gsap } from "gsap";
 import ScrollTrigger from "gsap/ScrollTrigger";
 

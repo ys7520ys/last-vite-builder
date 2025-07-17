@@ -9,10 +9,25 @@
 
 
 
+// const { defineConfig } = require('vite');
+// const react = require('@vitejs/plugin-react');
+
+// module.exports = defineConfig({
+//   base: "./", 
+//   plugins: [react()],
+// });
+
+
+
 const { defineConfig } = require('vite');
 const react = require('@vitejs/plugin-react');
 
 module.exports = defineConfig({
-  base: "./", 
+  base: "./",
   plugins: [react()],
+  build: {
+    rollupOptions: {
+      external: ['react-router-dom'], // 🔥 요 줄 추가!
+    },
+  },
 });

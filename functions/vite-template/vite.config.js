@@ -19,15 +19,26 @@
 
 
 
+// const { defineConfig } = require('vite');
+// const react = require('@vitejs/plugin-react');
+
+// module.exports = defineConfig({
+//   base: "./",
+//   plugins: [react()],
+//   build: {
+//     rollupOptions: {
+//       external: ['react-router-dom', 'react-beautiful-dnd'], // ✅ 둘 다 명시!
+//     },
+//   },
+// });
+
+
+
+
 const { defineConfig } = require('vite');
 const react = require('@vitejs/plugin-react');
 
 module.exports = defineConfig({
   base: "./",
   plugins: [react()],
-  build: {
-    rollupOptions: {
-      external: ['react-router-dom', 'react-beautiful-dnd'], // ✅ 둘 다 명시!
-    },
-  },
 });

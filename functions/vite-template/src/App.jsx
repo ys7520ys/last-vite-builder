@@ -72,9 +72,43 @@
 
 
 
-// 마지막 수정본 
+// // 마지막 수정본 
+// import { useEffect, useState } from "react";
+// import CustomerContent from "./CustomerContent";
+
+// function App() {
+//   const [data, setData] = useState(null);
+
+//   useEffect(() => {
+//     fetch("/data.json")
+//       .then((res) => res.json())
+//       .then(setData);
+//   }, []);
+
+//   if (!data) return <div>로딩 중...</div>;
+
+//   return <CustomerContent pageData={data} />;
+// }
+
+// export default App;
+
+
+
+
+
+
+
+
 import { useEffect, useState } from "react";
+import { BrowserRouter, Routes, Route, useSearchParams, Navigate } from "react-router-dom";
 import CustomerContent from "./CustomerContent";
+
+function CustomerPageWrapper({ data }) {
+  const [searchParams] = useSearchParams();
+  const pageIndex = parseInt(searchParams.get("page")) || 0;
+
+  return <CustomerContent pageData={data} currentPageIndex={pageIndex} />;
+}
 
 function App() {
   const [data, setData] = useState(null);
@@ -87,7 +121,14 @@ function App() {
 
   if (!data) return <div>로딩 중...</div>;
 
-  return <CustomerContent pageData={data} />;
+  return (
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Navigate to="/preview?page=0" />} />
+        <Route path="/preview" element={<CustomerPageWrapper data={data} />} />
+      </Routes>
+    </BrowserRouter>
+  );
 }
 
 export default App;

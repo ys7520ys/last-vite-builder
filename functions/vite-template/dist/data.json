@@ -1,0 +1,86 @@
+{
+  "domain": "idh.droppy.kr",
+  "headerType": "헤더02",
+  "logo": {
+    "text": "TOSS",
+    "fontFamily": "Noto Sans KR",
+    "fontSize": "24px",
+    "fontWeight": "700"
+  },
+  "menuItems": [
+    { "id": 1, "label": "홈", "link": "/preview?page=0" },
+    { "id": 2, "label": "서비스", "link": "/preview?page=1" },
+    { "id": 3, "label": "문의하기", "link": "/preview?page=2" }
+  ],
+  "pages": [
+    {
+      "components": [
+        {
+          "id": 101,
+          "type": "배너04",
+          "title": "TOSS와 함께 시작하세요",
+          "subtitle": "어서오세요"
+        },
+        {
+          "id": 107,
+          "type": "섹션04",
+          "titleText": "추천 상품",
+          "subTitleText": "많이 찾는 인기 아이템이에요",
+          "boxes": [
+            { "title": "무선 이어폰", "subtitle": "₩129,000" },
+            { "title": "스타일 백팩", "subtitle": "₩89,000" },
+            { "title": "스타일 백팩", "subtitle": "₩89,000" },
+            { "title": "스타일 백팩", "subtitle": "₩89,000" },
+            { "title": "스타일 백팩", "subtitle": "₩89,000" }
+          ]
+        }
+      ]
+    },
+    {
+      "components": [
+        {
+          "id": 103,
+          "type": "배너04",
+          "title": "서비스 영상 소개",
+          "subtitle": "저희의 서비스를 영상으로 만나보세요"
+        },
+        {
+          "id": 104,
+          "type": "배너04",
+          "title": "서비스 이미지 소개",
+          "subtitle": "한 눈에 보는 서비스 요약"
+        },
+        {
+          "id": 108,
+          "type": "섹션04",
+          "titleText": "주요 서비스",
+          "subTitleText": "고객님이 자주 이용하는 기능",
+          "boxes": [
+            { "title": "온라인 송금", "subtitle": "빠르고 안전하게" },
+            { "title": "카드 추천", "subtitle": "맞춤형 혜택 제공" }
+          ]
+        }
+      ]
+    },
+    {
+      "components": [
+        {
+          "id": 105,
+          "type": "배너04",
+          "title": "문의하기 영상",
+          "subtitle": "영상으로 안내드려요"
+        },
+        {
+          "id": 106,
+          "type": "배너04",
+          "title": "문의 이미지",
+          "subtitle": "간단히 확인하세요"
+        }
+      ]
+    }
+  ],
+  "user": {
+    "email": "ys7520y@naver.com",
+    "name": "김예성"
+  }
+}

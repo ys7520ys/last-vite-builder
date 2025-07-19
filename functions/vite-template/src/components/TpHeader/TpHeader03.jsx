@@ -786,7 +786,116 @@
 // export default TpHeader03;
 
 
+// import React, { useState } from "react";
+
+// // 고객 사이트용 헤더 컴포넌트
+// const TpHeader03 = ({ 
+//   menuItems = [], 
+//   pages = [],
+//   logo, 
+//   currentPageIndex = 0,
+//   setCurrentPageIndex = () => {} 
+// }) => {
+// 	const [menuOpen, setMenuOpen] = useState(false);
+
+//   // 서버에서 받은 menuItems가 없다면, pages 데이터로 기본 메뉴를 생성합니다.
+//   let displayMenuItems = menuItems;
+//   if (!menuItems || menuItems.length === 0) {
+//     displayMenuItems = pages.map((page, index) => ({
+//       id: page.id || String(index),
+//       label: page.name || `페이지 ${index + 1}`,
+//       link: `/preview?page=${index}`
+//     }));
+//   }
+
+//   // 메뉴 링크(예: "/preview?page=1")에서 페이지 번호(1)를 추출하는 함수
+//   const getIndexFromLink = (link) => {
+//     if (typeof link !== "string" || !link.includes("?page=")) return null;
+//     try {
+//       const pageStr = link.split("?page=")[1];
+//       const pageIndex = parseInt(pageStr, 10);
+//       return isNaN(pageIndex) ? null : pageIndex;
+//     } catch {
+//       return null;
+//     }
+//   };
+
+// 	return (
+// 		<header role="banner" className="tpHeader03">
+// 			<div className="tpHeader03__container">
+// 					<div className="tpHeader03__logo" style={{ fontSize: logo?.fontSize, fontWeight: logo?.fontWeight }}>
+// 						{logo?.text || "회사로고"}
+// 					</div>
+					
+// 					<div className="tpHeader03__right">
+// 						<button className="tpHeader03__support-btn">지원하기</button>
+// 						<button aria-label="메뉴 열기" className="tpHeader03__menuBtn" onClick={() => setMenuOpen(!menuOpen)}>
+// 							<ul><li/><li/><li/></ul>
+// 						</button>
+// 					</div>
+// 				</div>
+
+// 				<nav className={`tpHeader03__sideMenu ${menuOpen ? "active" : ""}`}>
+// 					<button aria-label="메뉴 닫기" className="tpHeader03__sideMenu-closeBtn" onClick={() => setMenuOpen(!menuOpen)}>×</button>
+
+//           {/* 고객 사이트에서는 항상 이 메뉴 리스트가 렌더링 됩니다. */}
+//           <ul className="sideMenu__lists">
+//             {displayMenuItems.map((item) => {
+//               const pageIndex = getIndexFromLink(item.link);
+              
+//               if (pageIndex === null) {
+//                 return <li key={item.id}><span>{item.label}</span></li>;
+//               }
+
+//               const isActive = currentPageIndex === pageIndex;
+
+//               return (
+//                 <li key={item.id}>
+//                   <button
+//                     onClick={() => {
+//                       setCurrentPageIndex(pageIndex);
+//                       setMenuOpen(false);
+//                     }}
+//                     style={{ 
+//                       background: 'none', 
+//                       border: 'none', 
+//                       color: isActive ? '#FFFFFF' : '#AAAAAA',
+//                       fontWeight: isActive ? 'bold' : 'normal',
+//                       cursor: 'pointer',
+//                       padding: '1rem',
+//                       fontSize: '1.2rem',
+//                       width: '100%',
+//                       textAlign: 'left'
+//                     }}
+//                   >
+//                     {item.label}
+//                   </button>
+//                 </li>
+//               );
+//             })}
+//           </ul>
+// 				</nav>
+// 		</header>
+// 	);
+// };
+
+// export default TpHeader03;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 import React, { useState } from "react";
+import styles from "./TpHeader03.module.scss"; // ✅ CSS 모듈 import
 
 // 고객 사이트용 헤더 컴포넌트
 const TpHeader03 = ({ 
@@ -798,7 +907,6 @@ const TpHeader03 = ({
 }) => {
 	const [menuOpen, setMenuOpen] = useState(false);
 
-  // 서버에서 받은 menuItems가 없다면, pages 데이터로 기본 메뉴를 생성합니다.
   let displayMenuItems = menuItems;
   if (!menuItems || menuItems.length === 0) {
     displayMenuItems = pages.map((page, index) => ({
@@ -808,7 +916,6 @@ const TpHeader03 = ({
     }));
   }
 
-  // 메뉴 링크(예: "/preview?page=1")에서 페이지 번호(1)를 추출하는 함수
   const getIndexFromLink = (link) => {
     if (typeof link !== "string" || !link.includes("?page=")) return null;
     try {
@@ -821,25 +928,25 @@ const TpHeader03 = ({
   };
 
 	return (
-		<header role="banner" className="tpHeader03">
-			<div className="tpHeader03__container">
-					<div className="tpHeader03__logo" style={{ fontSize: logo?.fontSize, fontWeight: logo?.fontWeight }}>
+    // ✅ className에 CSS 모듈 적용
+		<header role="banner" className={styles.tpHeader03}>
+			<div className={styles.tpHeader03__container}>
+					<div className={styles.tpHeader03__logo} style={{ fontSize: logo?.fontSize, fontWeight: logo?.fontWeight }}>
 						{logo?.text || "회사로고"}
 					</div>
 					
-					<div className="tpHeader03__right">
-						<button className="tpHeader03__support-btn">지원하기</button>
-						<button aria-label="메뉴 열기" className="tpHeader03__menuBtn" onClick={() => setMenuOpen(!menuOpen)}>
-							<ul><li/><li/><li/></ul>
+					<div className={styles.tpHeader03__right}>
+						<button className={styles.tpHeader03__supportBtn}>지원하기</button>
+						<button aria-label="메뉴 열기" className={styles.tpHeader03__menuBtn} onClick={() => setMenuOpen(!menuOpen)}>
+							<ul><li/><li/></ul>
 						</button>
 					</div>
 				</div>
 
-				<nav className={`tpHeader03__sideMenu ${menuOpen ? "active" : ""}`}>
-					<button aria-label="메뉴 닫기" className="tpHeader03__sideMenu-closeBtn" onClick={() => setMenuOpen(!menuOpen)}>×</button>
+				<nav className={`${styles.tpHeader03__sideMenu} ${menuOpen ? styles.active : ""}`}>
+					<button aria-label="메뉴 닫기" className={styles.sideMenu__closeBtn} onClick={() => setMenuOpen(!menuOpen)}>×</button>
 
-          {/* 고객 사이트에서는 항상 이 메뉴 리스트가 렌더링 됩니다. */}
-          <ul className="sideMenu__lists">
+          <ul className={styles.sideMenu__lists}>
             {displayMenuItems.map((item) => {
               const pageIndex = getIndexFromLink(item.link);
               
@@ -852,20 +959,11 @@ const TpHeader03 = ({
               return (
                 <li key={item.id}>
                   <button
+                    // ✅ 활성화된 버튼에 'active' 클래스 추가
+                    className={isActive ? styles.active : ""}
                     onClick={() => {
                       setCurrentPageIndex(pageIndex);
                       setMenuOpen(false);
-                    }}
-                    style={{ 
-                      background: 'none', 
-                      border: 'none', 
-                      color: isActive ? '#FFFFFF' : '#AAAAAA',
-                      fontWeight: isActive ? 'bold' : 'normal',
-                      cursor: 'pointer',
-                      padding: '1rem',
-                      fontSize: '1.2rem',
-                      width: '100%',
-                      textAlign: 'left'
                     }}
                   >
                     {item.label}
@@ -880,6 +978,12 @@ const TpHeader03 = ({
 };
 
 export default TpHeader03;
+
+
+
+
+
+
 
 
 

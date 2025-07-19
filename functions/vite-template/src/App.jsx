@@ -99,61 +99,14 @@
 
 
 
-// import { useEffect, useState } from "react";
-// import { BrowserRouter, Routes, Route, useSearchParams, Navigate } from "react-router-dom";
-// import CustomerContent from "./CustomerContent";
-
-// function CustomerPageWrapper({ data }) {
-//   const [searchParams] = useSearchParams();
-//   const pageIndex = parseInt(searchParams.get("page")) || 0;
-
-//   return <CustomerContent pageData={data} currentPageIndex={pageIndex} />;
-// }
-
-// function App() {
-//   const [data, setData] = useState(null);
-
-//   useEffect(() => {
-//     fetch("/data.json")
-//       .then((res) => res.json())
-//       .then(setData);
-//   }, []);
-
-//   if (!data) return <div>로딩 중...</div>;
-
-//   return (
-//     <BrowserRouter>
-//       <Routes>
-//         <Route path="/" element={<Navigate to="/preview?page=0" />} />
-//         <Route path="/preview" element={<CustomerPageWrapper data={data} />} />
-//       </Routes>
-//     </BrowserRouter>
-//   );
-// }
-
-// export default App;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-import { Routes, Route, useSearchParams, Navigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { BrowserRouter, Routes, Route, useSearchParams, Navigate } from "react-router-dom";
 import CustomerContent from "./CustomerContent";
 
 function CustomerPageWrapper({ data }) {
   const [searchParams] = useSearchParams();
   const pageIndex = parseInt(searchParams.get("page")) || 0;
+
   return <CustomerContent pageData={data} currentPageIndex={pageIndex} />;
 }
 
@@ -169,11 +122,58 @@ function App() {
   if (!data) return <div>로딩 중...</div>;
 
   return (
-    <Routes>
-      <Route path="/" element={<Navigate to="/preview?page=0" />} />
-      <Route path="/preview" element={<CustomerPageWrapper data={data} />} />
-    </Routes>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Navigate to="/preview?page=0" />} />
+        <Route path="/preview" element={<CustomerPageWrapper data={data} />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 
 export default App;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// import { Routes, Route, useSearchParams, Navigate } from "react-router-dom";
+// import CustomerContent from "./CustomerContent";
+
+// function CustomerPageWrapper({ data }) {
+//   const [searchParams] = useSearchParams();
+//   const pageIndex = parseInt(searchParams.get("page")) || 0;
+//   return <CustomerContent pageData={data} currentPageIndex={pageIndex} />;
+// }
+
+// function App() {
+//   const [data, setData] = useState(null);
+
+//   useEffect(() => {
+//     fetch("/data.json")
+//       .then((res) => res.json())
+//       .then(setData);
+//   }, []);
+
+//   if (!data) return <div>로딩 중...</div>;
+
+//   return (
+//     <Routes>
+//       <Route path="/" element={<Navigate to="/preview?page=0" />} />
+//       <Route path="/preview" element={<CustomerPageWrapper data={data} />} />
+//     </Routes>
+//   );
+// }
+
+// export default App;

@@ -302,7 +302,149 @@
 
 
 
+// .tpHeader03 {
+//   background: #fff;
+//   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+
+//   &__container {
+//     display: flex;
+//     align-items: center;
+//     justify-content: space-between;
+//     width: 1200px;
+//     height: 80px;
+//     margin: 0 auto;
+//     padding: 0 20px;
+//     @media (max-width: 1260px) {
+//       width: 100%;
+//     }
+//     @media (max-width: 960px) {
+//       height: 60px;
+//     }
+//   }
+
+//   &__logo {
+//     font-size: 24px;
+//     font-weight: 700;
+//     color: #222;
+//   }
+
+//   &__right {
+//     display: flex;
+//     align-items: center;
+//     gap: 15px;
+//   }
+
+//   &__support-btn {
+//     padding: 12px 24px;
+//     background-color: #343a40;
+//     color: white;
+//     border: none;
+//     border-radius: 8px;
+//     cursor: pointer;
+//     font-size: 16px;
+//     font-weight: 600;
+//     transition: all 0.2s ease;
+//     &:hover {
+//       background-color: #23272b;
+//     }
+//   }
+
+//   &__menuBtn {
+//     border: none;
+//     background: transparent;
+//     cursor: pointer;
+//     ul {
+//       list-style: none;
+//       padding: 0;
+//       margin: 0;
+//       display: flex;
+//       flex-direction: column;
+//       gap: 6px;
+//       li {
+//         width: 28px;
+//         height: 3px;
+//         background: #222;
+//         border-radius: 2px;
+//       }
+//     }
+//   }
+
+//   &__sideMenu {
+//     position: fixed;
+//     top: 0;
+//     right: 0;
+//     width: 300px;
+//     height: 100vh;
+//     background: #222;
+//     transform: translateX(100%);
+//     transition: transform 0.3s ease;
+//     z-index: 1001; // 다른 요소들 위에 보이도록 z-index 추가
+
+//     &.active {
+//       transform: translateX(0);
+//     }
+    
+//     .sideMenu__closeBtn { // 클래스 이름 수정
+//       position: absolute;
+//       top: 15px;
+//       right: 20px;
+//       background: transparent;
+//       border: none;
+//       color: white;
+//       font-size: 28px;
+//       cursor: pointer;
+//     }
+    
+//     .sideMenu__lists {
+//       list-style: none;
+//       padding: 80px 20px 20px; // 패딩 수정
+//       margin: 0;
+//       display: flex;
+//       flex-direction: column;
+//       gap: 10px;
+
+//       // 고객용 사이드 메뉴 버튼 스타일
+//       button {
+//         background: none;
+//         border: none;
+//         color: #aaa;
+//         font-weight: normal;
+//         cursor: pointer;
+//         padding: 1rem;
+//         font-size: 1.2rem;
+//         width: 100%;
+//         text-align: left;
+//         border-radius: 8px;
+//         transition: background-color 0.2s, color 0.2s;
+
+//         &:hover {
+//             background-color: #333;
+//             color: #fff;
+//         }
+
+//         &.active {
+//             color: #fff;
+//             font-weight: bold;
+//             background-color: #444;
+//         }
+//       }
+//     }
+//   }
+// }
+
+
+
+
+
+
+
+
 .tpHeader03 {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
   background: #fff;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
 
@@ -310,16 +452,12 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    width: 1200px;
+    width: 100%;
+    max-width: 1280px; // ✅ 고정 너비 대신 최대 너비 사용
     height: 80px;
     margin: 0 auto;
-    padding: 0 20px;
-    @media (max-width: 1260px) {
-      width: 100%;
-    }
-    @media (max-width: 960px) {
-      height: 60px;
-    }
+    padding: 0 24px;
+    box-sizing: border-box;
   }
 
   &__logo {
@@ -378,13 +516,13 @@
     background: #222;
     transform: translateX(100%);
     transition: transform 0.3s ease;
-    z-index: 1001; // 다른 요소들 위에 보이도록 z-index 추가
+    z-index: 1001;
 
     &.active {
       transform: translateX(0);
     }
     
-    .sideMenu__closeBtn { // 클래스 이름 수정
+    .sideMenu__closeBtn {
       position: absolute;
       top: 15px;
       right: 20px;
@@ -397,13 +535,12 @@
     
     .sideMenu__lists {
       list-style: none;
-      padding: 80px 20px 20px; // 패딩 수정
+      padding: 80px 20px 20px;
       margin: 0;
       display: flex;
       flex-direction: column;
       gap: 10px;
 
-      // 고객용 사이드 메뉴 버튼 스타일
       button {
         background: none;
         border: none;
@@ -432,11 +569,21 @@
   }
 }
 
-
-
-
-
-
+// ✅ [추가] 반응형 미디어 쿼리
+@media (max-width: 768px) {
+  .tpHeader03 {
+    &__container {
+      height: 60px;
+      padding: 0 16px;
+    }
+    &__logo {
+      font-size: 20px;
+    }
+    &__support-btn {
+      display: none; // 모바일에서는 '지원하기' 버튼 숨김
+    }
+  }
+}
 
 
 

@@ -676,10 +676,145 @@
 
 
 
+// // ✅ 고객용 TpBanner04.jsx (제작용과 동일한 애니메이션, 스타일 적용)
+// "use client";
+
+// import React, { useEffect, useRef } from "react";
+// import styles from "./TpBanner04.module.scss";
+// import { gsap } from "gsap";
+// import ScrollTrigger from "gsap/ScrollTrigger";
+
+// gsap.registerPlugin(ScrollTrigger);
+
+// const TpBanner04 = ({
+//   title = "건강한 하루의 시작",
+//   subTitle = "신선한 재료로 만들어지는 건강한 습관",
+//   mediaUrl = "/videos/default.mp4",
+//   mediaType = "video",
+//   align = "center",
+//   buttonText = "지금 문의하기",
+// }) => {
+//   const sectionRef = useRef(null);
+//   const titleRef = useRef(null);
+//   const subTitleRef = useRef(null);
+//   const btnRef = useRef(null);
+
+//   // 반응형 클래스 적용
+//   useEffect(() => {
+//     const updateResponsiveClass = () => {
+//       if (!sectionRef.current) return;
+//       sectionRef.current.classList.remove("is-mobile", "is-tablet", "is-pc");
+
+//       const width = window.innerWidth;
+//       if (width <= 768) {
+//         sectionRef.current.classList.add("is-mobile");
+//       } else if (width <= 1200) {
+//         sectionRef.current.classList.add("is-tablet");
+//       } else {
+//         sectionRef.current.classList.add("is-pc");
+//       }
+//     };
+
+//     updateResponsiveClass();
+//     window.addEventListener("resize", updateResponsiveClass);
+//     return () => window.removeEventListener("resize", updateResponsiveClass);
+//   }, []);
+
+//   // GSAP ScrollTrigger 애니메이션
+//   useEffect(() => {
+//     if (!sectionRef.current) return;
+
+//     const ctx = gsap.context(() => {
+//       const tl = gsap.timeline({
+//         scrollTrigger: {
+//           trigger: sectionRef.current,
+//           start: "top 30%",
+//           once: true,
+//         },
+//       });
+
+//       if (titleRef.current) {
+//         tl.from(titleRef.current, {
+//           opacity: 0,
+//           y: 100,
+//           duration: 0.8,
+//           ease: "power3.out",
+//         });
+//       }
+
+//       if (subTitleRef.current) {
+//         tl.from(subTitleRef.current, {
+//           opacity: 0,
+//           y: 40,
+//           duration: 0.6,
+//           ease: "power3.out",
+//         }, "-=0.2");
+//       }
+
+//       if (btnRef.current) {
+//         tl.from(btnRef.current, {
+//           opacity: 0,
+//           y: 40,
+//           duration: 0.5,
+//           ease: "power3.out",
+//         }, "-=0.3");
+//       }
+//     }, sectionRef);
+
+//     return () => ctx.revert();
+//   }, []);
+
+//   return (
+//     <section ref={sectionRef} className={styles.tpBanner04}>
+//       {mediaType === "video" ? (
+//         <video
+//           autoPlay
+//           loop
+//           muted
+//           playsInline
+//           preload="auto"
+//           className={styles.tpBanner04__background}
+//         >
+//           <source src={mediaUrl} type="video/mp4" />
+//         </video>
+//       ) : (
+//         <img
+//           src={mediaUrl}
+//           alt="배경 이미지"
+//           className={styles.tpBanner04__background}
+//           loading="lazy"
+//           style={{ objectFit: "cover", width: "100%", height: "100%" }}
+//         />
+//       )}
+
+//       <div className={styles.tpBanner04__text} style={{ textAlign: align }}>
+//         <h2 ref={titleRef} className={styles.title}>
+//           {title.split("\n").map((line, i) => (
+//             <span key={i}>{line}<br /></span>
+//           ))}
+//         </h2>
+//         <p ref={subTitleRef} className={styles.subTitle}>
+//           {subTitle.split("\n").map((line, i) => (
+//             <span key={i}>{line}<br /></span>
+//           ))}
+//         </p>
+//         <button ref={btnRef} className={styles.btn}>{buttonText}</button>
+//       </div>
+//     </section>
+//   );
+// };
+
+// export default TpBanner04;
+
+
+
+
+
+
 // ✅ 고객용 TpBanner04.jsx (제작용과 동일한 애니메이션, 스타일 적용)
 "use client";
 
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import styles from "./TpBanner04.module.scss";
 import { gsap } from "gsap";
 import ScrollTrigger from "gsap/ScrollTrigger";
@@ -698,20 +833,18 @@ const TpBanner04 = ({
   const titleRef = useRef(null);
   const subTitleRef = useRef(null);
   const btnRef = useRef(null);
+  const [viewMode, setViewMode] = useState('is-pc');
 
   // 반응형 클래스 적용
   useEffect(() => {
     const updateResponsiveClass = () => {
-      if (!sectionRef.current) return;
-      sectionRef.current.classList.remove("is-mobile", "is-tablet", "is-pc");
-
       const width = window.innerWidth;
       if (width <= 768) {
-        sectionRef.current.classList.add("is-mobile");
+        setViewMode('is-mobile');
       } else if (width <= 1200) {
-        sectionRef.current.classList.add("is-tablet");
+        setViewMode('is-tablet');
       } else {
-        sectionRef.current.classList.add("is-pc");
+        setViewMode('is-pc');
       }
     };
 
@@ -764,8 +897,10 @@ const TpBanner04 = ({
     return () => ctx.revert();
   }, []);
 
+  const sectionClassName = `${styles.tpBanner04} ${styles[viewMode] || ''}`;
+
   return (
-    <section ref={sectionRef} className={styles.tpBanner04}>
+    <section ref={sectionRef} className={sectionClassName}>
       {mediaType === "video" ? (
         <video
           autoPlay

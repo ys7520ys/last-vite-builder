@@ -908,7 +908,7 @@ const TpBanner04 = ({
           muted
           playsInline
           preload="auto"
-          className={styles.tpBanner04__background}
+          className={styles.background}
         >
           <source src={mediaUrl} type="video/mp4" />
         </video>
@@ -916,13 +916,13 @@ const TpBanner04 = ({
         <img
           src={mediaUrl}
           alt="배경 이미지"
-          className={styles.tpBanner04__background}
+          className={styles.background}
           loading="lazy"
           style={{ objectFit: "cover", width: "100%", height: "100%" }}
         />
       )}
 
-      <div className={styles.tpBanner04__text} style={{ textAlign: align }}>
+      <div className={styles.text} style={{ textAlign: align }}>
         <h2 ref={titleRef} className={styles.title}>
           {title.split("\n").map((line, i) => (
             <span key={i}>{line}<br /></span>

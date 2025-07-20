@@ -479,6 +479,104 @@
 
 
 
+// .tpBanner04 {
+//   position: relative;
+//   height: 100vh;
+//   overflow: hidden;
+//   padding: 0 50px;
+//   background-color: black;
+
+//   /* ✅ 반응형 클래스가 적용될 때의 스타일을 내부에 정의 */
+//   &.is-tablet {
+//     .title {
+//       font-size: 45px;
+//     }
+//     .subTitle {
+//       font-size: 18px;
+//       margin-bottom: 20px;
+//     }
+//     .btn {
+//       font-size: 16px;
+//       padding: 15px 25px;
+//     }
+//   }
+
+//   &.is-mobile {
+//     padding: 100px 20px 50px;
+//     .title {
+//       font-size: 30px;
+//       margin-bottom: 10px;
+//     }
+//     .subTitle {
+//       font-size: 14px;
+//       margin-bottom: 20px;
+//     }
+//     .btn {
+//       font-size: 14px;
+//       padding: 12px 20px;
+//     }
+//   }
+// }
+
+// .background {
+//   position: absolute;
+//   top: 0;
+//   left: 0;
+//   width: 100%;
+//   height: 100%;
+//   object-fit: cover;
+//   z-index: 1;
+//   filter: brightness(80%);
+// }
+
+// .text {
+//   position: relative;
+//   z-index: 2;
+//   top: 50%;
+//   transform: translateY(-50%);
+//   color: white;
+//   font-family: 'Pretendard', sans-serif;
+//   white-space: pre-line;
+// }
+
+// .title {
+//   font-size: 65px;
+//   font-weight: 700;
+//   margin-bottom: 18px;
+//   transition: font-size 0.3s ease;
+// }
+
+// .subTitle {
+//   font-size: 22px;
+//   margin-bottom: 25px;
+//   color: #eeeeee;
+//   transition: font-size 0.3s ease;
+// }
+
+// .btn {
+//   border-radius: 100px;
+//   border: none;
+//   outline: none;
+//   font-weight: 600;
+//   color: white;
+//   background-color: rgba(0, 0, 0, 0.5);
+//   cursor: pointer;
+//   font-size: 18px;
+//   padding: 18px 30px;
+//   transition: background-color 0.3s, color 0.3s, transform 0.3s;
+
+//   &:hover {
+//     background-color: white;
+//     color: black;
+//     transform: scale(1.1);
+//   }
+// }
+
+
+
+
+
+
 .tpBanner04 {
   position: relative;
   height: 100vh;
@@ -486,35 +584,8 @@
   padding: 0 50px;
   background-color: black;
 
-  /* ✅ 반응형 클래스가 적용될 때의 스타일을 내부에 정의 */
-  &.is-tablet {
-    .title {
-      font-size: 45px;
-    }
-    .subTitle {
-      font-size: 18px;
-      margin-bottom: 20px;
-    }
-    .btn {
-      font-size: 16px;
-      padding: 15px 25px;
-    }
-  }
-
   &.is-mobile {
     padding: 100px 20px 50px;
-    .title {
-      font-size: 30px;
-      margin-bottom: 10px;
-    }
-    .subTitle {
-      font-size: 14px;
-      margin-bottom: 20px;
-    }
-    .btn {
-      font-size: 14px;
-      padding: 12px 20px;
-    }
   }
 }
 
@@ -527,6 +598,7 @@
   object-fit: cover;
   z-index: 1;
   filter: brightness(80%);
+  transition: opacity 0.8s ease;
 }
 
 .text {
@@ -569,5 +641,34 @@
     background-color: white;
     color: black;
     transform: scale(1.1);
+  }
+}
+
+.is-tablet {
+  & .title {
+    font-size: 45px;
+  }
+  & .subTitle {
+    font-size: 18px;
+    margin-bottom: 20px;
+  }
+  & .btn {
+    font-size: 16px;
+    padding: 15px 25px;
+  }
+}
+
+.is-mobile {
+  & .title {
+    font-size: 30px;
+    margin-bottom: 10px;
+  }
+  & .subTitle {
+    font-size: 14px;
+    margin-bottom: 20px;
+  }
+  & .btn {
+    font-size: 14px;
+    padding: 12px 20px;
   }
 }

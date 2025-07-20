@@ -811,7 +811,330 @@
 
 
 
-// ✅ 고객용 TpBanner04.jsx (제작용과 동일한 애니메이션, 스타일 적용)
+// // ✅ 고객용 TpBanner04.jsx (제작용과 동일한 애니메이션, 스타일 적용)
+// "use client";
+
+// import React, { useEffect, useRef, useState } from "react";
+// import styles from "./TpBanner04.module.scss";
+// import { gsap } from "gsap";
+// import ScrollTrigger from "gsap/ScrollTrigger";
+
+// gsap.registerPlugin(ScrollTrigger);
+
+// const TpBanner04 = ({
+//   title = "건강한 하루의 시작",
+//   subTitle = "신선한 재료로 만들어지는 건강한 습관",
+//   mediaUrl = "/videos/default.mp4",
+//   mediaType = "video",
+//   align = "center",
+//   buttonText = "지금 문의하기",
+// }) => {
+//   const sectionRef = useRef(null);
+//   const titleRef = useRef(null);
+//   const subTitleRef = useRef(null);
+//   const btnRef = useRef(null);
+//   const [viewMode, setViewMode] = useState('is-pc');
+
+//   // 반응형 클래스 적용
+//   useEffect(() => {
+//     const updateResponsiveClass = () => {
+//       const width = window.innerWidth;
+//       if (width <= 768) {
+//         setViewMode('is-mobile');
+//       } else if (width <= 1200) {
+//         setViewMode('is-tablet');
+//       } else {
+//         setViewMode('is-pc');
+//       }
+//     };
+
+//     updateResponsiveClass();
+//     window.addEventListener("resize", updateResponsiveClass);
+//     return () => window.removeEventListener("resize", updateResponsiveClass);
+//   }, []);
+
+//   // GSAP ScrollTrigger 애니메이션
+//   // useEffect(() => {
+//   //   if (!sectionRef.current) return;
+
+//   //   const ctx = gsap.context(() => {
+//   //     const tl = gsap.timeline({
+//   //       scrollTrigger: {
+//   //         trigger: sectionRef.current,
+//   //         start: "top 30%",
+//   //         once: true,
+//   //       },
+//   //     });
+
+//   //     if (titleRef.current) {
+//   //       tl.from(titleRef.current, {
+//   //         opacity: 0,
+//   //         y: 100,
+//   //         duration: 0.8,
+//   //         ease: "power3.out",
+//   //       });
+//   //     }
+
+//   //     if (subTitleRef.current) {
+//   //       tl.from(subTitleRef.current, {
+//   //         opacity: 0,
+//   //         y: 40,
+//   //         duration: 0.6,
+//   //         ease: "power3.out",
+//   //       }, "-=0.2");
+//   //     }
+
+//   //     if (btnRef.current) {
+//   //       tl.from(btnRef.current, {
+//   //         opacity: 0,
+//   //         y: 40,
+//   //         duration: 0.5,
+//   //         ease: "power3.out",
+//   //       }, "-=0.3");
+//   //     }
+//   //   }, sectionRef);
+
+//   //   return () => ctx.revert();
+//   // }, []);
+
+//   // GSAP ScrollTrigger 애니메이션
+//   useEffect(() => {
+//     if (!sectionRef.current) return;
+
+//     const ctx = gsap.context(() => {
+//       const tl = gsap.timeline({
+//         scrollTrigger: {
+//           trigger: sectionRef.current,
+//           start: "top 30%",
+//           once: true,
+//         },
+//       });
+
+//       if (titleRef.current) {
+//         tl.from(titleRef.current, {
+//           opacity: 0,
+//           y: 100,
+//           duration: 0.8,
+//           ease: "power3.out",
+//         });
+//       }
+
+//       if (subTitleRef.current) {
+//         tl.from(subTitleRef.current, {
+//           opacity: 0,
+//           y: 40,
+//           duration: 0.6,
+//           ease: "power3.out",
+//         }, "-=0.2");
+//       }
+
+//       if (btnRef.current) {
+//         tl.from(btnRef.current, {
+//           opacity: 0,
+//           y: 40,
+//           duration: 0.5,
+//           ease: "power3.out",
+//         }, "-=0.3");
+//       }
+//     }, sectionRef);
+
+//     return () => ctx.revert();
+//   }, []);
+
+//   const sectionClassName = `${styles.tpBanner04} ${styles[viewMode] || ''}`;
+
+//   return (
+//     <section ref={sectionRef} className={sectionClassName}>
+//       {mediaType === "video" ? (
+//         <video
+//           autoPlay
+//           loop
+//           muted
+//           playsInline
+//           preload="auto"
+//           className={styles.background}
+//         >
+//           <source src={mediaUrl} type="video/mp4" />
+//         </video>
+//       ) : (
+//         <img
+//           src={mediaUrl}
+//           alt="배경 이미지"
+//           className={styles.background}
+//           loading="lazy"
+//           style={{ objectFit: "cover", width: "100%", height: "100%" }}
+//         />
+//       )}
+
+//       <div className={styles.text} style={{ textAlign: align }}>
+//         <h2 ref={titleRef} className={styles.title}>
+//           {title.split("\n").map((line, i) => (
+//             <span key={i}>{line}<br /></span>
+//           ))}
+//         </h2>
+//         <p ref={subTitleRef} className={styles.subTitle}>
+//           {subTitle.split("\n").map((line, i) => (
+//             <span key={i}>{line}<br /></span>
+//           ))}
+//         </p>
+//         <button ref={btnRef} className={styles.btn}>{buttonText}</button>
+//       </div>
+//     </section>
+//   );
+// };
+
+// export default TpBanner04;
+
+
+
+
+
+
+
+// "use client";
+
+// import React, { useEffect, useRef, useState } from "react";
+// import styles from "./TpBanner04.module.scss";
+// import { gsap } from "gsap";
+// import ScrollTrigger from "gsap/ScrollTrigger";
+
+// gsap.registerPlugin(ScrollTrigger);
+
+// const TpBanner04 = ({
+//   title = "건강한 하루의 시작",
+//   subTitle = "신선한 재료로 만들어지는 건강한 습관",
+//   mediaUrl = "/videos/default.mp4",
+//   mediaType = "video",
+//   align = "center",
+//   buttonText = "지금 문의하기",
+// }) => {
+//   const sectionRef = useRef(null);
+//   const titleRef = useRef(null);
+//   const subTitleRef = useRef(null);
+//   const btnRef = useRef(null);
+//   const [viewMode, setViewMode] = useState('is-pc');
+//   const [isMediaLoaded, setIsMediaLoaded] = useState(false);
+
+//   useEffect(() => {
+//     const updateResponsiveClass = () => {
+//       const width = window.innerWidth;
+//       if (width <= 768) {
+//         setViewMode('is-mobile');
+//       } else if (width <= 1200) {
+//         setViewMode('is-tablet');
+//       } else {
+//         setViewMode('is-pc');
+//       }
+//     };
+
+//     updateResponsiveClass();
+//     window.addEventListener("resize", updateResponsiveClass);
+//     return () => window.removeEventListener("resize", updateResponsiveClass);
+//   }, []);
+
+//   useEffect(() => {
+//     if (!sectionRef.current) return;
+
+//     const ctx = gsap.context(() => {
+//       const tl = gsap.timeline({
+//         scrollTrigger: {
+//           trigger: sectionRef.current,
+//           start: "top 30%",
+//           once: true,
+//         },
+//       });
+
+//       if (titleRef.current) {
+//         tl.from(titleRef.current, {
+//           opacity: 0,
+//           y: 100,
+//           duration: 0.8,
+//           ease: "power3.out",
+//         });
+//       }
+
+//       if (subTitleRef.current) {
+//         tl.from(subTitleRef.current, {
+//           opacity: 0,
+//           y: 40,
+//           duration: 0.6,
+//           ease: "power3.out",
+//         }, "-=0.2");
+//       }
+
+//       if (btnRef.current) {
+//         tl.from(btnRef.current, {
+//           opacity: 0,
+//           y: 40,
+//           duration: 0.5,
+//           ease: "power3.out",
+//         }, "-=0.3");
+//       }
+//     }, sectionRef);
+
+//     return () => ctx.revert();
+//   }, []);
+
+//   const sectionClassName = `${styles.tpBanner04} ${styles[viewMode] || ''}`;
+
+//   return (
+//     <section ref={sectionRef} className={sectionClassName}>
+//       {mediaType === "video" ? (
+//         <video
+//           key={mediaUrl}
+//           autoPlay
+//           loop
+//           muted
+//           playsInline
+//           preload="auto"
+//           className={styles.background}
+//           onCanPlay={() => setIsMediaLoaded(true)}
+//           style={{ opacity: isMediaLoaded ? 1 : 0 }}
+//         >
+//           <source src={mediaUrl} type="video/mp4" />
+//         </video>
+//       ) : (
+//         <img
+//           key={mediaUrl}
+//           src={mediaUrl}
+//           alt="배경 이미지"
+//           className={styles.background}
+//           onLoad={() => setIsMediaLoaded(true)}
+//           style={{
+//             objectFit: "cover",
+//             width: "100%",
+//             height: "100%",
+//             opacity: isMediaLoaded ? 1 : 0,
+//           }}
+//         />
+//       )}
+
+//       <div className={styles.text} style={{ textAlign: align }}>
+//         <h2 ref={titleRef} className={styles.title}>
+//           {title.split("\n").map((line, i) => (
+//             <span key={i}>{line}<br /></span>
+//           ))}
+//         </h2>
+//         <p ref={subTitleRef} className={styles.subTitle}>
+//           {subTitle.split("\n").map((line, i) => (
+//             <span key={i}>{line}<br /></span>
+//           ))}
+//         </p>
+//         <button ref={btnRef} className={styles.btn}>{buttonText}</button>
+//       </div>
+//     </section>
+//   );
+// };
+
+// export default TpBanner04;
+
+
+
+
+
+
+
+
 "use client";
 
 import React, { useEffect, useRef, useState } from "react";
@@ -830,12 +1153,55 @@ const TpBanner04 = ({
   buttonText = "지금 문의하기",
 }) => {
   const sectionRef = useRef(null);
+  const videoRef = useRef(null);
   const titleRef = useRef(null);
   const subTitleRef = useRef(null);
   const btnRef = useRef(null);
   const [viewMode, setViewMode] = useState('is-pc');
+  const [isImageLoaded, setIsImageLoaded] = useState(false);
 
-  // 반응형 클래스 적용
+  useEffect(() => {
+    if (mediaType === 'image' && mediaUrl) {
+      const img = new Image();
+      img.src = mediaUrl;
+      img.onload = () => setIsImageLoaded(true);
+    }
+  }, [mediaUrl, mediaType]);
+
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+
+    const fadeDuration = 0.5;
+
+    const handleTimeUpdate = () => {
+      const { currentTime, duration } = video;
+      if (isNaN(duration)) return;
+
+      if (currentTime < fadeDuration) {
+        video.style.opacity = currentTime / fadeDuration;
+      } else if (currentTime > duration - fadeDuration) {
+        video.style.opacity = (duration - currentTime) / fadeDuration;
+      } else {
+        if (video.style.opacity !== '1') {
+          video.style.opacity = 1;
+        }
+      }
+    };
+    
+    const handleLoadedData = () => {
+      video.style.opacity = 0;
+    };
+
+    video.addEventListener('loadeddata', handleLoadedData);
+    video.addEventListener('timeupdate', handleTimeUpdate);
+
+    return () => {
+      video.removeEventListener('loadeddata', handleLoadedData);
+      video.removeEventListener('timeupdate', handleTimeUpdate);
+    };
+  }, [mediaUrl]);
+
   useEffect(() => {
     const updateResponsiveClass = () => {
       const width = window.innerWidth;
@@ -853,51 +1219,6 @@ const TpBanner04 = ({
     return () => window.removeEventListener("resize", updateResponsiveClass);
   }, []);
 
-  // GSAP ScrollTrigger 애니메이션
-  // useEffect(() => {
-  //   if (!sectionRef.current) return;
-
-  //   const ctx = gsap.context(() => {
-  //     const tl = gsap.timeline({
-  //       scrollTrigger: {
-  //         trigger: sectionRef.current,
-  //         start: "top 30%",
-  //         once: true,
-  //       },
-  //     });
-
-  //     if (titleRef.current) {
-  //       tl.from(titleRef.current, {
-  //         opacity: 0,
-  //         y: 100,
-  //         duration: 0.8,
-  //         ease: "power3.out",
-  //       });
-  //     }
-
-  //     if (subTitleRef.current) {
-  //       tl.from(subTitleRef.current, {
-  //         opacity: 0,
-  //         y: 40,
-  //         duration: 0.6,
-  //         ease: "power3.out",
-  //       }, "-=0.2");
-  //     }
-
-  //     if (btnRef.current) {
-  //       tl.from(btnRef.current, {
-  //         opacity: 0,
-  //         y: 40,
-  //         duration: 0.5,
-  //         ease: "power3.out",
-  //       }, "-=0.3");
-  //     }
-  //   }, sectionRef);
-
-  //   return () => ctx.revert();
-  // }, []);
-
-  // GSAP ScrollTrigger 애니메이션
   useEffect(() => {
     if (!sectionRef.current) return;
 
@@ -947,22 +1268,30 @@ const TpBanner04 = ({
     <section ref={sectionRef} className={sectionClassName}>
       {mediaType === "video" ? (
         <video
+          ref={videoRef}
+          key={mediaUrl}
           autoPlay
           loop
           muted
           playsInline
           preload="auto"
           className={styles.background}
+          style={{ opacity: 0 }}
         >
           <source src={mediaUrl} type="video/mp4" />
         </video>
       ) : (
         <img
+          key={mediaUrl}
           src={mediaUrl}
           alt="배경 이미지"
           className={styles.background}
-          loading="lazy"
-          style={{ objectFit: "cover", width: "100%", height: "100%" }}
+          style={{
+            objectFit: "cover",
+            width: "100%",
+            height: "100%",
+            opacity: isImageLoaded ? 1 : 0,
+          }}
         />
       )}
 

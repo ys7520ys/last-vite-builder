@@ -854,6 +854,50 @@ const TpBanner04 = ({
   }, []);
 
   // GSAP ScrollTrigger 애니메이션
+  // useEffect(() => {
+  //   if (!sectionRef.current) return;
+
+  //   const ctx = gsap.context(() => {
+  //     const tl = gsap.timeline({
+  //       scrollTrigger: {
+  //         trigger: sectionRef.current,
+  //         start: "top 30%",
+  //         once: true,
+  //       },
+  //     });
+
+  //     if (titleRef.current) {
+  //       tl.from(titleRef.current, {
+  //         opacity: 0,
+  //         y: 100,
+  //         duration: 0.8,
+  //         ease: "power3.out",
+  //       });
+  //     }
+
+  //     if (subTitleRef.current) {
+  //       tl.from(subTitleRef.current, {
+  //         opacity: 0,
+  //         y: 40,
+  //         duration: 0.6,
+  //         ease: "power3.out",
+  //       }, "-=0.2");
+  //     }
+
+  //     if (btnRef.current) {
+  //       tl.from(btnRef.current, {
+  //         opacity: 0,
+  //         y: 40,
+  //         duration: 0.5,
+  //         ease: "power3.out",
+  //       }, "-=0.3");
+  //     }
+  //   }, sectionRef);
+
+  //   return () => ctx.revert();
+  // }, []);
+
+  // GSAP ScrollTrigger 애니메이션
   useEffect(() => {
     if (!sectionRef.current) return;
 

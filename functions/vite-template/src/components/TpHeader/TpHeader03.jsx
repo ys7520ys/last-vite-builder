@@ -900,7 +900,7 @@ import styles from "./TpHeader03.module.scss"; // ✅ CSS 모듈 import
 // 고객 사이트용 헤더 컴포넌트
 const TpHeader03 = ({ 
   menuItems = [], 
-  pages = [],
+  pages = [], 
   logo, 
   currentPageIndex = 0,
   setCurrentPageIndex = () => {} 
@@ -925,7 +925,7 @@ const TpHeader03 = ({
     } catch {
       return null;
     }
-  };
+	};
 
 	return (
     // ✅ className에 CSS 모듈 적용
@@ -968,10 +968,10 @@ const TpHeader03 = ({
                   >
                     {item.label}
                   </button>
-                </li>
+													</li>
               );
             })}
-          </ul>
+            </ul>
 				</nav>
 		</header>
 	);

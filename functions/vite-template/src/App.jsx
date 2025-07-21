@@ -134,6 +134,56 @@
 // export default App;
 
 
+// import { useEffect, useState } from "react";
+// import {
+//   BrowserRouter,
+//   Routes,
+//   Route,
+//   Navigate,
+// } from "react-router-dom";
+// import CustomerContent from "./CustomerContent";
+
+// // CustomerContent에서 URL 파라미터를 직접 처리하므로,
+// // 이 Wrapper 컴포넌트는 더 이상 페이지 인덱스를 전달할 필요가 없습니다.
+// function CustomerPageWrapper({ data }) {
+//   return <CustomerContent pageData={data} />;
+// }
+
+// function App() {
+//   const [data, setData] = useState(null);
+
+//   useEffect(() => {
+//     // data.json에서 페이지 데이터를 가져옵니다.
+//     fetch("/data.json")
+//       .then((res) => res.json())
+//       .then(setData);
+//   }, []);
+
+//   // 데이터 로딩 중일 때 표시할 UI
+//   if (!data) return <div>로딩 중...</div>;
+
+//   // 라우터 설정
+//   return (
+//     <BrowserRouter>
+//       <Routes>
+//         {/* 기본 경로(/)로 접근 시 '/preview?page=0'으로 리디렉션 */}
+//         <Route path="/" element={<Navigate to="/preview?page=0" />} />
+//         {/* 미리보기 페이지 경로 */}
+//         <Route path="/preview" element={<CustomerPageWrapper data={data} />} />
+//       </Routes>
+//     </BrowserRouter>
+//   );
+// }
+
+// export default App;
+
+
+
+
+
+
+
+// 네이버로그인 라우터해결용용
 import { useEffect, useState } from "react";
 import {
   BrowserRouter,
@@ -165,7 +215,12 @@ function App() {
   // 라우터 설정
   return (
     <BrowserRouter>
-      <Routes>
+      <Routes
+        future={{
+          v7_startTransition: true,
+          v7_relativeSplatPath: true,
+        }}
+      >
         {/* 기본 경로(/)로 접근 시 '/preview?page=0'으로 리디렉션 */}
         <Route path="/" element={<Navigate to="/preview?page=0" />} />
         {/* 미리보기 페이지 경로 */}

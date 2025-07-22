@@ -894,8 +894,106 @@
 
 
 
+// import React, { useState } from "react";
+// import styles from "./TpHeader03.module.scss"; // ✅ CSS 모듈 import
+
+// // 고객 사이트용 헤더 컴포넌트
+// const TpHeader03 = ({ 
+//   menuItems = [], 
+//   pages = [], 
+//   logo, 
+//   currentPageIndex = 0,
+//   setCurrentPageIndex = () => {} 
+// }) => {
+// 	const [menuOpen, setMenuOpen] = useState(false);
+
+//   let displayMenuItems = menuItems;
+//   if (!menuItems || menuItems.length === 0) {
+//     displayMenuItems = pages.map((page, index) => ({
+//       id: page.id || String(index),
+//       label: page.name || `페이지 ${index + 1}`,
+//       link: `/preview?page=${index}`
+//     }));
+//   }
+
+//   const getIndexFromLink = (link) => {
+//     if (typeof link !== "string" || !link.includes("?page=")) return null;
+//     try {
+//       const pageStr = link.split("?page=")[1];
+//       const pageIndex = parseInt(pageStr, 10);
+//       return isNaN(pageIndex) ? null : pageIndex;
+//     } catch {
+//       return null;
+//     }
+// 	};
+
+// 	return (
+//     // ✅ className에 CSS 모듈 적용
+// 		<header role="banner" className={styles.tpHeader03}>
+// 			<div className={styles.tpHeader03__container}>
+// 					<div className={styles.tpHeader03__logo} style={{ fontSize: logo?.fontSize, fontWeight: logo?.fontWeight }}>
+// 						{logo?.text || "회사로고"}
+// 					</div>
+					
+// 					<div className={styles.tpHeader03__right}>
+// 						<button className={styles.tpHeader03__supportBtn}>지원하기</button>
+// 						<button aria-label="메뉴 열기" className={styles.tpHeader03__menuBtn} onClick={() => setMenuOpen(!menuOpen)}>
+// 							<ul><li/><li/></ul>
+// 						</button>
+// 					</div>
+// 				</div>
+
+// 				<nav className={`${styles.tpHeader03__sideMenu} ${menuOpen ? styles.active : ""}`}>
+// 					<button aria-label="메뉴 닫기" className={styles.sideMenu__closeBtn} onClick={() => setMenuOpen(!menuOpen)}>×</button>
+
+//           <ul className={styles.sideMenu__lists}>
+//             {displayMenuItems.map((item) => {
+//               const pageIndex = getIndexFromLink(item.link);
+              
+//               if (pageIndex === null) {
+//                 return <li key={item.id}><span>{item.label}</span></li>;
+//               }
+
+//               const isActive = currentPageIndex === pageIndex;
+
+//               return (
+//                 <li key={item.id}>
+//                   <button
+//                     // ✅ 활성화된 버튼에 'active' 클래스 추가
+//                     className={isActive ? styles.active : ""}
+//                     onClick={() => {
+//                       setCurrentPageIndex(pageIndex);
+//                       setMenuOpen(false);
+//                     }}
+//                   >
+//                     {item.label}
+//                   </button>
+// 													</li>
+//               );
+//             })}
+//             </ul>
+// 				</nav>
+// 		</header>
+// 	);
+// };
+
+// export default TpHeader03;
+
+
+
 import React, { useState } from "react";
 import styles from "./TpHeader03.module.scss"; // ✅ CSS 모듈 import
+
+// hex 색상 코드를 rgba로 변환하는 헬퍼 함수
+const hexToRgba = (hex = '#FFFFFF', opacity = 1) => {
+    if (!hex || !/^#([A-Fa-f0-9]{3}){1,2}$/.test(hex)) return `rgba(255, 255, 255, ${opacity})`;
+    let c = hex.substring(1).split('');
+    if (c.length === 3) {
+        c = [c[0], c[0], c[1], c[1], c[2], c[2]];
+    }
+    c = '0x' + c.join('');
+    return `rgba(${(c >> 16) & 255},${(c >> 8) & 255},${c & 255},${opacity})`;
+};
 
 // 고객 사이트용 헤더 컴포넌트
 const TpHeader03 = ({ 
@@ -927,11 +1025,14 @@ const TpHeader03 = ({
     }
 	};
 
+  const headerStyle = {
+    backgroundColor: hexToRgba(logo?.backgroundColor, logo?.backgroundOpacity),
+  };
+
 	return (
-    // ✅ className에 CSS 모듈 적용
-		<header role="banner" className={styles.tpHeader03}>
+		<header role="banner" className={styles.tpHeader03} style={headerStyle}>
 			<div className={styles.tpHeader03__container}>
-					<div className={styles.tpHeader03__logo} style={{ fontSize: logo?.fontSize, fontWeight: logo?.fontWeight }}>
+					<div className={styles.tpHeader03__logo} style={{ fontSize: logo?.fontSize, fontWeight: logo?.fontWeight, color: logo?.color }}>
 						{logo?.text || "회사로고"}
 					</div>
 					
@@ -959,7 +1060,6 @@ const TpHeader03 = ({
               return (
                 <li key={item.id}>
                   <button
-                    // ✅ 활성화된 버튼에 'active' 클래스 추가
                     className={isActive ? styles.active : ""}
                     onClick={() => {
                       setCurrentPageIndex(pageIndex);
@@ -968,7 +1068,7 @@ const TpHeader03 = ({
                   >
                     {item.label}
                   </button>
-													</li>
+												</li>
               );
             })}
             </ul>
@@ -986,59 +1086,3 @@ export default TpHeader03;
 
 
 
-
-
-
-
-
-
-// import React, { useState } from "react";
-// import { Link } from "react-router-dom";
-// import "./TpHeader03.module.scss";
-
-// const TpHeader03 = ({ menuItems = [], logo }) => {
-//   const [menuOpen, setMenuOpen] = useState(false);
-
-//   const defaultMenuItems = [
-//     { id: '1', label: "회사소개", link: "/about" },
-//     { id: '2', label: "브랜드", link: "/brand" },
-//     { id: '3', label: "제품소개", link: "/products" },
-//     { id: '4', label: "커뮤니티", link: "/community" },
-//   ];
-
-//   const displayMenuItems = menuItems.length > 0 ? menuItems : defaultMenuItems;
-
-//   return (
-//     <header className={`tpHeader03 ${menuOpen ? "menuActive" : ""}`}>
-//       <div className="tpHeader03__container">
-//         <div className="tpHeader03__logo">
-//           {logo?.text || "회사로고"}
-//         </div>
-
-//         <nav className="tpHeader03__nav">
-//           <ul className="tpHeader03__navLists">
-//             {displayMenuItems.map((item) => (
-//               <li key={item.id}>
-//                 <Link to={item.link} className="tpHeader03__link">
-//                   {item.label}
-//                 </Link>
-//               </li>
-//             ))}
-//           </ul>
-//         </nav>
-
-//         <button
-//           className="tpHeader03__mobileToggle"
-//           onClick={() => setMenuOpen(!menuOpen)}
-//           aria-label="메뉴 열기"
-//         >
-//           <div className="line1" />
-//           <div className="line2" />
-//           <div className="line3" />
-//         </button>
-//       </div>
-//     </header>
-//   );
-// };
-
-// export default TpHeader03;

@@ -986,6 +986,67 @@
 
 
 
+// import React, { useState } from "react";
+// import styles from "./TpHeader03.module.scss";
+
+// const hexToRgba = (hex = '#FFFFFF', opacity = 1) => {
+//     if (!hex || !/^#([A-Fa-f0-9]{3}){1,2}$/.test(hex)) return `rgba(255, 255, 255, ${opacity})`;
+//     let c = hex.substring(1).split('');
+//     if (c.length === 3) {
+//         c = [c[0], c[0], c[1], c[1], c[2], c[2]];
+//     }
+//     c = '0x' + c.join('');
+//     return `rgba(${(c >> 16) & 255},${(c >> 8) & 255},${c & 255},${opacity})`;
+// };
+
+// const TpHeader03 = ({ logo, menuItems = [] }) => {
+// 	const [menuOpen, setMenuOpen] = useState(false);
+	
+//   const headerStyle = {
+//     backgroundColor: hexToRgba(logo?.backgroundColor, logo?.backgroundOpacity),
+//   };
+
+//   const logoStyle = {
+//     fontSize: logo?.fontSize,
+//     fontWeight: logo?.fontWeight,
+//     color: logo?.color,
+//   };
+
+// 	return (
+// 		<header role="banner" className={styles.tpHeader03} style={headerStyle}>
+// 			<div className={styles.tpHeader03__container}>
+// 					<div className={styles.tpHeader03__logo} style={logoStyle}>
+// 						{logo?.text || "회사로고"}
+// 					</div>
+// 					<div className={styles.tpHeader03__right}>
+// 						<button className={styles["tpHeader03__support-btn"]}>지원하기</button>
+// 						<button aria-label="메뉴 열기" className={styles.tpHeader03__menuBtn} onClick={() => setMenuOpen(!menuOpen)}>
+//               <ul><li /><li /><li /></ul>
+// 						</button>
+// 					</div>
+// 				</div>
+// 				<nav className={`${styles.tpHeader03__sideMenu} ${menuOpen ? styles.active : ""}`}>
+// 					<button aria-label="메뉴 닫기" className={styles["tpHeader03__sideMenu-closeBtn"]} onClick={() => setMenuOpen(!menuOpen)}>×</button>
+//             <ul className={styles.sideMenu__lists}>
+//               {menuItems.map((item) => (
+//                 <li key={item.id} className={styles.list}>
+//                   <a href={item.link} className={styles["list-text"]}>{item.label}</a>
+//                 </li>
+//               ))}
+//             </ul>
+// 				</nav>
+// 		</header>
+// 	);
+// };  
+
+// export default TpHeader03;
+
+
+
+
+
+
+
 import React, { useState } from "react";
 import styles from "./TpHeader03.module.scss";
 
@@ -999,7 +1060,21 @@ const hexToRgba = (hex = '#FFFFFF', opacity = 1) => {
     return `rgba(${(c >> 16) & 255},${(c >> 8) & 255},${c & 255},${opacity})`;
 };
 
-const TpHeader03 = ({ logo, menuItems = [] }) => {
+// 링크에서 페이지 인덱스를 추출하는 헬퍼 함수
+const getPageIndexFromLink = (link) => {
+  if (typeof link !== 'string') return null;
+  try {
+    // URL 객체를 사용해 search 파라미터를 쉽게 파싱합니다.
+    const url = new URL(link, 'http://dummy-base.com');
+    const page = url.searchParams.get('page');
+    return page !== null ? parseInt(page, 10) : null;
+  } catch (e) {
+    console.error("잘못된 링크 형식입니다:", link);
+    return null;
+  }
+}
+
+const TpHeader03 = ({ logo, menuItems = [], setCurrentPageIndex }) => {
 	const [menuOpen, setMenuOpen] = useState(false);
 	
   const headerStyle = {
@@ -1011,6 +1086,17 @@ const TpHeader03 = ({ logo, menuItems = [] }) => {
     fontWeight: logo?.fontWeight,
     color: logo?.color,
   };
+
+  // ✅ [핵심 수정] 메뉴 클릭 시 페이지를 새로고침하는 대신,
+  // 부모 컴포넌트로부터 받은 페이지 전환 함수(setCurrentPageIndex)를 호출합니다.
+  const handleMenuClick = (e, link) => {
+    e.preventDefault(); // a 태그의 기본 동작(페이지 이동)을 막습니다.
+    const pageIndex = getPageIndexFromLink(link);
+    if (pageIndex !== null && setCurrentPageIndex) {
+        setCurrentPageIndex(pageIndex);
+    }
+    setMenuOpen(false); // 메뉴를 클릭하면 사이드 메뉴가 닫히도록 합니다.
+  }
 
 	return (
 		<header role="banner" className={styles.tpHeader03} style={headerStyle}>
@@ -1030,7 +1116,13 @@ const TpHeader03 = ({ logo, menuItems = [] }) => {
             <ul className={styles.sideMenu__lists}>
               {menuItems.map((item) => (
                 <li key={item.id} className={styles.list}>
-                  <a href={item.link} className={styles["list-text"]}>{item.label}</a>
+                  <a 
+                    href={item.link} 
+                    onClick={(e) => handleMenuClick(e, item.link)} 
+                    className={styles["list-text"]}
+                  >
+                    {item.label}
+                  </a>
                 </li>
               ))}
             </ul>
@@ -1040,7 +1132,6 @@ const TpHeader03 = ({ logo, menuItems = [] }) => {
 };  
 
 export default TpHeader03;
-
 
 
 

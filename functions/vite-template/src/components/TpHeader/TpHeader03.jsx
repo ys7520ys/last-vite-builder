@@ -1331,7 +1331,107 @@
 
 
 
-import React, { useState } from "react";
+// import React, { useState } from "react";
+// import styles from "./TpHeader03.module.scss";
+
+// const hexToRgba = (hex = '#FFFFFF', opacity = 1) => {
+//     if (!hex || !/^#([A-Fa-f0-9]{3}){1,2}$/.test(hex)) return `rgba(255, 255, 255, ${opacity})`;
+//     let c = hex.substring(1).split('');
+//     if (c.length === 3) { c = [c[0], c[0], c[1], c[1], c[2], c[2]]; }
+//     c = '0x' + c.join('');
+//     return `rgba(${(c >> 16) & 255},${(c >> 8) & 255},${c & 255},${opacity})`;
+// };
+
+// const getPageIndexFromLink = (link) => {
+//   if (typeof link !== 'string') return null;
+//   try {
+//     const url = new URL(link, 'http://dummy-base.com');
+//     const page = url.searchParams.get('page');
+//     return page !== null ? parseInt(page, 10) : null;
+//   } catch (e) {
+//     console.error("잘못된 링크 형식입니다:", link);
+//     return null;
+//   }
+// }
+
+// const TpHeader03 = ({ logo, menuItems = [], setCurrentPageIndex }) => {
+// 	const [menuOpen, setMenuOpen] = useState(false);
+	
+//   const headerStyle = {
+//     backgroundColor: hexToRgba(logo?.backgroundColor, logo?.backgroundOpacity),
+//     borderBottom: `${logo?.borderBottomWidth || 0}px solid ${logo?.borderBottomColor || 'transparent'}`,
+//   };
+
+//   const containerStyle = {
+//     '--padding-top': `${logo?.paddingTop ?? 16}px`,
+//     '--padding-bottom': `${logo?.paddingBottom ?? 16}px`,
+//     '--padding-left': `${logo?.paddingLeft ?? 24}px`,
+//     '--padding-right': `${logo?.paddingRight ?? 24}px`,
+//     '--max-width': logo?.maxWidth === null ? 'none' : `${logo?.maxWidth ?? 1200}px`,
+//   };
+
+//   const buttonStyle = {
+//     backgroundColor: logo?.buttonBgColor,
+//     color: logo?.buttonTextColor
+//   };
+
+//   const logoStyle = {
+//     fontSize: logo?.fontSize,
+//     fontWeight: logo?.fontWeight,
+//     color: logo?.color,
+//   };
+
+//   const handleMenuClick = (e, link) => {
+//     e.preventDefault();
+//     const pageIndex = getPageIndexFromLink(link);
+//     if (pageIndex !== null && setCurrentPageIndex) {
+//         setCurrentPageIndex(pageIndex);
+//     }
+//     setMenuOpen(false);
+//   }
+
+// 	return (
+// 		<header role="banner" className={styles.tpHeader03} style={headerStyle}>
+// 			<div className={styles.tpHeader03__container} style={containerStyle}>
+// 					<div className={styles.tpHeader03__logo} style={logoStyle}>
+// 						{logo?.text || "회사로고"}
+// 					</div>
+// 					<div className={styles.tpHeader03__right}>
+// 						<button className={styles["tpHeader03__support-btn"]} style={buttonStyle}>{logo?.buttonText || "지원하기"}</button>
+// 						<button aria-label="메뉴 열기" className={styles.tpHeader03__menuBtn} onClick={() => setMenuOpen(!menuOpen)}>
+//               <ul><li /><li /><li /></ul>
+// 						</button>
+// 					</div>
+// 				</div>
+// 				<nav className={`${styles.tpHeader03__sideMenu} ${menuOpen ? styles.active : ""}`}>
+// 					<button aria-label="메뉴 닫기" className={styles["tpHeader03__sideMenu-closeBtn"]} onClick={() => setMenuOpen(!menuOpen)}>×</button>
+//             <ul className={styles.sideMenu__lists}>
+//               {menuItems.map((item) => (
+//                 <li key={item.id} className={styles.list}>
+//                   <a href={item.link} onClick={(e) => handleMenuClick(e, item.link)} className={styles["list-text"]}>
+//                     {item.label}
+//                   </a>
+//                 </li>
+//               ))}
+//             </ul>
+// 				</nav>
+// 		</header>
+// 	);
+// };  
+
+// export default TpHeader03;
+
+
+
+
+
+
+
+
+
+
+
+import React, { useState, useEffect } from "react";
 import styles from "./TpHeader03.module.scss";
 
 const hexToRgba = (hex = '#FFFFFF', opacity = 1) => {
@@ -1357,9 +1457,28 @@ const getPageIndexFromLink = (link) => {
 const TpHeader03 = ({ logo, menuItems = [], setCurrentPageIndex }) => {
 	const [menuOpen, setMenuOpen] = useState(false);
 	
+  useEffect(() => {
+    if (logo?.customFonts) {
+      logo.customFonts.forEach(font => {
+          const styleId = `custom-font-${font.name.replace(/\s+/g, '-')}`;
+          if (document.getElementById(styleId)) return;
+
+          const style = document.createElement('style');
+          style.id = styleId;
+          
+          if (font.type === 'font-face' && font.rule) {
+            style.textContent = font.rule;
+          }
+          
+          document.head.appendChild(style);
+      });
+    }
+  }, [logo?.customFonts]);
+
   const headerStyle = {
     backgroundColor: hexToRgba(logo?.backgroundColor, logo?.backgroundOpacity),
     borderBottom: `${logo?.borderBottomWidth || 0}px solid ${logo?.borderBottomColor || 'transparent'}`,
+    fontFamily: logo?.fontFamily ?? "'Noto Sans KR', sans-serif",
   };
 
   const containerStyle = {
@@ -1381,6 +1500,11 @@ const TpHeader03 = ({ logo, menuItems = [], setCurrentPageIndex }) => {
     color: logo?.color,
   };
 
+  const hamburgerLineStyle = {
+    backgroundColor: logo?.hamburgerColor ?? '#212121',
+    height: `${logo?.hamburgerThickness ?? 2}px`,
+  };
+
   const handleMenuClick = (e, link) => {
     e.preventDefault();
     const pageIndex = getPageIndexFromLink(link);
@@ -1399,7 +1523,11 @@ const TpHeader03 = ({ logo, menuItems = [], setCurrentPageIndex }) => {
 					<div className={styles.tpHeader03__right}>
 						<button className={styles["tpHeader03__support-btn"]} style={buttonStyle}>{logo?.buttonText || "지원하기"}</button>
 						<button aria-label="메뉴 열기" className={styles.tpHeader03__menuBtn} onClick={() => setMenuOpen(!menuOpen)}>
-              <ul><li /><li /><li /></ul>
+              <ul>
+                <li style={hamburgerLineStyle} />
+                <li style={hamburgerLineStyle} />
+                <li style={hamburgerLineStyle} />
+              </ul>
 						</button>
 					</div>
 				</div>

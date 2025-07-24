@@ -1135,7 +1135,190 @@
 
 
 
-"use client";
+// "use client";
+
+// import React, { useEffect, useRef, useState } from "react";
+// import styles from "./TpBanner04.module.scss";
+// import { gsap } from "gsap";
+// import ScrollTrigger from "gsap/ScrollTrigger";
+
+// gsap.registerPlugin(ScrollTrigger);
+
+// const TpBanner04 = ({
+//   title = "건강한 하루의 시작",
+//   subTitle = "신선한 재료로 만들어지는 건강한 습관",
+//   mediaUrl = "/videos/default.mp4",
+//   mediaType = "video",
+//   align = "center",
+//   buttonText = "지금 문의하기",
+// }) => {
+//   const sectionRef = useRef(null);
+//   const videoRef = useRef(null);
+//   const titleRef = useRef(null);
+//   const subTitleRef = useRef(null);
+//   const btnRef = useRef(null);
+//   const [viewMode, setViewMode] = useState('is-pc');
+//   const [isImageLoaded, setIsImageLoaded] = useState(false);
+
+//   useEffect(() => {
+//     if (mediaType === 'image' && mediaUrl) {
+//       const img = new Image();
+//       img.src = mediaUrl;
+//       img.onload = () => setIsImageLoaded(true);
+//     }
+//   }, [mediaUrl, mediaType]);
+
+//   useEffect(() => {
+//     const video = videoRef.current;
+//     if (!video) return;
+
+//     const fadeDuration = 0.5;
+
+//     const handleTimeUpdate = () => {
+//       const { currentTime, duration } = video;
+//       if (isNaN(duration)) return;
+
+//       if (currentTime < fadeDuration) {
+//         video.style.opacity = currentTime / fadeDuration;
+//       } else if (currentTime > duration - fadeDuration) {
+//         video.style.opacity = (duration - currentTime) / fadeDuration;
+//       } else {
+//         if (video.style.opacity !== '1') {
+//           video.style.opacity = 1;
+//         }
+//       }
+//     };
+    
+//     const handleLoadedData = () => {
+//       video.style.opacity = 0;
+//     };
+
+//     video.addEventListener('loadeddata', handleLoadedData);
+//     video.addEventListener('timeupdate', handleTimeUpdate);
+
+//     return () => {
+//       video.removeEventListener('loadeddata', handleLoadedData);
+//       video.removeEventListener('timeupdate', handleTimeUpdate);
+//     };
+//   }, [mediaUrl]);
+
+//   useEffect(() => {
+//     const updateResponsiveClass = () => {
+//       const width = window.innerWidth;
+//       if (width <= 768) {
+//         setViewMode('is-mobile');
+//       } else if (width <= 1200) {
+//         setViewMode('is-tablet');
+//       } else {
+//         setViewMode('is-pc');
+//       }
+//     };
+
+//     updateResponsiveClass();
+//     window.addEventListener("resize", updateResponsiveClass);
+//     return () => window.removeEventListener("resize", updateResponsiveClass);
+//   }, []);
+
+//   useEffect(() => {
+//     if (!sectionRef.current) return;
+
+//     const ctx = gsap.context(() => {
+//       const tl = gsap.timeline({
+//         scrollTrigger: {
+//           trigger: sectionRef.current,
+//           start: "top 30%",
+//           once: true,
+//         },
+//       });
+
+//       if (titleRef.current) {
+//         tl.from(titleRef.current, {
+//           opacity: 0,
+//           y: 100,
+//           duration: 0.8,
+//           ease: "power3.out",
+//         });
+//       }
+
+//       if (subTitleRef.current) {
+//         tl.from(subTitleRef.current, {
+//           opacity: 0,
+//           y: 40,
+//           duration: 0.6,
+//           ease: "power3.out",
+//         }, "-=0.2");
+//       }
+
+//       if (btnRef.current) {
+//         tl.from(btnRef.current, {
+//           opacity: 0,
+//           y: 40,
+//           duration: 0.5,
+//           ease: "power3.out",
+//         }, "-=0.3");
+//       }
+//     }, sectionRef);
+
+//     return () => ctx.revert();
+//   }, []);
+
+//   const sectionClassName = `${styles.tpBanner04} ${styles[viewMode] || ''}`;
+
+//   return (
+//     <section ref={sectionRef} className={sectionClassName}>
+//       {mediaType === "video" ? (
+//         <video
+//           ref={videoRef}
+//           key={mediaUrl}
+//           autoPlay
+//           loop
+//           muted
+//           playsInline
+//           preload="auto"
+//           className={styles.background}
+//           style={{ opacity: 0 }}
+//         >
+//           <source src={mediaUrl} type="video/mp4" />
+//         </video>
+//       ) : (
+//         <img
+//           key={mediaUrl}
+//           src={mediaUrl}
+//           alt="배경 이미지"
+//           className={styles.background}
+//           style={{
+//             objectFit: "cover",
+//             width: "100%",
+//             height: "100%",
+//             opacity: isImageLoaded ? 1 : 0,
+//           }}
+//         />
+//       )}
+
+//       <div className={styles.text} style={{ textAlign: align }}>
+//         <h2 ref={titleRef} className={styles.title}>
+//           {title.split("\n").map((line, i) => (
+//             <span key={i}>{line}<br /></span>
+//           ))}
+//         </h2>
+//         <p ref={subTitleRef} className={styles.subTitle}>
+//           {subTitle.split("\n").map((line, i) => (
+//             <span key={i}>{line}<br /></span>
+//           ))}
+//         </p>
+//         <button ref={btnRef} className={styles.btn}>{buttonText}</button>
+//       </div>
+//     </section>
+//   );
+// };
+
+// export default TpBanner04;
+
+
+
+
+
+
 
 import React, { useEffect, useRef, useState } from "react";
 import styles from "./TpBanner04.module.scss";
@@ -1144,14 +1327,18 @@ import ScrollTrigger from "gsap/ScrollTrigger";
 
 gsap.registerPlugin(ScrollTrigger);
 
-const TpBanner04 = ({
-  title = "건강한 하루의 시작",
-  subTitle = "신선한 재료로 만들어지는 건강한 습관",
-  mediaUrl = "/videos/default.mp4",
-  mediaType = "video",
-  align = "center",
-  buttonText = "지금 문의하기",
-}) => {
+const TpBanner04 = ({ bannerData = {} }) => {
+  const {
+    mediaUrl,
+    mediaType = "video",
+    title = "건강한 하루의 시작",
+    subTitle = "신선한 재료로 만들어지는 건강한 습관",
+    buttonText = "지금 문의하기",
+    align = "center",
+    customFonts = [],
+    styles: bannerStyles = {},
+  } = bannerData;
+
   const sectionRef = useRef(null);
   const videoRef = useRef(null);
   const titleRef = useRef(null);
@@ -1159,6 +1346,19 @@ const TpBanner04 = ({
   const btnRef = useRef(null);
   const [viewMode, setViewMode] = useState('is-pc');
   const [isImageLoaded, setIsImageLoaded] = useState(false);
+
+  useEffect(() => {
+    if (customFonts && customFonts.length > 0) {
+      const styleId = `custom-banner-fonts`;
+      let styleTag = document.getElementById(styleId);
+      if (!styleTag) {
+        styleTag = document.createElement('style');
+        styleTag.id = styleId;
+        document.head.appendChild(styleTag);
+      }
+      styleTag.innerHTML = customFonts.map(font => font.code).join('\n');
+    }
+  }, [customFonts]);
 
   useEffect(() => {
     if (mediaType === 'image' && mediaUrl) {
@@ -1173,140 +1373,97 @@ const TpBanner04 = ({
     if (!video) return;
 
     const fadeDuration = 0.5;
-
     const handleTimeUpdate = () => {
+      if (!video.duration) return;
       const { currentTime, duration } = video;
-      if (isNaN(duration)) return;
-
-      if (currentTime < fadeDuration) {
-        video.style.opacity = currentTime / fadeDuration;
-      } else if (currentTime > duration - fadeDuration) {
-        video.style.opacity = (duration - currentTime) / fadeDuration;
-      } else {
-        if (video.style.opacity !== '1') {
-          video.style.opacity = 1;
-        }
-      }
+      if (currentTime < fadeDuration) video.style.opacity = currentTime / fadeDuration;
+      else if (currentTime > duration - fadeDuration) video.style.opacity = (duration - currentTime) / fadeDuration;
+      else if (video.style.opacity !== '1') video.style.opacity = 1;
     };
     
-    const handleLoadedData = () => {
-      video.style.opacity = 0;
-    };
-
-    video.addEventListener('loadeddata', handleLoadedData);
+    video.addEventListener('loadeddata', () => video.style.opacity = 0);
     video.addEventListener('timeupdate', handleTimeUpdate);
 
     return () => {
-      video.removeEventListener('loadeddata', handleLoadedData);
-      video.removeEventListener('timeupdate', handleTimeUpdate);
+      if (video) {
+        video.removeEventListener('loadeddata', () => video.style.opacity = 0);
+        video.removeEventListener('timeupdate', handleTimeUpdate);
+      }
     };
-  }, [mediaUrl]);
+  }, [mediaUrl, mediaType]);
 
   useEffect(() => {
     const updateResponsiveClass = () => {
       const width = window.innerWidth;
-      if (width <= 768) {
-        setViewMode('is-mobile');
-      } else if (width <= 1200) {
-        setViewMode('is-tablet');
-      } else {
-        setViewMode('is-pc');
-      }
+      setViewMode(width <= 768 ? 'is-mobile' : width <= 1200 ? 'is-tablet' : 'is-pc');
     };
-
     updateResponsiveClass();
     window.addEventListener("resize", updateResponsiveClass);
     return () => window.removeEventListener("resize", updateResponsiveClass);
   }, []);
 
   useEffect(() => {
-    if (!sectionRef.current) return;
-
     const ctx = gsap.context(() => {
-      const tl = gsap.timeline({
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: "top 30%",
-          once: true,
-        },
-      });
-
-      if (titleRef.current) {
-        tl.from(titleRef.current, {
-          opacity: 0,
-          y: 100,
-          duration: 0.8,
-          ease: "power3.out",
-        });
-      }
-
-      if (subTitleRef.current) {
-        tl.from(subTitleRef.current, {
-          opacity: 0,
-          y: 40,
-          duration: 0.6,
-          ease: "power3.out",
-        }, "-=0.2");
-      }
-
-      if (btnRef.current) {
-        tl.from(btnRef.current, {
-          opacity: 0,
-          y: 40,
-          duration: 0.5,
-          ease: "power3.out",
-        }, "-=0.3");
-      }
+      const tl = gsap.timeline({ scrollTrigger: { trigger: sectionRef.current, start: "top 30%", once: true } });
+      tl.from(titleRef.current, { opacity: 0, y: 100, duration: 0.8, ease: "power3.out" })
+        .from(subTitleRef.current, { opacity: 0, y: 40, duration: 0.6, ease: "power3.out" }, "-=0.2")
+        .from(btnRef.current, { opacity: 0, y: 40, duration: 0.5, ease: "power3.out" }, "-=0.3");
     }, sectionRef);
-
     return () => ctx.revert();
   }, []);
 
   const sectionClassName = `${styles.tpBanner04} ${styles[viewMode] || ''}`;
 
+  const titleStyle = {
+    color: bannerStyles.title?.color,
+    fontFamily: bannerStyles.title?.fontFamily,
+    fontSize: `${bannerStyles.title?.fontSize}px`,
+    marginBottom: `${bannerStyles.title?.marginBottom}px`,
+  };
+
+  const subTitleStyle = {
+    color: bannerStyles.subTitle?.color,
+    fontFamily: bannerStyles.subTitle?.fontFamily,
+    fontSize: `${bannerStyles.subTitle?.fontSize}px`,
+    marginBottom: `${bannerStyles.subTitle?.marginBottom}px`,
+  };
+
+  const buttonStyle = {
+    color: bannerStyles.button?.color,
+    backgroundColor: bannerStyles.button?.backgroundColor,
+    fontFamily: bannerStyles.button?.fontFamily,
+    fontSize: `${bannerStyles.button?.fontSize}px`,
+  };
+
   return (
     <section ref={sectionRef} className={sectionClassName}>
-      {mediaType === "video" ? (
+      {mediaType === "video" && mediaUrl ? (
         <video
           ref={videoRef}
           key={mediaUrl}
-          autoPlay
-          loop
-          muted
-          playsInline
-          preload="auto"
+          autoPlay loop muted playsInline preload="auto"
           className={styles.background}
           style={{ opacity: 0 }}
         >
           <source src={mediaUrl} type="video/mp4" />
         </video>
-      ) : (
+      ) : mediaType === "image" && mediaUrl ? (
         <img
-          key={mediaUrl}
-          src={mediaUrl}
-          alt="배경 이미지"
-          className={styles.background}
-          style={{
-            objectFit: "cover",
-            width: "100%",
-            height: "100%",
-            opacity: isImageLoaded ? 1 : 0,
-          }}
+          key={mediaUrl} src={mediaUrl} alt="배경 이미지" className={styles.background}
+          style={{ objectFit: "cover", width: "100%", height: "100%", opacity: isImageLoaded ? 1 : 0 }}
         />
-      )}
+      ) : null}
 
       <div className={styles.text} style={{ textAlign: align }}>
-        <h2 ref={titleRef} className={styles.title}>
-          {title.split("\n").map((line, i) => (
-            <span key={i}>{line}<br /></span>
-          ))}
+        <h2 ref={titleRef} className={styles.title} style={titleStyle}>
+          {title.split("\n").map((line, i) => <span key={i}>{line}<br /></span>)}
         </h2>
-        <p ref={subTitleRef} className={styles.subTitle}>
-          {subTitle.split("\n").map((line, i) => (
-            <span key={i}>{line}<br /></span>
-          ))}
+        <p ref={subTitleRef} className={styles.subTitle} style={subTitleStyle}>
+          {subTitle.split("\n").map((line, i) => <span key={i}>{line}<br /></span>)}
         </p>
-        <button ref={btnRef} className={styles.btn}>{buttonText}</button>
+        <button ref={btnRef} className={styles.btn} style={buttonStyle}>
+          {buttonText}
+        </button>
       </div>
     </section>
   );

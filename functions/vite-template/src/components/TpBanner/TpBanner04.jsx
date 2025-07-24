@@ -1335,9 +1335,11 @@ const TpBanner04 = ({ bannerData = {} }) => {
     subTitle = "신선한 재료로 만들어지는 건강한 습관",
     buttonText = "지금 문의하기",
     align = "center",
-    customFonts = [],
     styles: bannerStyles = {},
   } = bannerData;
+
+  // `customFonts`를 `styles` 객체 안에서 올바르게 추출합니다.
+  const { customFonts = [] } = bannerStyles;
 
   const sectionRef = useRef(null);
   const videoRef = useRef(null);
@@ -1356,7 +1358,7 @@ const TpBanner04 = ({ bannerData = {} }) => {
         styleTag.id = styleId;
         document.head.appendChild(styleTag);
       }
-      styleTag.innerHTML = customFonts.map(font => font.code).join('\n');
+      styleTag.innerHTML = customFonts.map(font => font.fontFace || font.code).join('\n');
     }
   }, [customFonts]);
 
@@ -1368,29 +1370,26 @@ const TpBanner04 = ({ bannerData = {} }) => {
     }
   }, [mediaUrl, mediaType]);
 
+  // 영상 페이드인 로직을 더 안정적인 방식으로 수정합니다.
   useEffect(() => {
     const video = videoRef.current;
     if (!video) return;
 
-    const fadeDuration = 0.5;
-    const handleTimeUpdate = () => {
-      if (!video.duration) return;
-      const { currentTime, duration } = video;
-      if (currentTime < fadeDuration) video.style.opacity = currentTime / fadeDuration;
-      else if (currentTime > duration - fadeDuration) video.style.opacity = (duration - currentTime) / fadeDuration;
-      else if (video.style.opacity !== '1') video.style.opacity = 1;
+    const onCanPlay = () => {
+      video.style.transition = 'opacity 0.8s ease-in';
+      video.style.opacity = 1;
     };
-    
-    video.addEventListener('loadeddata', () => video.style.opacity = 0);
-    video.addEventListener('timeupdate', handleTimeUpdate);
+
+    video.style.opacity = 0; // 초기 상태는 투명
+    video.addEventListener('canplay', onCanPlay);
 
     return () => {
       if (video) {
-        video.removeEventListener('loadeddata', () => video.style.opacity = 0);
-        video.removeEventListener('timeupdate', handleTimeUpdate);
+        video.removeEventListener('canplay', onCanPlay);
       }
     };
-  }, [mediaUrl, mediaType]);
+  }, [mediaUrl]);
+
 
   useEffect(() => {
     const updateResponsiveClass = () => {
@@ -1414,26 +1413,21 @@ const TpBanner04 = ({ bannerData = {} }) => {
 
   const sectionClassName = `${styles.tpBanner04} ${styles[viewMode] || ''}`;
 
-  const titleStyle = {
-    color: bannerStyles.title?.color,
-    fontFamily: bannerStyles.title?.fontFamily,
-    fontSize: `${bannerStyles.title?.fontSize}px`,
-    marginBottom: `${bannerStyles.title?.marginBottom}px`,
+  const getStyleObject = (styleData) => {
+    if (!styleData) return {};
+    const result = {
+        color: styleData.color,
+        fontFamily: styleData.fontFamily,
+    };
+    if (styleData.fontSize) result.fontSize = `${styleData.fontSize}px`;
+    if (styleData.marginBottom) result.marginBottom = `${styleData.marginBottom}px`;
+    if (styleData.backgroundColor) result.backgroundColor = styleData.backgroundColor;
+    return result;
   };
 
-  const subTitleStyle = {
-    color: bannerStyles.subTitle?.color,
-    fontFamily: bannerStyles.subTitle?.fontFamily,
-    fontSize: `${bannerStyles.subTitle?.fontSize}px`,
-    marginBottom: `${bannerStyles.subTitle?.marginBottom}px`,
-  };
-
-  const buttonStyle = {
-    color: bannerStyles.button?.color,
-    backgroundColor: bannerStyles.button?.backgroundColor,
-    fontFamily: bannerStyles.button?.fontFamily,
-    fontSize: `${bannerStyles.button?.fontSize}px`,
-  };
+  const titleStyle = getStyleObject(bannerStyles.title);
+  const subTitleStyle = getStyleObject(bannerStyles.subTitle);
+  const buttonStyle = getStyleObject(bannerStyles.button);
 
   return (
     <section ref={sectionRef} className={sectionClassName}>
@@ -1443,7 +1437,6 @@ const TpBanner04 = ({ bannerData = {} }) => {
           key={mediaUrl}
           autoPlay loop muted playsInline preload="auto"
           className={styles.background}
-          style={{ opacity: 0 }}
         >
           <source src={mediaUrl} type="video/mp4" />
         </video>
@@ -1456,10 +1449,10 @@ const TpBanner04 = ({ bannerData = {} }) => {
 
       <div className={styles.text} style={{ textAlign: align }}>
         <h2 ref={titleRef} className={styles.title} style={titleStyle}>
-          {title.split("\n").map((line, i) => <span key={i}>{line}<br /></span>)}
+          {title && title.split("\n").map((line, i) => <span key={i}>{line}<br /></span>)}
         </h2>
         <p ref={subTitleRef} className={styles.subTitle} style={subTitleStyle}>
-          {subTitle.split("\n").map((line, i) => <span key={i}>{line}<br /></span>)}
+          {subTitle && subTitle.split("\n").map((line, i) => <span key={i}>{line}<br /></span>)}
         </p>
         <button ref={btnRef} className={styles.btn} style={buttonStyle}>
           {buttonText}

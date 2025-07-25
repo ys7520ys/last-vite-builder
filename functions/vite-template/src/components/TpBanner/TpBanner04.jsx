@@ -1634,7 +1634,7 @@ const TpBanner04 = ({ bannerData = {} }) => {
     mediaType = "video",
     title = "건강한 하루의 시작",
     subTitle = "신선한 재료로 만들어지는 건강한 습관",
-    buttonText = "지금 문의하기",
+    buttonText = "지금 문의d하기",
     align = "center",
     styles: bannerStyles = {},
   } = bannerData;

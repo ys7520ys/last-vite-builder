@@ -1473,157 +1473,6 @@
 
 
 
-// import React, { useEffect, useRef, useState } from "react";
-// import styles from "./TpBanner04.module.scss";
-// import { gsap } from "gsap";
-// import ScrollTrigger from "gsap/ScrollTrigger";
-
-// gsap.registerPlugin(ScrollTrigger);
-
-// const TpBanner04 = ({ bannerData = {} }) => {
-//   const {
-//     mediaUrl,
-//     mediaType = "video",
-//     title = "건강한 하루의 시작",
-//     subTitle = "신선한 재료로 만들어지는 건강한 습관",
-//     buttonText = "지금 문의하기",
-//     align = "center",
-//     styles: bannerStyles = {},
-//   } = bannerData;
-
-//   // `customFonts`를 `styles` 객체 안에서 올바르게 추출합니다.
-//   const { customFonts = [] } = bannerStyles;
-
-//   const sectionRef = useRef(null);
-//   const videoRef = useRef(null);
-//   const titleRef = useRef(null);
-//   const subTitleRef = useRef(null);
-//   const btnRef = useRef(null);
-//   const [viewMode, setViewMode] = useState('is-pc');
-//   const [isImageLoaded, setIsImageLoaded] = useState(false);
-
-//   useEffect(() => {
-//     if (customFonts && customFonts.length > 0) {
-//       const styleId = `custom-banner-fonts`;
-//       let styleTag = document.getElementById(styleId);
-//       if (!styleTag) {
-//         styleTag = document.createElement('style');
-//         styleTag.id = styleId;
-//         document.head.appendChild(styleTag);
-//       }
-//       styleTag.innerHTML = customFonts.map(font => font.fontFace || font.code).join('\n');
-//     }
-//   }, [customFonts]);
-
-//   useEffect(() => {
-//     if (mediaType === 'image' && mediaUrl) {
-//       const img = new Image();
-//       img.src = mediaUrl;
-//       img.onload = () => setIsImageLoaded(true);
-//     }
-//   }, [mediaUrl, mediaType]);
-
-//   // 영상 페이드인 로직을 더 안정적인 방식으로 수정합니다.
-//   useEffect(() => {
-//     const video = videoRef.current;
-//     if (!video) return;
-
-//     const onCanPlay = () => {
-//       video.style.transition = 'opacity 0.8s ease-in';
-//       video.style.opacity = 1;
-//     };
-
-//     video.style.opacity = 0; // 초기 상태는 투명
-//     video.addEventListener('canplay', onCanPlay);
-
-//     return () => {
-//       if (video) {
-//         video.removeEventListener('canplay', onCanPlay);
-//       }
-//     };
-//   }, [mediaUrl]);
-
-
-//   useEffect(() => {
-//     const updateResponsiveClass = () => {
-//       const width = window.innerWidth;
-//       setViewMode(width <= 768 ? 'is-mobile' : width <= 1200 ? 'is-tablet' : 'is-pc');
-//     };
-//     updateResponsiveClass();
-//     window.addEventListener("resize", updateResponsiveClass);
-//     return () => window.removeEventListener("resize", updateResponsiveClass);
-//   }, []);
-
-//   useEffect(() => {
-//     const ctx = gsap.context(() => {
-//       const tl = gsap.timeline({ scrollTrigger: { trigger: sectionRef.current, start: "top 30%", once: true } });
-//       tl.from(titleRef.current, { opacity: 0, y: 100, duration: 0.8, ease: "power3.out" })
-//         .from(subTitleRef.current, { opacity: 0, y: 40, duration: 0.6, ease: "power3.out" }, "-=0.2")
-//         .from(btnRef.current, { opacity: 0, y: 40, duration: 0.5, ease: "power3.out" }, "-=0.3");
-//     }, sectionRef);
-//     return () => ctx.revert();
-//   }, []);
-
-//   const sectionClassName = `${styles.tpBanner04} ${styles[viewMode] || ''}`;
-
-//   const getStyleObject = (styleData) => {
-//     if (!styleData) return {};
-//     const result = {
-//         color: styleData.color,
-//         fontFamily: styleData.fontFamily,
-//     };
-//     if (styleData.fontSize) result.fontSize = `${styleData.fontSize}px`;
-//     if (styleData.marginBottom) result.marginBottom = `${styleData.marginBottom}px`;
-//     if (styleData.backgroundColor) result.backgroundColor = styleData.backgroundColor;
-//     return result;
-//   };
-
-//   const titleStyle = getStyleObject(bannerStyles.title);
-//   const subTitleStyle = getStyleObject(bannerStyles.subTitle);
-//   const buttonStyle = getStyleObject(bannerStyles.button);
-
-//   return (
-//     <section ref={sectionRef} className={sectionClassName}>
-//       {mediaType === "video" && mediaUrl ? (
-//         <video
-//           ref={videoRef}
-//           key={mediaUrl}
-//           autoPlay loop muted playsInline preload="auto"
-//           className={styles.background}
-//         >
-//           <source src={mediaUrl} type="video/mp4" />
-//         </video>
-//       ) : mediaType === "image" && mediaUrl ? (
-//         <img
-//           key={mediaUrl} src={mediaUrl} alt="배경 이미지" className={styles.background}
-//           style={{ objectFit: "cover", width: "100%", height: "100%", opacity: isImageLoaded ? 1 : 0 }}
-//         />
-//       ) : null}
-
-//       <div className={styles.text} style={{ textAlign: align }}>
-//         <h2 ref={titleRef} className={styles.title} style={titleStyle}>
-//           {title && title.split("\n").map((line, i) => <span key={i}>{line}<br /></span>)}
-//         </h2>
-//         <p ref={subTitleRef} className={styles.subTitle} style={subTitleStyle}>
-//           {subTitle && subTitle.split("\n").map((line, i) => <span key={i}>{line}<br /></span>)}
-//         </p>
-//         <button ref={btnRef} className={styles.btn} style={buttonStyle}>
-//           {buttonText}
-//         </button>
-//       </div>
-//     </section>
-//   );
-// };
-
-// export default TpBanner04;
-
-
-
-
-
-
-
-
 import React, { useEffect, useRef, useState } from "react";
 import styles from "./TpBanner04.module.scss";
 import { gsap } from "gsap";
@@ -1634,15 +1483,15 @@ gsap.registerPlugin(ScrollTrigger);
 const TpBanner04 = ({ bannerData = {} }) => {
   const {
     mediaUrl,
-    mediaType,
-    title,
-    subTitle,
-    buttonText,
-    align,
+    mediaType = "video",
+    title = "건강한 하루의 시작",
+    subTitle = "신선한 재료로 만들어지는 건강한 습관",
+    buttonText = "지금 문의하기",
+    align = "center",
     styles: bannerStyles = {},
-    id,
   } = bannerData;
 
+  // `customFonts`를 `styles` 객체 안에서 올바르게 추출합니다.
   const { customFonts = [] } = bannerStyles;
 
   const sectionRef = useRef(null);
@@ -1655,35 +1504,36 @@ const TpBanner04 = ({ bannerData = {} }) => {
 
   useEffect(() => {
     if (customFonts && customFonts.length > 0) {
-      const styleId = `custom-banner-fonts-${id}`;
+      const styleId = `custom-banner-fonts`;
       let styleTag = document.getElementById(styleId);
       if (!styleTag) {
         styleTag = document.createElement('style');
         styleTag.id = styleId;
         document.head.appendChild(styleTag);
       }
-      styleTag.innerHTML = customFonts.map(font => font.fontFace).join('\n');
+      styleTag.innerHTML = customFonts.map(font => font.fontFace || font.code).join('\n');
     }
-  }, [customFonts, id]);
+  }, [customFonts]);
 
   useEffect(() => {
     if (mediaType === 'image' && mediaUrl) {
       const img = new Image();
       img.src = mediaUrl;
       img.onload = () => setIsImageLoaded(true);
-    } else {
-        setIsImageLoaded(false);
     }
   }, [mediaUrl, mediaType]);
-  
+
+  // 영상 페이드인 로직을 더 안정적인 방식으로 수정합니다.
   useEffect(() => {
     const video = videoRef.current;
-    if (!video || mediaType !== 'video') return;
+    if (!video) return;
 
-    video.style.opacity = 0;
     const onCanPlay = () => {
-      gsap.to(video, { opacity: 1, duration: 0.8, ease: 'power2.inOut' });
+      video.style.transition = 'opacity 0.8s ease-in';
+      video.style.opacity = 1;
     };
+
+    video.style.opacity = 0; // 초기 상태는 투명
     video.addEventListener('canplay', onCanPlay);
 
     return () => {
@@ -1691,7 +1541,7 @@ const TpBanner04 = ({ bannerData = {} }) => {
         video.removeEventListener('canplay', onCanPlay);
       }
     };
-  }, [mediaUrl, mediaType]);
+  }, [mediaUrl]);
 
 
   useEffect(() => {
@@ -1707,23 +1557,21 @@ const TpBanner04 = ({ bannerData = {} }) => {
   useEffect(() => {
     const ctx = gsap.context(() => {
       const tl = gsap.timeline({ scrollTrigger: { trigger: sectionRef.current, start: "top 30%", once: true } });
-      tl.from([titleRef.current, subTitleRef.current, btnRef.current], { 
-        opacity: 0, 
-        y: 40, 
-        duration: 0.8, 
-        ease: "power3.out",
-        stagger: 0.2
-      });
+      tl.from(titleRef.current, { opacity: 0, y: 100, duration: 0.8, ease: "power3.out" })
+        .from(subTitleRef.current, { opacity: 0, y: 40, duration: 0.6, ease: "power3.out" }, "-=0.2")
+        .from(btnRef.current, { opacity: 0, y: 40, duration: 0.5, ease: "power3.out" }, "-=0.3");
     }, sectionRef);
     return () => ctx.revert();
   }, []);
 
   const sectionClassName = `${styles.tpBanner04} ${styles[viewMode] || ''}`;
 
-  const getStyleObject = (styleData = {}) => {
-    const result = {};
-    if (styleData.color) result.color = styleData.color;
-    if (styleData.fontFamily) result.fontFamily = styleData.fontFamily;
+  const getStyleObject = (styleData) => {
+    if (!styleData) return {};
+    const result = {
+        color: styleData.color,
+        fontFamily: styleData.fontFamily,
+    };
     if (styleData.fontSize) result.fontSize = `${styleData.fontSize}px`;
     if (styleData.marginBottom) result.marginBottom = `${styleData.marginBottom}px`;
     if (styleData.backgroundColor) result.backgroundColor = styleData.backgroundColor;
@@ -1746,13 +1594,9 @@ const TpBanner04 = ({ bannerData = {} }) => {
           <source src={mediaUrl} type="video/mp4" />
         </video>
       ) : mediaType === "image" && mediaUrl ? (
-        <div
-          className={styles.background}
-          style={{ 
-            backgroundImage: `url(${mediaUrl})`,
-            opacity: isImageLoaded ? 1 : 0,
-            transition: 'opacity 0.8s ease-in'
-          }}
+        <img
+          key={mediaUrl} src={mediaUrl} alt="배경 이미지" className={styles.background}
+          style={{ objectFit: "cover", width: "100%", height: "100%", opacity: isImageLoaded ? 1 : 0 }}
         />
       ) : null}
 

@@ -1780,50 +1780,48 @@ import React, { useEffect, useRef, useState } from "react";
 import styles from "./TpBanner04.module.scss";
 
 const TpBanner04 = ({ bannerData = {} }) => {
-  const [data, setData] = useState({});
-  const sectionRef = useRef(null);
-  const videoRef = useRef(null);
-  const [isMediaReady, setIsMediaReady] = useState(false);
-  const [viewMode, setViewMode] = useState('is-pc');
+  // 전달받은 bannerData와 기본값을 병합하여 최종 데이터를 생성합니다.
+  // 이로써 데이터가 일부 누락되어도 안전하게 렌더링됩니다.
+  const defaultData = {
+    mediaUrl: "",
+    mediaType: "video",
+    title: "건강한 하루의 시작",
+    subTitle: "신선한 재료로 만들어지는 건강한 습관",
+    buttonText: "지금 문의하기",
+    align: "center",
+    styles: {
+      customFonts: [],
+      title: { fontSize: 48, color: '#ffffff', marginBottom: 20, fontFamily: "'Pretendard', sans-serif" },
+      subTitle: { fontSize: 18, color: '#ffffff', marginBottom: 30, fontFamily: "'Pretendard', sans-serif" },
+      button: { fontSize: 16, color: '#ffffff', backgroundColor: '#3182f6', fontFamily: "'Pretendard', sans-serif" },
+    },
+  };
 
-  useEffect(() => {
-    const defaultData = {
-      mediaUrl: "",
-      mediaType: "video",
-      title: "건강한 하루의 시작",
-      subTitle: "신선한 재료로 만들어지는 건강한 습관",
-      buttonText: "지금 문의하기",
-      align: "center",
-      styles: {
-        customFonts: [],
-        title: { fontSize: 48, color: '#ffffff', marginBottom: 20, fontFamily: "'Pretendard', sans-serif" },
-        subTitle: { fontSize: 18, color: '#ffffff', marginBottom: 30, fontFamily: "'Pretendard', sans-serif" },
-        button: { fontSize: 16, color: '#ffffff', backgroundColor: '#3182f6', fontFamily: "'Pretendard', sans-serif" },
-      },
-    };
+  const mergedStyles = {
+      ...defaultData.styles,
+      ...(bannerData.styles || {}),
+      title: {...defaultData.styles.title, ...(bannerData.styles?.title || {})},
+      subTitle: {...defaultData.styles.subTitle, ...(bannerData.styles?.subTitle || {})},
+      button: {...defaultData.styles.button, ...(bannerData.styles?.button || {})},
+      customFonts: bannerData.styles?.customFonts || [],
+  };
 
-    const mergedStyles = {
-        ...defaultData.styles,
-        ...(bannerData.styles || {}),
-        title: {...defaultData.styles.title, ...(bannerData.styles?.title || {})},
-        subTitle: {...defaultData.styles.subTitle, ...(bannerData.styles?.subTitle || {})},
-        button: {...defaultData.styles.button, ...(bannerData.styles?.button || {})},
-        customFonts: bannerData.styles?.customFonts || [],
-    };
-
-    const mergedData = {
-        ...defaultData,
-        ...bannerData,
-        styles: mergedStyles,
-    };
-    setData(mergedData);
-  }, [bannerData]);
+  const data = {
+      ...defaultData,
+      ...bannerData,
+      styles: mergedStyles,
+  };
 
   const {
     mediaUrl, mediaType, title, subTitle, buttonText, align, styles: bannerStyles,
   } = data;
   
   const { customFonts = [] } = bannerStyles || {};
+  
+  const sectionRef = useRef(null);
+  const videoRef = useRef(null);
+  const [isMediaReady, setIsMediaReady] = useState(false);
+  const [viewMode, setViewMode] = useState('is-pc');
 
   useEffect(() => {
     if (customFonts && customFonts.length > 0) {
@@ -1838,6 +1836,7 @@ const TpBanner04 = ({ bannerData = {} }) => {
     }
   }, [customFonts]);
   
+  // 미디어(이미지/비디오)가 실제로 로드되었는지 확인하는 로직을 단순화하고 안정화했습니다.
   useEffect(() => {
     setIsMediaReady(false);
     if (!mediaUrl) return;
@@ -1847,10 +1846,17 @@ const TpBanner04 = ({ bannerData = {} }) => {
       img.src = mediaUrl;
       img.onload = () => setIsMediaReady(true);
       img.onerror = () => console.error("배너 이미지 로딩 실패:", mediaUrl);
-    } else if (mediaType === 'video' && videoRef.current) {
+    } else if (mediaType === 'video') {
         const video = videoRef.current;
-        video.oncanplay = () => setIsMediaReady(true);
-        video.onerror = () => console.error("배너 비디오 로딩 실패:", mediaUrl);
+        if(video) {
+            const handleCanPlay = () => setIsMediaReady(true);
+            video.addEventListener('canplay', handleCanPlay);
+            // 비디오가 이미 로드된 경우를 대비
+            if (video.readyState >= 3) {
+                handleCanPlay();
+            }
+            return () => video.removeEventListener('canplay', handleCanPlay);
+        }
     }
   }, [mediaUrl, mediaType]);
 
@@ -1874,6 +1880,7 @@ const TpBanner04 = ({ bannerData = {} }) => {
           key={mediaUrl}
           autoPlay loop muted playsInline preload="auto"
           className={styles.background}
+          // isMediaReady가 true일 때만 opacity를 1로 만들어 화면에 표시합니다.
           style={{ opacity: isMediaReady ? 1 : 0 }}
         >
           <source src={mediaUrl} type="video/mp4" />

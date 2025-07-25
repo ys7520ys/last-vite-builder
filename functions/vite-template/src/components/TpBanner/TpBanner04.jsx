@@ -1620,6 +1620,10 @@
 
 
 
+
+
+
+
 import React, { useEffect, useRef, useState } from "react";
 import styles from "./TpBanner04.module.scss";
 import { gsap } from "gsap";
@@ -1627,38 +1631,68 @@ import ScrollTrigger from "gsap/ScrollTrigger";
 
 gsap.registerPlugin(ScrollTrigger);
 
-const TpBanner04 = ({ data: bannerData = {} }) => {
-  // Defensive defaults to prevent crashes and show something meaningful
+const TpBanner04 = ({ bannerData = {} }) => {
   const {
     mediaUrl,
-    mediaType = "video",
-    title = "건강한 하루의 시작",
-    subTitle = "신선한 재료로 만들어지는 건강한 습관",
-    buttonText = "지금 문의하기",
-    align = "center",
+    mediaType,
+    title,
+    subTitle,
+    buttonText,
+    align,
     styles: bannerStyles = {},
+    id,
   } = bannerData;
 
   const { customFonts = [] } = bannerStyles;
 
   const sectionRef = useRef(null);
+  const videoRef = useRef(null);
+  const titleRef = useRef(null);
+  const subTitleRef = useRef(null);
+  const btnRef = useRef(null);
   const [viewMode, setViewMode] = useState('is-pc');
+  const [isImageLoaded, setIsImageLoaded] = useState(false);
 
   useEffect(() => {
     if (customFonts && customFonts.length > 0) {
-      const styleId = `custom-banner-fonts-${Math.random().toString(36).substr(2, 9)}`;
-      const styleTag = document.createElement('style');
-      styleTag.id = styleId;
+      const styleId = `custom-banner-fonts-${id}`;
+      let styleTag = document.getElementById(styleId);
+      if (!styleTag) {
+        styleTag = document.createElement('style');
+        styleTag.id = styleId;
+        document.head.appendChild(styleTag);
+      }
       styleTag.innerHTML = customFonts.map(font => font.fontFace).join('\n');
-      document.head.appendChild(styleTag);
-      return () => {
-        const tagToRemove = document.getElementById(styleId);
-        if (tagToRemove) {
-          tagToRemove.parentNode.removeChild(tagToRemove);
-        }
-      };
     }
-  }, [customFonts]);
+  }, [customFonts, id]);
+
+  useEffect(() => {
+    if (mediaType === 'image' && mediaUrl) {
+      const img = new Image();
+      img.src = mediaUrl;
+      img.onload = () => setIsImageLoaded(true);
+    } else {
+        setIsImageLoaded(false);
+    }
+  }, [mediaUrl, mediaType]);
+  
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video || mediaType !== 'video') return;
+
+    video.style.opacity = 0;
+    const onCanPlay = () => {
+      gsap.to(video, { opacity: 1, duration: 0.8, ease: 'power2.inOut' });
+    };
+    video.addEventListener('canplay', onCanPlay);
+
+    return () => {
+      if (video) {
+        video.removeEventListener('canplay', onCanPlay);
+      }
+    };
+  }, [mediaUrl, mediaType]);
+
 
   useEffect(() => {
     const updateResponsiveClass = () => {
@@ -1670,39 +1704,41 @@ const TpBanner04 = ({ data: bannerData = {} }) => {
     return () => window.removeEventListener("resize", updateResponsiveClass);
   }, []);
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     const ctx = gsap.context(() => {
-        const elements = [`.${styles.title}`, `.${styles.subTitle}`, `.${styles.btn}`];
-        gsap.from(elements, {
-            opacity: 0,
-            y: 50,
-            duration: 0.8,
-            ease: 'power3.out',
-            stagger: 0.2,
-            scrollTrigger: {
-              trigger: sectionRef.current,
-              start: 'top 80%',
-              once: true,
-            },
-        });
+      const tl = gsap.timeline({ scrollTrigger: { trigger: sectionRef.current, start: "top 30%", once: true } });
+      tl.from([titleRef.current, subTitleRef.current, btnRef.current], { 
+        opacity: 0, 
+        y: 40, 
+        duration: 0.8, 
+        ease: "power3.out",
+        stagger: 0.2
+      });
     }, sectionRef);
     return () => ctx.revert();
-  }, [mediaUrl]);
-
-  const getStyleObject = (styleData = {}) => ({
-    color: styleData.color,
-    fontFamily: styleData.fontFamily,
-    fontSize: styleData.fontSize ? `${styleData.fontSize}px` : undefined,
-    marginBottom: styleData.marginBottom ? `${styleData.marginBottom}px` : undefined,
-    backgroundColor: styleData.backgroundColor,
-  });
+  }, []);
 
   const sectionClassName = `${styles.tpBanner04} ${styles[viewMode] || ''}`;
+
+  const getStyleObject = (styleData = {}) => {
+    const result = {};
+    if (styleData.color) result.color = styleData.color;
+    if (styleData.fontFamily) result.fontFamily = styleData.fontFamily;
+    if (styleData.fontSize) result.fontSize = `${styleData.fontSize}px`;
+    if (styleData.marginBottom) result.marginBottom = `${styleData.marginBottom}px`;
+    if (styleData.backgroundColor) result.backgroundColor = styleData.backgroundColor;
+    return result;
+  };
+
+  const titleStyle = getStyleObject(bannerStyles.title);
+  const subTitleStyle = getStyleObject(bannerStyles.subTitle);
+  const buttonStyle = getStyleObject(bannerStyles.button);
 
   return (
     <section ref={sectionRef} className={sectionClassName}>
       {mediaType === "video" && mediaUrl ? (
         <video
+          ref={videoRef}
           key={mediaUrl}
           autoPlay loop muted playsInline preload="auto"
           className={styles.background}
@@ -1710,21 +1746,26 @@ const TpBanner04 = ({ data: bannerData = {} }) => {
           <source src={mediaUrl} type="video/mp4" />
         </video>
       ) : mediaType === "image" && mediaUrl ? (
-        <div className={styles.background} style={{ backgroundImage: `url(${mediaUrl})` }} />
+        <div
+          className={styles.background}
+          style={{ 
+            backgroundImage: `url(${mediaUrl})`,
+            opacity: isImageLoaded ? 1 : 0,
+            transition: 'opacity 0.8s ease-in'
+          }}
+        />
       ) : null}
 
       <div className={styles.text} style={{ textAlign: align }}>
-        <h2 className={styles.title} style={getStyleObject(bannerStyles.title)}>
-          {(title || '').split("\n").map((line, i) => <span key={i}>{line}<br /></span>)}
+        <h2 ref={titleRef} className={styles.title} style={titleStyle}>
+          {title && title.split("\n").map((line, i) => <span key={i}>{line}<br /></span>)}
         </h2>
-        <p className={styles.subTitle} style={getStyleObject(bannerStyles.subTitle)}>
-          {(subTitle || '').split("\n").map((line, i) => <span key={i}>{line}<br /></span>)}
+        <p ref={subTitleRef} className={styles.subTitle} style={subTitleStyle}>
+          {subTitle && subTitle.split("\n").map((line, i) => <span key={i}>{line}<br /></span>)}
         </p>
-        {buttonText && (
-            <button className={styles.btn} style={getStyleObject(bannerStyles.button)}>
-                {buttonText}
-            </button>
-        )}
+        <button ref={btnRef} className={styles.btn} style={buttonStyle}>
+          {buttonText}
+        </button>
       </div>
     </section>
   );

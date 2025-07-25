@@ -1471,8 +1471,6 @@
 
 
 
-
-
 import React, { useEffect, useRef, useState } from "react";
 import styles from "./TpBanner04.module.scss";
 import { gsap } from "gsap";
@@ -1491,7 +1489,6 @@ const TpBanner04 = ({ bannerData = {} }) => {
     styles: bannerStyles = {},
   } = bannerData;
 
-  // `customFonts`를 `styles` 객체 안에서 올바르게 추출합니다.
   const { customFonts = [] } = bannerStyles;
 
   const sectionRef = useRef(null);
@@ -1523,17 +1520,15 @@ const TpBanner04 = ({ bannerData = {} }) => {
     }
   }, [mediaUrl, mediaType]);
 
-  // 영상 페이드인 로직을 더 안정적인 방식으로 수정합니다.
   useEffect(() => {
     const video = videoRef.current;
     if (!video) return;
 
     const onCanPlay = () => {
-      video.style.transition = 'opacity 0.8s ease-in';
-      video.style.opacity = 1;
+      gsap.to(video, { opacity: 1, duration: 0.8, ease: 'ease-in' });
     };
 
-    video.style.opacity = 0; // 초기 상태는 투명
+    gsap.set(video, { opacity: 0 });
     video.addEventListener('canplay', onCanPlay);
 
     return () => {
@@ -1607,9 +1602,11 @@ const TpBanner04 = ({ bannerData = {} }) => {
         <p ref={subTitleRef} className={styles.subTitle} style={subTitleStyle}>
           {subTitle && subTitle.split("\n").map((line, i) => <span key={i}>{line}<br /></span>)}
         </p>
-        <button ref={btnRef} className={styles.btn} style={buttonStyle}>
-          {buttonText}
-        </button>
+        {buttonText && (
+          <button ref={btnRef} className={styles.btn} style={buttonStyle}>
+            {buttonText}
+          </button>
+        )}
       </div>
     </section>
   );

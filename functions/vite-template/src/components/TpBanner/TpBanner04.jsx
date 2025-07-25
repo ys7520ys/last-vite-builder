@@ -1471,12 +1471,12 @@
 
 
 
-import React, { useEffect, useRef, useState } from "react";
-import styles from "./TpBanner04.module.scss";
-import { gsap } from "gsap";
-import ScrollTrigger from "gsap/ScrollTrigger";
+// import React, { useEffect, useRef, useState } from "react";
+// import styles from "./TpBanner04.module.scss";
+// import { gsap } from "gsap";
+// import ScrollTrigger from "gsap/ScrollTrigger";
 
-gsap.registerPlugin(ScrollTrigger);
+// gsap.registerPlugin(ScrollTrigger);
 
 // const TpBanner04 = ({ bannerData = {} }) => {
 //   const {
@@ -1616,7 +1616,18 @@ gsap.registerPlugin(ScrollTrigger);
 
 
 
-// ... existing code ...
+
+
+
+
+
+import React, { useEffect, useRef, useState } from "react";
+import styles from "./TpBanner04.module.scss";
+import { gsap } from "gsap";
+import ScrollTrigger from "gsap/ScrollTrigger";
+
+gsap.registerPlugin(ScrollTrigger);
+
 const TpBanner04 = ({ bannerData = {} }) => {
   const {
     mediaUrl,
@@ -1632,6 +1643,9 @@ const TpBanner04 = ({ bannerData = {} }) => {
 
   const sectionRef = useRef(null);
   const videoRef = useRef(null);
+  const titleRef = useRef(null);
+  const subTitleRef = useRef(null);
+  const btnRef = useRef(null);
   const [viewMode, setViewMode] = useState('is-pc');
   const [isImageLoaded, setIsImageLoaded] = useState(false);
 
@@ -1660,34 +1674,16 @@ const TpBanner04 = ({ bannerData = {} }) => {
     const video = videoRef.current;
     if (!video) return;
 
-    const fadeDuration = 0.5;
-
-    const handleTimeUpdate = () => {
-      const { currentTime, duration } = video;
-      if (isNaN(duration)) return;
-
-      if (currentTime < fadeDuration) {
-        video.style.opacity = (currentTime / fadeDuration).toString();
-      } else if (currentTime > duration - fadeDuration) {
-        video.style.opacity = ((duration - currentTime) / fadeDuration).toString();
-      } else {
-        if (video.style.opacity !== '1') {
-          video.style.opacity = '1';
-        }
-      }
-    };
-    
-    const handleLoadedData = () => {
-      video.style.opacity = '0';
+    const onCanPlay = () => {
+      gsap.to(video, { opacity: 1, duration: 0.8, ease: 'ease-in' });
     };
 
-    video.addEventListener('loadeddata', handleLoadedData);
-    video.addEventListener('timeupdate', handleTimeUpdate);
+    gsap.set(video, { opacity: 0 });
+    video.addEventListener('canplay', onCanPlay);
 
     return () => {
-      if(video) {
-        video.removeEventListener('loadeddata', handleLoadedData);
-        video.removeEventListener('timeupdate', handleTimeUpdate);
+      if (video) {
+        video.removeEventListener('canplay', onCanPlay);
       }
     };
   }, [mediaUrl]);
@@ -1705,23 +1701,30 @@ const TpBanner04 = ({ bannerData = {} }) => {
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      const tl = gsap.timeline({
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: "top 80%",
-          once: true,
-        },
-      });
-      tl.from(`.${styles.title}`, { opacity: 0, y: 60, duration: 0.8, ease: "power3.out" })
-        .from(`.${styles.subTitle}`, { opacity: 0, y: 40, duration: 0.6, ease: "power3.out" }, "-=0.4")
-        .from(`.${styles.btn}`, { opacity: 0, y: 40, duration: 0.5, ease: "power3.out" }, "-=0.4");
+      const tl = gsap.timeline({ scrollTrigger: { trigger: sectionRef.current, start: "top 30%", once: true } });
+      tl.from(titleRef.current, { opacity: 0, y: 100, duration: 0.8, ease: "power3.out" })
+        .from(subTitleRef.current, { opacity: 0, y: 40, duration: 0.6, ease: "power3.out" }, "-=0.2")
+        .from(btnRef.current, { opacity: 0, y: 40, duration: 0.5, ease: "power3.out" }, "-=0.3");
     }, sectionRef);
     return () => ctx.revert();
-  }, [mediaUrl]); // mediaUrl 변경 시 애니메이션 재실행
+  }, []);
 
   const sectionClassName = `${styles.tpBanner04} ${styles[viewMode] || ''}`;
 
-// ... existing code ...
+  const getStyleObject = (styleData) => {
+    if (!styleData) return {};
+    const result = {
+        color: styleData.color,
+        fontFamily: styleData.fontFamily,
+    };
+    if (styleData.fontSize) result.fontSize = `${styleData.fontSize}px`;
+    if (styleData.marginBottom) result.marginBottom = `${styleData.marginBottom}px`;
+    if (styleData.backgroundColor) result.backgroundColor = styleData.backgroundColor;
+    return result;
+  };
+
+  const titleStyle = getStyleObject(bannerStyles.title);
+  const subTitleStyle = getStyleObject(bannerStyles.subTitle);
   const buttonStyle = getStyleObject(bannerStyles.button);
 
   return (
@@ -1732,32 +1735,25 @@ const TpBanner04 = ({ bannerData = {} }) => {
           key={mediaUrl}
           autoPlay loop muted playsInline preload="auto"
           className={styles.background}
-          style={{ opacity: 0 }}
         >
           <source src={mediaUrl} type="video/mp4" />
         </video>
       ) : mediaType === "image" && mediaUrl ? (
         <img
-          key={mediaUrl} 
-          src={mediaUrl} 
-          alt="배경 이미지" 
-          className={styles.background}
-          style={{ 
-            opacity: isImageLoaded ? 1 : 0, 
-            transition: 'opacity 0.5s ease-in-out'
-          }}
+          key={mediaUrl} src={mediaUrl} alt="배경 이미지" className={styles.background}
+          style={{ objectFit: "cover", width: "100%", height: "100%", opacity: isImageLoaded ? 1 : 0, transition: 'opacity 0.5s ease-in-out' }}
         />
       ) : null}
 
       <div className={styles.text} style={{ textAlign: align }}>
-        <h2 className={styles.title} style={titleStyle}>
+        <h2 ref={titleRef} className={styles.title} style={titleStyle}>
           {title && title.split("\n").map((line, i) => <span key={i}>{line}<br /></span>)}
         </h2>
-        <p className={styles.subTitle} style={subTitleStyle}>
+        <p ref={subTitleRef} className={styles.subTitle} style={subTitleStyle}>
           {subTitle && subTitle.split("\n").map((line, i) => <span key={i}>{line}<br /></span>)}
         </p>
         {buttonText && (
-          <button className={styles.btn} style={buttonStyle}>
+          <button ref={btnRef} className={styles.btn} style={buttonStyle}>
             {buttonText}
           </button>
         )}

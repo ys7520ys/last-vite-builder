@@ -524,70 +524,155 @@
 //   );
 // }
 
-import React from "react";
-import { useNavigate, useLocation } from "react-router-dom";
+// import React from "react";
+// import { useNavigate, useLocation } from "react-router-dom";
+// import { AnimatePresence } from "framer-motion";
+
+// // 컴포넌트 임포트
+// import TpHeader03 from "./components/TpHeader/TpHeader03";
+// import TpBanner04 from "./components/TpBanner/TpBanner04";
+// // ... 다른 컴포넌트들도 필요에 따라 import ...
+// import AnimatedPage from "./components/AnimatedPage";
+
+// // 렌더링할 컴포넌트와 타입을 짝지어주는 맵(Map)
+// const componentMap = {
+//   배너04: TpBanner04,
+//   // ... 다른 컴포넌트들 ...
+// };
+
+// // 렌더링할 헤더와 타입을 짝지어주는 맵(Map)
+// const headerMap = {
+//   헤더03: TpHeader03,
+//   // ... 다른 헤더 타입들 ...
+// };
+
+// // ✅ [수정] props로 siteData와 currentPageData를 직접 받도록 변경
+// function CustomerContent({ siteData, currentPageData }) {
+//   const navigate = useNavigate();
+//   const location = useLocation();
+
+//   // App.jsx에서 내려준 props를 바로 사용합니다.
+//   const { logo, menuItems, headerType } = siteData;
+//   const { components, path } = currentPageData;
+
+//   if (!currentPageData) {
+//     return <div>페이지 데이터가 없습니다.</div>;
+//   }
+
+//   // pageData에서 headerType을 찾아 headerMap에서 해당하는 컴포넌트를 가져옴
+//   const HeaderComponent = headerMap[headerType];
+
+//   // 헤더 메뉴 클릭 시 페이지를 이동시키는 함수
+//   const handleNavigate = (pagePath) => {
+//     // 현재 경로와 목표 경로가 다를 때만 이동을 실행합니다.
+//     if (location.pathname !== pagePath) {
+//       navigate(pagePath);
+//     }
+//   };
+
+//   return (
+//     <main style={{ background: "#111", color: "#111", margin: 0, padding: 0 }}>
+//       {HeaderComponent && (
+//         <HeaderComponent
+//           logo={logo}
+//           menuItems={menuItems}
+//           isPreview={true}
+//           onPreviewNavigate={handleNavigate}
+//         />
+//       )}
+
+//       {/* 페이지 전환 애니메이션을 위해 현재 페이지의 고유 경로(path)를 key로 사용 */}
+//       <AnimatePresence mode="wait" onExitComplete={() => window.scrollTo(0, 0)}>
+//         <AnimatedPage key={path}>
+//           {components && components.length > 0 ? (
+//             components.map((comp) => {
+//               const Component = componentMap[comp.type];
+//               return Comp ? (
+//                 <Component key={comp.id} {...comp} isPreview />
+//               ) : (
+//                 <div key={comp.id} style={{ padding: "60px", background: "#f0f0f0", color: 'red' }}>
+//                   ⚠️ 알 수 없는 컴포넌트: <strong>{comp.type}</strong>
+//                 </div>
+//               );
+//             })
+//           ) : (
+//             <div style={{ padding: "100px", textAlign: "center", color: "#fff" }}>
+//               ❌ 페이지 구성 요소가 없습니다
+//             </div>
+//           )}
+//         </AnimatedPage>
+//       </AnimatePresence>
+//     </main>
+//   );
+// }
+
+// export default CustomerContent;
+
+
+import { useState } from "react";
 import { AnimatePresence } from "framer-motion";
 
 // 컴포넌트 임포트
+import TpHeader02 from "./components/TpHeader/TpHeader02";
 import TpHeader03 from "./components/TpHeader/TpHeader03";
 import TpBanner04 from "./components/TpBanner/TpBanner04";
-// ... 다른 컴포넌트들도 필요에 따라 import ...
+import TpSection04 from "./components/TpSection/TpSection04";
 import AnimatedPage from "./components/AnimatedPage";
 
 // 렌더링할 컴포넌트와 타입을 짝지어주는 맵(Map)
+// ✅ [수정] 사용 가능한 모든 컴포넌트를 등록합니다.
 const componentMap = {
-  배너04: TpBanner04,
-  // ... 다른 컴포넌트들 ...
+  "배너04": TpBanner04,
+  "섹션04": TpSection04,
 };
 
 // 렌더링할 헤더와 타입을 짝지어주는 맵(Map)
+// ✅ [수정] 사용 가능한 모든 헤더를 등록합니다.
 const headerMap = {
-  헤더03: TpHeader03,
-  // ... 다른 헤더 타입들 ...
+  "헤더02": TpHeader02,
+  "헤더03": TpHeader03,
 };
 
-// ✅ [수정] props로 siteData와 currentPageData를 직접 받도록 변경
-function CustomerContent({ siteData, currentPageData }) {
-  const navigate = useNavigate();
-  const location = useLocation();
+export default function CustomerContent({ pageData }) {
+  const [currentPageIndex, setCurrentPageIndex] = useState(0);
+  const [pageKey, setPageKey] = useState(0);
 
-  // App.jsx에서 내려준 props를 바로 사용합니다.
-  const { logo, menuItems, headerType } = siteData;
-  const { components, path } = currentPageData;
-
-  if (!currentPageData) {
-    return <div>페이지 데이터가 없습니다.</div>;
-  }
-
-  // pageData에서 headerType을 찾아 headerMap에서 해당하는 컴포넌트를 가져옴
-  const HeaderComponent = headerMap[headerType];
-
-  // 헤더 메뉴 클릭 시 페이지를 이동시키는 함수
-  const handleNavigate = (pagePath) => {
-    // 현재 경로와 목표 경로가 다를 때만 이동을 실행합니다.
-    if (location.pathname !== pagePath) {
-      navigate(pagePath);
-    }
+  const handleChangePage = (index) => {
+    if (index === currentPageIndex) return;
+    setPageKey((prev) => prev + 1);
+    setCurrentPageIndex(index);
   };
 
+  const currentPage = pageData?.pages?.[currentPageIndex] || { components: [] };
+  const isValidComponents =
+    Array.isArray(currentPage.components) && currentPage.components.length > 0;
+
+  const HeaderComponent = headerMap[pageData.headerType];
+
   return (
-    <main style={{ background: "#111", color: "#111", margin: 0, padding: 0 }}>
+    <main style={{ background: "#111", margin: 0, padding: 0 }}>
       {HeaderComponent && (
         <HeaderComponent
-          logo={logo}
-          menuItems={menuItems}
-          isPreview={true}
-          onPreviewNavigate={handleNavigate}
+          isPreview
+          setCurrentPageIndex={handleChangePage}
+          currentPageIndex={currentPageIndex}
+          menuItems={pageData.menuItems || []}
+          logo={pageData.logo}
         />
       )}
 
-      {/* 페이지 전환 애니메이션을 위해 현재 페이지의 고유 경로(path)를 key로 사용 */}
-      <AnimatePresence mode="wait" onExitComplete={() => window.scrollTo(0, 0)}>
-        <AnimatedPage key={path}>
-          {components && components.length > 0 ? (
-            components.map((comp) => {
+      <AnimatePresence
+        mode="wait"
+        onExitComplete={() => {
+          window.scrollTo({ top: 0 });
+        }}
+      >
+        <AnimatedPage key={pageKey} index={currentPageIndex}>
+          {isValidComponents ? (
+            currentPage.components.map((comp) => {
+              // ✅ [수정] 변수명을 'Component'로 통일하여 오류를 해결했습니다.
               const Component = componentMap[comp.type];
-              return Comp ? (
+              return Component ? (
                 <Component key={comp.id} {...comp} isPreview />
               ) : (
                 <div key={comp.id} style={{ padding: "60px", background: "#f0f0f0", color: 'red' }}>
@@ -605,9 +690,6 @@ function CustomerContent({ siteData, currentPageData }) {
     </main>
   );
 }
-
-export default CustomerContent;
-
 
 
 

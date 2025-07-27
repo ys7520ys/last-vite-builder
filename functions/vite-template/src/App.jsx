@@ -248,14 +248,95 @@
 
 
 
+// import { useEffect, useState } from "react";
+// import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+// import CustomerContent from "./CustomerContent";
+// import "./App.css";
+
+// // CustomerContent에 pageData를 전달하는 역할
+// function CustomerPageWrapper({ pageData }) {
+//   return <CustomerContent pageData={pageData} />;
+// }
+
+// function App() {
+//   const [pageData, setPageData] = useState(null);
+//   const [error, setError] = useState(null);
+
+//   useEffect(() => {
+//     const fetchData = async () => {
+//       try {
+//         // data.json을 비동기적으로 가져옵니다.
+//         const response = await fetch("/data.json");
+//         if (!response.ok) {
+//           throw new Error(`HTTP error! status: ${response.status}`);
+//         }
+//         const data = await response.json();
+//         setPageData(data);
+//       } catch (e) {
+//         console.error("Failed to fetch page data:", e);
+//         setError(e.message);
+//       }
+//     };
+
+//     fetchData();
+//   }, []);
+
+//   // 데이터 로딩 중 에러 발생 시
+//   if (error) {
+//     return <div>Error loading page data: {error}</div>;
+//   }
+
+//   // 데이터 로딩 중일 때 (이 코드가 없어서 이전 오류 발생)
+//   if (!pageData) {
+//     return <div>Loading...</div>;
+//   }
+
+//   return (
+//     <BrowserRouter>
+//       <Routes>
+//         {/* 기본 경로(/)로 오면 '/preview?page=0'으로 자동 이동 */}
+//         <Route path="/" element={<Navigate to="/preview?page=0" replace />} />
+//         {/* 미리보기 페이지 */}
+//         <Route
+//           path="/preview"
+//           element={<CustomerPageWrapper pageData={pageData} />}
+//         />
+//       </Routes>
+//     </BrowserRouter>
+//   );
+// }
+
+// export default App;
 import { useEffect, useState } from "react";
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
+import { AnimatePresence } from "framer-motion";
 import CustomerContent from "./CustomerContent";
 import "./App.css";
 
-// CustomerContent에 pageData를 전달하는 역할
-function CustomerPageWrapper({ pageData }) {
-  return <CustomerContent pageData={pageData} />;
+// 라우팅과 애니메이션을 관리하는 컴포넌트
+function ContentSwitcher({ pageData }) {
+  const location = useLocation();
+
+  return (
+    <AnimatePresence mode="wait" onExitComplete={() => window.scrollTo({ top: 0 })}>
+      {/* URL 경로가 바뀔 때마다 애니메이션이 동작하도록 key 설정 */}
+      <Routes location={location} key={location.pathname}>
+        {/* data.json에 있는 페이지 목록으로 동적 라우트 생성 */}
+        {pageData.pages.map((page) => (
+          <Route
+            key={page.id || page.path}
+            path={page.path}
+            element={
+              <CustomerContent
+                siteData={pageData} // 헤더, 메뉴 등 전체 사이트 정보 전달
+                currentPageData={page} // 현재 페이지에 해당하는 정보만 전달
+              />
+            }
+          />
+        ))}
+      </Routes>
+    </AnimatePresence>
+  );
 }
 
 function App() {
@@ -265,7 +346,6 @@ function App() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        // data.json을 비동기적으로 가져옵니다.
         const response = await fetch("/data.json");
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
@@ -277,31 +357,15 @@ function App() {
         setError(e.message);
       }
     };
-
     fetchData();
   }, []);
 
-  // 데이터 로딩 중 에러 발생 시
-  if (error) {
-    return <div>Error loading page data: {error}</div>;
-  }
-
-  // 데이터 로딩 중일 때 (이 코드가 없어서 이전 오류 발생)
-  if (!pageData) {
-    return <div>Loading...</div>;
-  }
+  if (error) return <div>Error loading page data: {error}</div>;
+  if (!pageData) return <div>Loading...</div>;
 
   return (
     <BrowserRouter>
-      <Routes>
-        {/* 기본 경로(/)로 오면 '/preview?page=0'으로 자동 이동 */}
-        <Route path="/" element={<Navigate to="/preview?page=0" replace />} />
-        {/* 미리보기 페이지 */}
-        <Route
-          path="/preview"
-          element={<CustomerPageWrapper pageData={pageData} />}
-        />
-      </Routes>
+      <ContentSwitcher pageData={pageData} />
     </BrowserRouter>
   );
 }

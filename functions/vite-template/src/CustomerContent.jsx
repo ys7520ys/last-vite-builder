@@ -524,6 +524,30 @@
 //   );
 // }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 // import React from "react";
 // import { useNavigate, useLocation } from "react-router-dom";
 // import { AnimatePresence } from "framer-motion";
@@ -608,9 +632,9 @@
 
 // export default CustomerContent;
 
-
 import { useState } from "react";
 import { AnimatePresence } from "framer-motion";
+import { useNavigate, useSearchParams } from "react-router-dom";
 
 // 컴포넌트 임포트
 import TpHeader02 from "./components/TpHeader/TpHeader02";
@@ -619,28 +643,29 @@ import TpBanner04 from "./components/TpBanner/TpBanner04";
 import TpSection04 from "./components/TpSection/TpSection04";
 import AnimatedPage from "./components/AnimatedPage";
 
-// 렌더링할 컴포넌트와 타입을 짝지어주는 맵(Map)
-// ✅ [수정] 사용 가능한 모든 컴포넌트를 등록합니다.
 const componentMap = {
-  "배너04": TpBanner04,
-  "섹션04": TpSection04,
+  배너04: TpBanner04,
+  섹션04: TpSection04,
 };
 
-// 렌더링할 헤더와 타입을 짝지어주는 맵(Map)
-// ✅ [수정] 사용 가능한 모든 헤더를 등록합니다.
 const headerMap = {
-  "헤더02": TpHeader02,
-  "헤더03": TpHeader03,
+  헤더02: TpHeader02,
+  헤더03: TpHeader03,
 };
 
 export default function CustomerContent({ pageData }) {
-  const [currentPageIndex, setCurrentPageIndex] = useState(0);
   const [pageKey, setPageKey] = useState(0);
+  const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
 
+  // URL에서 `page` 파라미터 값을 읽어 현재 페이지 인덱스로 사용
+  const currentPageIndex = parseInt(searchParams.get("page")) || 0;
+
+  // 페이지 변경 시 URL을 업데이트하는 함수
   const handleChangePage = (index) => {
     if (index === currentPageIndex) return;
     setPageKey((prev) => prev + 1);
-    setCurrentPageIndex(index);
+    navigate(`/preview?page=${index}`);
   };
 
   const currentPage = pageData?.pages?.[currentPageIndex] || { components: [] };
@@ -661,21 +686,15 @@ export default function CustomerContent({ pageData }) {
         />
       )}
 
-      <AnimatePresence
-        mode="wait"
-        onExitComplete={() => {
-          window.scrollTo({ top: 0 });
-        }}
-      >
+      <AnimatePresence mode="wait" onExitComplete={() => window.scrollTo({ top: 0 })}>
         <AnimatedPage key={pageKey} index={currentPageIndex}>
           {isValidComponents ? (
             currentPage.components.map((comp) => {
-              // ✅ [수정] 변수명을 'Component'로 통일하여 오류를 해결했습니다.
               const Component = componentMap[comp.type];
               return Component ? (
                 <Component key={comp.id} {...comp} isPreview />
               ) : (
-                <div key={comp.id} style={{ padding: "60px", background: "#f0f0f0", color: 'red' }}>
+                <div key={comp.id} style={{ padding: "60px", background: "#f0f0f0", color: "red" }}>
                   ⚠️ 알 수 없는 컴포넌트: <strong>{comp.type}</strong>
                 </div>
               );
@@ -690,9 +709,6 @@ export default function CustomerContent({ pageData }) {
     </main>
   );
 }
-
-
-
 
 
 

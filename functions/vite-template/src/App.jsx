@@ -248,66 +248,59 @@
 
 
 
-
-
-
-import React, { useEffect, useState } from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import CustomerContent from "./CustomerContent";
+import "./App.css";
+
+// CustomerContent에 pageData를 전달하는 역할
+function CustomerPageWrapper({ pageData }) {
+  return <CustomerContent pageData={pageData} />;
+}
 
 function App() {
-  // 1. 데이터를 저장할 state를 만듭니다. 초기값은 null입니다.
-  const [data, setData] = useState(null);
+  const [pageData, setPageData] = useState(null);
+  const [error, setError] = useState(null);
 
-  // 2. 컴포넌트가 처음 렌더링될 때 data.json 파일을 비동기적으로 불러옵니다.
   useEffect(() => {
-    fetch("/data.json") // Vite 환경에서는 public 폴더의 파일은 '/'를 기준으로 절대 경로로 접근합니다.
-      .then((res) => {
-        // fetch 요청이 실패했을 경우 에러를 발생시킵니다.
-        if (!res.ok) {
-          throw new Error(`HTTP error! status: ${res.status}`);
+    const fetchData = async () => {
+      try {
+        // data.json을 비동기적으로 가져옵니다.
+        const response = await fetch("/data.json");
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
         }
-        return res.json();
-      })
-      .then(setData) // 성공적으로 데이터를 가져오면 state를 업데이트합니다.
-      .catch((err) => {
-        console.error("data.json을 불러오는 데 실패했습니다:", err);
-      });
-  }, []); // 빈 배열을 전달하여 이 effect가 한 번만 실행되도록 합니다.
+        const data = await response.json();
+        setPageData(data);
+      } catch (e) {
+        console.error("Failed to fetch page data:", e);
+        setError(e.message);
+      }
+    };
 
-  // 3. 데이터를 불러오는 중일 때(data가 null일 때) 로딩 메시지를 표시합니다.
-  if (!data) {
-    return <div>사이트 데이터를 불러오는 중입니다...</div>;
+    fetchData();
+  }, []);
+
+  // 데이터 로딩 중 에러 발생 시
+  if (error) {
+    return <div>Error loading page data: {error}</div>;
   }
 
-  // 4. 데이터 로딩에 실패했거나, 데이터 형식이 올바르지 않을 경우를 대비한 방어 코드입니다.
-  if (!data.pages || data.pages.length === 0) {
-    return <div>사이트 데이터를 불러오지 못했거나, 표시할 페이지가 없습니다.</div>;
+  // 데이터 로딩 중일 때 (이 코드가 없어서 이전 오류 발생)
+  if (!pageData) {
+    return <div>Loading...</div>;
   }
 
-  // 5. 데이터가 성공적으로 로드되면 페이지를 렌더링합니다.
   return (
     <BrowserRouter>
       <Routes>
-        {/* data.json 안의 모든 페이지를 순회하며 각각의 경로에 맞는 라우트를 생성합니다. */}
-        {data.pages.map((page) => (
-          <Route
-            key={page.id}
-            path={page.path}
-            element={
-              <CustomerContent
-                siteData={{
-                  logo: data.logo,
-                  menuItems: data.menuItems,
-                  headerType: data.headerType,
-                }}
-                currentPageData={page}
-              />
-            }
-          />
-        ))}
-        {/* 일치하는 경로가 없을 때 보여줄 404 페이지 */}
-        <Route path="*" element={<div>페이지를 찾을 수 없습니다.</div>} />
+        {/* 기본 경로(/)로 오면 '/preview?page=0'으로 자동 이동 */}
+        <Route path="/" element={<Navigate to="/preview?page=0" replace />} />
+        {/* 미리보기 페이지 */}
+        <Route
+          path="/preview"
+          element={<CustomerPageWrapper pageData={pageData} />}
+        />
       </Routes>
     </BrowserRouter>
   );

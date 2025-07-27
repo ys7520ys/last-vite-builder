@@ -709,12 +709,73 @@
 //     </main>
 //   );
 // }
-import { useNavigate } from "react-router-dom";
-import AnimatedPage from "./components/AnimatedPage";
+// import { useNavigate } from "react-router-dom";
+// import AnimatedPage from "./components/AnimatedPage";
 
-// 컴포넌트 임포트
-import TpHeader02 from "./components/TpHeader/TpHeader02";
-import TpHeader03 from "./components/TpHeader/TpHeader03";
+// // 컴포넌트 임포트
+// import TpHeader02 from "./components/TpHeader/TpHeader02";
+// import TpHeader03 from "./components/TpHeader/TpHeader03";
+// import TpBanner04 from "./components/TpBanner/TpBanner04";
+// import TpSection04 from "./components/TpSection/TpSection04";
+
+// const componentMap = {
+//   배너04: TpBanner04,
+//   섹션04: TpSection04,
+// };
+
+// const headerMap = {
+//   헤더02: TpHeader02,
+//   헤더03: TpHeader03,
+// };
+
+// export default function CustomerContent({ siteData, currentPageData }) {
+//   const navigate = useNavigate();
+
+//   // 헤더 메뉴 클릭 시 해당 경로로 이동시키는 함수
+//   const handleNavigate = (path) => {
+//     navigate(path);
+//   };
+
+//   const { components, path: currentPath } = currentPageData;
+//   const isValidComponents =
+//     Array.isArray(components) && components.length > 0;
+//   const HeaderComponent = headerMap[siteData.headerType];
+
+//   return (
+//     <AnimatedPage key={currentPath}>
+//       <main style={{ background: "#111", margin: 0, padding: 0, minHeight: "100vh" }}>
+//         {HeaderComponent && (
+//           <HeaderComponent
+//             isPreview
+//             onNavigate={handleNavigate} // 페이지 이동 함수 전달
+//             menuItems={siteData.menuItems || []} // 전체 메뉴 목록 전달
+//             activePath={currentPath} // 현재 활성화된 페이지 경로 전달
+//             logo={siteData.logo}
+//           />
+//         )}
+//         {isValidComponents ? (
+//           components.map((comp) => {
+//             const Component = componentMap[comp.type];
+//             return Component ? (
+//               <Component key={comp.id} {...comp} isPreview />
+//             ) : (
+//               <div key={comp.id} style={{ padding: "60px", background: "#f0f0f0", color: "red" }}>
+//                 ⚠️ 알 수 없는 컴포넌트: <strong>{comp.type}</strong>
+//               </div>
+//             );
+//           })
+//         ) : (
+//           <div style={{ padding: "100px", textAlign: "center", color: "#fff" }}>
+//             ❌ 페이지 구성 요소가 없습니다
+//           </div>
+//         )}
+//       </main>
+//     </AnimatedPage>
+//   );
+// }
+
+
+import AnimatedPage from "./components/AnimatedPage";
 import TpBanner04 from "./components/TpBanner/TpBanner04";
 import TpSection04 from "./components/TpSection/TpSection04";
 
@@ -723,57 +784,32 @@ const componentMap = {
   섹션04: TpSection04,
 };
 
-const headerMap = {
-  헤더02: TpHeader02,
-  헤더03: TpHeader03,
-};
-
-export default function CustomerContent({ siteData, currentPageData }) {
-  const navigate = useNavigate();
-
-  // 헤더 메뉴 클릭 시 해당 경로로 이동시키는 함수
-  const handleNavigate = (path) => {
-    navigate(path);
-  };
-
+export default function CustomerContent({ currentPageData }) {
   const { components, path: currentPath } = currentPageData;
   const isValidComponents =
     Array.isArray(components) && components.length > 0;
-  const HeaderComponent = headerMap[siteData.headerType];
 
   return (
     <AnimatedPage key={currentPath}>
-      <main style={{ background: "#111", margin: 0, padding: 0, minHeight: "100vh" }}>
-        {HeaderComponent && (
-          <HeaderComponent
-            isPreview
-            onNavigate={handleNavigate} // 페이지 이동 함수 전달
-            menuItems={siteData.menuItems || []} // 전체 메뉴 목록 전달
-            activePath={currentPath} // 현재 활성화된 페이지 경로 전달
-            logo={siteData.logo}
-          />
-        )}
-        {isValidComponents ? (
-          components.map((comp) => {
-            const Component = componentMap[comp.type];
-            return Component ? (
-              <Component key={comp.id} {...comp} isPreview />
-            ) : (
-              <div key={comp.id} style={{ padding: "60px", background: "#f0f0f0", color: "red" }}>
-                ⚠️ 알 수 없는 컴포넌트: <strong>{comp.type}</strong>
-              </div>
-            );
-          })
-        ) : (
-          <div style={{ padding: "100px", textAlign: "center", color: "#fff" }}>
-            ❌ 페이지 구성 요소가 없습니다
-          </div>
-        )}
-      </main>
+      {isValidComponents ? (
+        components.map((comp) => {
+          const Component = componentMap[comp.type];
+          return Component ? (
+            <Component key={comp.id} {...comp} isPreview />
+          ) : (
+            <div key={comp.id} style={{ padding: "60px", background: "#f0f0f0", color: "red" }}>
+              ⚠️ 알 수 없는 컴포넌트: <strong>{comp.type}</strong>
+            </div>
+          );
+        })
+      ) : (
+        <div style={{ padding: "100px", textAlign: "center", color: "#fff" }}>
+          ❌ 페이지 구성 요소가 없습니다
+        </div>
+      )}
     </AnimatedPage>
   );
 }
-
 
 
 

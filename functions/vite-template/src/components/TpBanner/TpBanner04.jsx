@@ -1996,11 +1996,161 @@
 
 
 
-//성공함 건들지마마
+// //성공함 건들지마마
+// import React, { useEffect, useRef, useState } from "react";
+// import styles from "./TpBanner04.module.scss";
+
+// // props를 bannerData 객체 하나로 받는 대신, 필요한 모든 데이터를 개별적으로 받도록 수정했습니다.
+// const TpBanner04 = ({
+//   mediaUrl,
+//   mediaType = "video",
+//   title = "건강한 하루의 시작",
+//   subTitle = "신선한 재료로 만들어지는 건강한 습관",
+//   buttonText = "지금 문의하기",
+//   align = "center",
+//   styles: initialStyles = {},
+// }) => {
+  
+//   // 전달받은 개별 props와 기본값을 병합하여 최종 데이터를 생성합니다.
+//   const defaultStyles = {
+//     customFonts: [],
+//     title: { fontSize: 48, color: '#ffffff', marginBottom: 20, fontFamily: "'Pretendard', sans-serif" },
+//     subTitle: { fontSize: 18, color: '#ffffff', marginBottom: 30, fontFamily: "'Pretendard', sans-serif" },
+//     button: { fontSize: 16, color: '#ffffff', backgroundColor: '#3182f6', fontFamily: "'Pretendard', sans-serif" },
+//   };
+
+//   const bannerStyles = {
+//     ...defaultStyles,
+//     ...initialStyles,
+//     title: { ...defaultStyles.title, ...(initialStyles.title || {}) },
+//     subTitle: { ...defaultStyles.subTitle, ...(initialStyles.subTitle || {}) },
+//     button: { ...defaultStyles.button, ...(initialStyles.button || {}) },
+//   };
+  
+//   const { customFonts = [] } = bannerStyles;
+  
+//   const sectionRef = useRef(null);
+//   const videoRef = useRef(null);
+//   const [isMediaReady, setIsMediaReady] = useState(false);
+//   const [viewMode, setViewMode] = useState('is-pc');
+
+//   useEffect(() => {
+//     if (customFonts && customFonts.length > 0) {
+//       const styleId = `custom-banner-fonts`;
+//       let styleTag = document.getElementById(styleId);
+//       if (!styleTag) {
+//         styleTag = document.createElement('style');
+//         styleTag.id = styleId;
+//         document.head.appendChild(styleTag);
+//       }
+//       styleTag.innerHTML = customFonts.map(font => font.code || '').join('\n');
+//     }
+//   }, [customFonts]);
+  
+//   useEffect(() => {
+//     setIsMediaReady(false);
+//     if (!mediaUrl) return;
+
+//     if (mediaType === 'image') {
+//       const img = new Image();
+//       img.src = mediaUrl;
+//       img.onload = () => setIsMediaReady(true);
+//       img.onerror = () => console.error("배너 이미지 로딩 실패:", mediaUrl);
+//     } else if (mediaType === 'video') {
+//         const video = videoRef.current;
+//         if(video) {
+//             const handleCanPlay = () => setIsMediaReady(true);
+//             video.addEventListener('canplay', handleCanPlay);
+//             if (video.readyState >= 3) { // 비디오가 이미 로드된 경우 대비
+//                 handleCanPlay();
+//             }
+//             return () => video.removeEventListener('canplay', handleCanPlay);
+//         }
+//     }
+//   }, [mediaUrl, mediaType]);
+
+//   useEffect(() => {
+//     const updateResponsiveClass = () => {
+//       const width = window.innerWidth;
+//       setViewMode(width <= 768 ? 'is-mobile' : width <= 1200 ? 'is-tablet' : 'is-pc');
+//     };
+//     updateResponsiveClass();
+//     window.addEventListener("resize", updateResponsiveClass);
+//     return () => window.removeEventListener("resize", updateResponsiveClass);
+//   }, []);
+
+//   const sectionClassName = `${styles.tpBanner04} ${styles[viewMode] || ''}`;
+
+//   return (
+//     <section ref={sectionRef} className={sectionClassName}>
+//       {mediaType === "video" && mediaUrl ? (
+//         <video
+//           ref={videoRef}
+//           key={mediaUrl}
+//           autoPlay loop muted playsInline preload="auto"
+//           className={styles.background}
+//           style={{ opacity: isMediaReady ? 1 : 0 }}
+//         >
+//           <source src={mediaUrl} type="video/mp4" />
+//         </video>
+//       ) : mediaType === "image" && mediaUrl ? (
+//         <div
+//           key={mediaUrl}
+//           className={styles.background}
+//           style={{
+//             backgroundImage: `url(${mediaUrl})`,
+//             backgroundSize: 'cover',
+//             backgroundPosition: 'center',
+//             opacity: isMediaReady ? 1 : 0,
+//           }}
+//         />
+//       ) : null}
+
+//       <div className={styles.text} style={{ textAlign: align }}>
+//         <h2 className={styles.title} style={{
+//           color: bannerStyles.title.color,
+//           fontFamily: bannerStyles.title.fontFamily,
+//           fontSize: `${bannerStyles.title.fontSize}px`,
+//           marginBottom: `${bannerStyles.title.marginBottom}px`,
+//         }}>
+//           {title && title.split("\n").map((line, i) => <span key={i}>{line}<br /></span>)}
+//         </h2>
+//         <p className={styles.subTitle} style={{
+//           color: bannerStyles.subTitle.color,
+//           fontFamily: bannerStyles.subTitle.fontFamily,
+//           fontSize: `${bannerStyles.subTitle.fontSize}px`,
+//           marginBottom: `${bannerStyles.subTitle.marginBottom}px`,
+//         }}>
+//           {subTitle && subTitle.split("\n").map((line, i) => <span key={i}>{line}<br /></span>)}
+//         </p>
+//         {buttonText && (
+//           <button className={styles.btn} style={{
+//             color: bannerStyles.button.color,
+//             backgroundColor: bannerStyles.button.backgroundColor,
+//             fontFamily: bannerStyles.button.fontFamily,
+//             fontSize: `${bannerStyles.button.fontSize}px`,
+//           }}>
+//             {buttonText}
+//           </button>
+//         )}
+//       </div>
+//     </section>
+//   );
+// };
+
+// export default TpBanner04;
+
+
+
+
+
+
+
+
+
 import React, { useEffect, useRef, useState } from "react";
 import styles from "./TpBanner04.module.scss";
 
-// props를 bannerData 객체 하나로 받는 대신, 필요한 모든 데이터를 개별적으로 받도록 수정했습니다.
 const TpBanner04 = ({
   mediaUrl,
   mediaType = "video",
@@ -2011,7 +2161,6 @@ const TpBanner04 = ({
   styles: initialStyles = {},
 }) => {
   
-  // 전달받은 개별 props와 기본값을 병합하여 최종 데이터를 생성합니다.
   const defaultStyles = {
     customFonts: [],
     title: { fontSize: 48, color: '#ffffff', marginBottom: 20, fontFamily: "'Pretendard', sans-serif" },
@@ -2032,7 +2181,6 @@ const TpBanner04 = ({
   const sectionRef = useRef(null);
   const videoRef = useRef(null);
   const [isMediaReady, setIsMediaReady] = useState(false);
-  const [viewMode, setViewMode] = useState('is-pc');
 
   useEffect(() => {
     if (customFonts && customFonts.length > 0) {
@@ -2069,20 +2217,8 @@ const TpBanner04 = ({
     }
   }, [mediaUrl, mediaType]);
 
-  useEffect(() => {
-    const updateResponsiveClass = () => {
-      const width = window.innerWidth;
-      setViewMode(width <= 768 ? 'is-mobile' : width <= 1200 ? 'is-tablet' : 'is-pc');
-    };
-    updateResponsiveClass();
-    window.addEventListener("resize", updateResponsiveClass);
-    return () => window.removeEventListener("resize", updateResponsiveClass);
-  }, []);
-
-  const sectionClassName = `${styles.tpBanner04} ${styles[viewMode] || ''}`;
-
   return (
-    <section ref={sectionRef} className={sectionClassName}>
+    <section ref={sectionRef} className={styles.tpBanner04}>
       {mediaType === "video" && mediaUrl ? (
         <video
           ref={videoRef}
@@ -2110,7 +2246,7 @@ const TpBanner04 = ({
         <h2 className={styles.title} style={{
           color: bannerStyles.title.color,
           fontFamily: bannerStyles.title.fontFamily,
-          fontSize: `${bannerStyles.title.fontSize}px`,
+          '--base-font-size': `${bannerStyles.title.fontSize}px`,
           marginBottom: `${bannerStyles.title.marginBottom}px`,
         }}>
           {title && title.split("\n").map((line, i) => <span key={i}>{line}<br /></span>)}
@@ -2118,7 +2254,7 @@ const TpBanner04 = ({
         <p className={styles.subTitle} style={{
           color: bannerStyles.subTitle.color,
           fontFamily: bannerStyles.subTitle.fontFamily,
-          fontSize: `${bannerStyles.subTitle.fontSize}px`,
+          '--base-font-size': `${bannerStyles.subTitle.fontSize}px`,
           marginBottom: `${bannerStyles.subTitle.marginBottom}px`,
         }}>
           {subTitle && subTitle.split("\n").map((line, i) => <span key={i}>{line}<br /></span>)}
@@ -2128,7 +2264,7 @@ const TpBanner04 = ({
             color: bannerStyles.button.color,
             backgroundColor: bannerStyles.button.backgroundColor,
             fontFamily: bannerStyles.button.fontFamily,
-            fontSize: `${bannerStyles.button.fontSize}px`,
+            '--base-font-size': `${bannerStyles.button.fontSize}px`,
           }}>
             {buttonText}
           </button>

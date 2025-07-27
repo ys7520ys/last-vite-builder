@@ -577,16 +577,115 @@
 
 
 
+// .tpBanner04 {
+//   position: relative;
+//   height: 100vh;
+//   overflow: hidden;
+//   padding: 0 50px;
+//   background-color: black;
+
+//   &.is-mobile {
+//     padding: 100px 20px 50px;
+//   }
+// }
+
+// .background {
+//   position: absolute;
+//   top: 0;
+//   left: 0;
+//   width: 100%;
+//   height: 100%;
+//   object-fit: cover;
+//   z-index: 1;
+//   filter: brightness(80%);
+//   transition: opacity 0.8s ease;
+// }
+
+// .text {
+//   position: relative;
+//   z-index: 2;
+//   top: 50%;
+//   transform: translateY(-50%);
+//   color: white;
+//   font-family: 'Pretendard', sans-serif;
+//   white-space: pre-line;
+// }
+
+// .title {
+//   font-size: 65px;
+//   font-weight: 700;
+//   margin-bottom: 18px;
+//   transition: font-size 0.3s ease;
+// }
+
+// .subTitle {
+//   font-size: 22px;
+//   margin-bottom: 25px;
+//   color: #eeeeee;
+//   transition: font-size 0.3s ease;
+// }
+
+// .btn {
+//   border-radius: 100px;
+//   border: none;
+//   outline: none;
+//   font-weight: 600;
+//   color: white;
+//   background-color: rgba(0, 0, 0, 0.5);
+//   cursor: pointer;
+//   font-size: 18px;
+//   padding: 18px 30px;
+//   transition: background-color 0.3s, color 0.3s, transform 0.3s;
+
+//   &:hover {
+//     background-color: white;
+//     color: black;
+//     transform: scale(1.1);
+//   }
+// }
+
+// .is-tablet {
+//   & .title {
+//     font-size: 45px;
+//   }
+//   & .subTitle {
+//     font-size: 18px;
+//     margin-bottom: 20px;
+//   }
+//   & .btn {
+//     font-size: 16px;
+//     padding: 15px 25px;
+//   }
+// }
+
+// .is-mobile {
+//   & .title {
+//     font-size: 30px;
+//     margin-bottom: 10px;
+//   }
+//   & .subTitle {
+//     font-size: 14px;
+//     margin-bottom: 20px;
+//   }
+//   & .btn {
+//     font-size: 14px;
+//     padding: 12px 20px;
+//   }
+// }
+
+
+
+
+
+
+
+// 기본 스타일 정의
 .tpBanner04 {
   position: relative;
   height: 100vh;
   overflow: hidden;
   padding: 0 50px;
   background-color: black;
-
-  &.is-mobile {
-    padding: 100px 20px 50px;
-  }
 }
 
 .background {
@@ -611,21 +710,25 @@
   white-space: pre-line;
 }
 
+// 각 텍스트 요소의 기본 스타일 (CSS 변수 사용)
 .title {
-  font-size: 65px;
+  font-size: var(--base-font-size, 65px);
   font-weight: 700;
   margin-bottom: 18px;
   transition: font-size 0.3s ease;
+  word-break: keep-all;
 }
 
 .subTitle {
-  font-size: 22px;
+  font-size: var(--base-font-size, 22px);
   margin-bottom: 25px;
   color: #eeeeee;
   transition: font-size 0.3s ease;
+  word-break: keep-all;
 }
 
 .btn {
+  font-size: var(--base-font-size, 18px);
   border-radius: 100px;
   border: none;
   outline: none;
@@ -633,9 +736,8 @@
   color: white;
   background-color: rgba(0, 0, 0, 0.5);
   cursor: pointer;
-  font-size: 18px;
   padding: 18px 30px;
-  transition: background-color 0.3s, color 0.3s, transform 0.3s;
+  transition: background-color 0.3s, color 0.3s, transform 0.3s, font-size 0.3s, padding 0.3s;
 
   &:hover {
     background-color: white;
@@ -644,31 +746,32 @@
   }
 }
 
-.is-tablet {
-  & .title {
-    font-size: 45px;
+// 미디어 쿼리를 사용한 반응형 스타일
+@media (max-width: 1200px) { // 태블릿
+  .title {
+    font-size: calc(var(--base-font-size, 65px) * 0.7);
   }
-  & .subTitle {
-    font-size: 18px;
-    margin-bottom: 20px;
+  .subTitle {
+    font-size: calc(var(--base-font-size, 22px) * 0.85);
   }
-  & .btn {
-    font-size: 16px;
+  .btn {
+    font-size: calc(var(--base-font-size, 18px) * 0.9);
     padding: 15px 25px;
   }
 }
 
-.is-mobile {
-  & .title {
-    font-size: 30px;
-    margin-bottom: 10px;
+@media (max-width: 768px) { // 모바일
+  .tpBanner04 {
+    padding: 100px 20px 50px;
   }
-  & .subTitle {
-    font-size: 14px;
-    margin-bottom: 20px;
+  .title {
+    font-size: calc(var(--base-font-size, 65px) * 0.5);
   }
-  & .btn {
-    font-size: 14px;
+  .subTitle {
+    font-size: calc(var(--base-font-size, 22px) * 0.7);
+  }
+  .btn {
+    font-size: calc(var(--base-font-size, 18px) * 0.8);
     padding: 12px 20px;
   }
 }

@@ -19,7 +19,6 @@
 // }
 
 
-// components/AnimatedPage.jsx
 "use client";
 
 import { motion } from "framer-motion";

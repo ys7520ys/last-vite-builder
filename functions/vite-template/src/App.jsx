@@ -184,94 +184,114 @@
 
 
 // 네이버로그인 라우터해결용용
-import { useEffect, useState } from "react";
-import {
-  BrowserRouter,
-  Routes,
-  Route,
-  Navigate,
-} from "react-router-dom";
-import CustomerContent from "./CustomerContent";
-
-// CustomerContent에서 URL 파라미터를 직접 처리하므로,
-// 이 Wrapper 컴포넌트는 더 이상 페이지 인덱스를 전달할 필요가 없습니다.
-function CustomerPageWrapper({ data }) {
-  return <CustomerContent pageData={data} />;
-}
-
-function App() {
-  const [data, setData] = useState(null);
-
-  useEffect(() => {
-    // data.json에서 페이지 데이터를 가져옵니다.
-    fetch("/data.json")
-      .then((res) => res.json())
-      .then(setData);
-  }, []);
-
-  // 데이터 로딩 중일 때 표시할 UI
-  if (!data) return <div>로딩 중...</div>;
-
-  // 라우터 설정
-  return (
-    <BrowserRouter>
-      <Routes
-        future={{
-          v7_startTransition: true,
-          v7_relativeSplatPath: true,
-        }}
-      >
-        {/* 기본 경로(/)로 접근 시 '/preview?page=0'으로 리디렉션 */}
-        <Route path="/" element={<Navigate to="/preview?page=0" />} />
-        {/* 미리보기 페이지 경로 */}
-        <Route path="/preview" element={<CustomerPageWrapper data={data} />} />
-      </Routes>
-    </BrowserRouter>
-  );
-}
-
-export default App;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// import { Routes, Route, useSearchParams, Navigate } from "react-router-dom";
+// //성공함함
+// import { useEffect, useState } from "react";
+// import {
+//   BrowserRouter,
+//   Routes,
+//   Route,
+//   Navigate,
+// } from "react-router-dom";
 // import CustomerContent from "./CustomerContent";
 
+// // CustomerContent에서 URL 파라미터를 직접 처리하므로,
+// // 이 Wrapper 컴포넌트는 더 이상 페이지 인덱스를 전달할 필요가 없습니다.
 // function CustomerPageWrapper({ data }) {
-//   const [searchParams] = useSearchParams();
-//   const pageIndex = parseInt(searchParams.get("page")) || 0;
-//   return <CustomerContent pageData={data} currentPageIndex={pageIndex} />;
+//   return <CustomerContent pageData={data} />;
 // }
 
 // function App() {
 //   const [data, setData] = useState(null);
 
 //   useEffect(() => {
+//     // data.json에서 페이지 데이터를 가져옵니다.
 //     fetch("/data.json")
 //       .then((res) => res.json())
 //       .then(setData);
 //   }, []);
 
+//   // 데이터 로딩 중일 때 표시할 UI
 //   if (!data) return <div>로딩 중...</div>;
 
+//   // 라우터 설정
 //   return (
-//     <Routes>
-//       <Route path="/" element={<Navigate to="/preview?page=0" />} />
-//       <Route path="/preview" element={<CustomerPageWrapper data={data} />} />
-//     </Routes>
+//     <BrowserRouter>
+//       <Routes
+//         future={{
+//           v7_startTransition: true,
+//           v7_relativeSplatPath: true,
+//         }}
+//       >
+//         {/* 기본 경로(/)로 접근 시 '/preview?page=0'으로 리디렉션 */}
+//         <Route path="/" element={<Navigate to="/preview?page=0" />} />
+//         {/* 미리보기 페이지 경로 */}
+//         <Route path="/preview" element={<CustomerPageWrapper data={data} />} />
+//       </Routes>
+//     </BrowserRouter>
 //   );
 // }
 
 // export default App;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+import React, { useEffect, useState } from "react";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import CustomerContent from "./CustomerContent";
+import data from "./data.json";
+
+function App() {
+  // data.json 파일이 없거나, 내부에 pages 배열이 없으면 로딩 또는 에러 메시지를 표시합니다.
+  if (!data || !data.pages || data.pages.length === 0) {
+    return <div>사이트 데이터를 불러오는 중이거나, 페이지가 없습니다.</div>;
+  }
+
+  return (
+    <BrowserRouter>
+      <Routes>
+        {/* data.json 안의 모든 페이지를 순회하며 각각의 경로에 맞는 라우트를 생성합니다. */}
+        {data.pages.map((page) => (
+          <Route
+            key={page.id}
+            path={page.path} // 예: "/", "/about", "/products"
+            element={
+              <CustomerContent
+                // 로고, 메뉴 등 사이트 전체에 적용되는 데이터를 props로 전달합니다.
+                siteData={{
+                  logo: data.logo,
+                  menuItems: data.menuItems,
+                  headerType: data.headerType,
+                }}
+                // 현재 URL에 해당하는 특정 페이지의 데이터를 props로 전달합니다.
+                currentPageData={page}
+              />
+            }
+          />
+        ))}
+        {/* 일치하는 경로가 없을 때 보여줄 404 페이지 (선택 사항) */}
+        <Route path="*" element={<div>페이지를 찾을 수 없습니다.</div>} />
+      </Routes>
+    </BrowserRouter>
+  );
+}
+
+export default App;

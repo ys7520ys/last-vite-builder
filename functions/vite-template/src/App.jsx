@@ -251,20 +251,41 @@
 
 
 
-
-
-
 import React, { useEffect, useState } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import CustomerContent from "./CustomerContent";
-import data from "./data.json";
 
 function App() {
-  // data.json 파일이 없거나, 내부에 pages 배열이 없으면 로딩 또는 에러 메시지를 표시합니다.
-  if (!data || !data.pages || data.pages.length === 0) {
-    return <div>사이트 데이터를 불러오는 중이거나, 페이지가 없습니다.</div>;
+  // 1. 데이터를 저장할 state를 만듭니다. 초기값은 null입니다.
+  const [data, setData] = useState(null);
+
+  // 2. 컴포넌트가 처음 렌더링될 때 data.json 파일을 비동기적으로 불러옵니다.
+  useEffect(() => {
+    fetch("/data.json") // Vite 환경에서는 public 폴더의 파일은 '/'를 기준으로 절대 경로로 접근합니다.
+      .then((res) => {
+        // fetch 요청이 실패했을 경우 에러를 발생시킵니다.
+        if (!res.ok) {
+          throw new Error(`HTTP error! status: ${res.status}`);
+        }
+        return res.json();
+      })
+      .then(setData) // 성공적으로 데이터를 가져오면 state를 업데이트합니다.
+      .catch((err) => {
+        console.error("data.json을 불러오는 데 실패했습니다:", err);
+      });
+  }, []); // 빈 배열을 전달하여 이 effect가 한 번만 실행되도록 합니다.
+
+  // 3. 데이터를 불러오는 중일 때(data가 null일 때) 로딩 메시지를 표시합니다.
+  if (!data) {
+    return <div>사이트 데이터를 불러오는 중입니다...</div>;
   }
 
+  // 4. 데이터 로딩에 실패했거나, 데이터 형식이 올바르지 않을 경우를 대비한 방어 코드입니다.
+  if (!data.pages || data.pages.length === 0) {
+    return <div>사이트 데이터를 불러오지 못했거나, 표시할 페이지가 없습니다.</div>;
+  }
+
+  // 5. 데이터가 성공적으로 로드되면 페이지를 렌더링합니다.
   return (
     <BrowserRouter>
       <Routes>
@@ -272,22 +293,20 @@ function App() {
         {data.pages.map((page) => (
           <Route
             key={page.id}
-            path={page.path} // 예: "/", "/about", "/products"
+            path={page.path}
             element={
               <CustomerContent
-                // 로고, 메뉴 등 사이트 전체에 적용되는 데이터를 props로 전달합니다.
                 siteData={{
                   logo: data.logo,
                   menuItems: data.menuItems,
                   headerType: data.headerType,
                 }}
-                // 현재 URL에 해당하는 특정 페이지의 데이터를 props로 전달합니다.
                 currentPageData={page}
               />
             }
           />
         ))}
-        {/* 일치하는 경로가 없을 때 보여줄 404 페이지 (선택 사항) */}
+        {/* 일치하는 경로가 없을 때 보여줄 404 페이지 */}
         <Route path="*" element={<div>페이지를 찾을 수 없습니다.</div>} />
       </Routes>
     </BrowserRouter>

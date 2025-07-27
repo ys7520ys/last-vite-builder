@@ -1815,7 +1815,141 @@
 
 
 
-// 성공함 수정 x
+// // 성공함 수정 x
+// import React, { useState, useEffect } from "react";
+// import styles from "./TpHeader03.module.scss";
+
+// const hexToRgba = (hex = '#FFFFFF', opacity = 1) => {
+//     if (!hex || !/^#([A-Fa-f0-9]{3}){1,2}$/.test(hex)) return `rgba(255, 255, 255, ${opacity})`;
+//     let c = hex.substring(1).split('');
+//     if (c.length === 3) { c = [c[0], c[0], c[1], c[1], c[2], c[2]]; }
+//     c = '0x' + c.join('');
+//     return `rgba(${(c >> 16) & 255},${(c >> 8) & 255},${c & 255},${opacity})`;
+// };
+
+// const getPageIndexFromLink = (link) => {
+//   if (typeof link !== 'string') return null;
+//   try {
+//     const url = new URL(link, 'http://dummy-base.com');
+//     const page = url.searchParams.get('page');
+//     return page !== null ? parseInt(page, 10) : null;
+//   } catch (e) {
+//     console.error("잘못된 링크 형식입니다:", link);
+//     return null;
+//   }
+// }
+
+// const TpHeader03 = ({ logo, menuItems = [], setCurrentPageIndex }) => {
+// 	const [menuOpen, setMenuOpen] = useState(false);
+	
+//   useEffect(() => {
+//     const customFonts = logo?.customFonts || [];
+//     if (customFonts.length > 0) {
+//       const styleId = `custom-header-fonts`;
+//       let styleTag = document.getElementById(styleId);
+//       if (!styleTag) {
+//         styleTag = document.createElement('style');
+//         styleTag.id = styleId;
+//         document.head.appendChild(styleTag);
+//       }
+//       styleTag.innerHTML = customFonts.map(font => font.code).join('\n');
+//     }
+//   }, [logo?.customFonts]);
+
+//   const headerStyle = {
+//     backgroundColor: hexToRgba(logo?.backgroundColor, logo?.backgroundOpacity),
+//     borderBottom: `${logo?.borderBottomWidth || 0}px solid ${logo?.borderBottomColor || 'transparent'}`,
+//     '--logo-font-size-base': logo?.fontSize ?? '24px',
+//     '--logo-font-weight': logo?.fontWeight ?? '700',
+//     '--logo-color': logo?.color ?? '#222',
+//     '--logo-font-family': logo?.fontFamily ?? "'Noto Sans KR', sans-serif",
+//     '--menu-font-family': logo?.menuFontFamily ?? "'Noto Sans KR', sans-serif",
+//     '--menu-font-weight': logo?.menuFontWeight ?? '400',
+//     '--hamburger-color': logo?.hamburgerColor ?? '#212121',
+//     '--hamburger-thickness': `${logo?.hamburgerThickness ?? 2}px`,
+//   };
+
+//   const containerStyle = {
+//     '--padding-top': `${logo?.paddingTop ?? 16}px`,
+//     '--padding-bottom': `${logo?.paddingBottom ?? 16}px`,
+//     '--padding-left': `${logo?.paddingLeft ?? 24}px`,
+//     '--padding-right': `${logo?.paddingRight ?? 24}px`,
+//     '--max-width': logo?.maxWidth === null ? 'none' : `${logo?.maxWidth ?? 1200}px`,
+//   };
+
+//   const handleMenuClick = (e, link) => {
+//     e.preventDefault();
+//     const pageIndex = getPageIndexFromLink(link);
+//     if (pageIndex !== null && setCurrentPageIndex) {
+//         setCurrentPageIndex(pageIndex);
+//     }
+//     setMenuOpen(false);
+//   }
+
+// 	return (
+// 		<header role="banner" className={styles.tpHeader03} style={headerStyle}>
+// 			<div className={styles.tpHeader03__container} style={containerStyle}>
+// 					<div className={styles.tpHeader03__logo}>
+// 						{logo?.text || "회사로고"}
+// 					</div>
+// 					<div className={styles.tpHeader03__right}>
+//             <nav className={styles.tpHeader03__nav}>
+//               <ul className={styles['tpHeader03__nav-list']}>
+//                 {menuItems.map((item) => (
+//                   <li key={item.id} className={styles['tpHeader03__nav-item']}>
+//                     <a href={item.link} onClick={(e) => handleMenuClick(e, item.link)} className={styles['tpHeader03__nav-link']}>
+//                       {item.label}
+//                     </a>
+//                   </li>
+//                 ))}
+//               </ul>
+//             </nav>
+// 						<button aria-label="메뉴 열기" className={styles.tpHeader03__menuBtn} onClick={() => setMenuOpen(!menuOpen)}>
+//               <ul>
+//                 <li />
+//                 <li />
+//                 <li />
+//               </ul>
+// 						</button>
+// 					</div>
+// 				</div>
+// 				<nav className={`${styles.tpHeader03__sideMenu} ${menuOpen ? styles.active : ""}`}>
+// 					<button aria-label="메뉴 닫기" className={styles["tpHeader03__sideMenu-closeBtn"]} onClick={() => setMenuOpen(!menuOpen)}>×</button>
+//             <ul className={styles.sideMenu__lists}>
+//               {menuItems.map((item) => (
+//                 <li key={item.id} className={styles.list}>
+//                   <a href={item.link} onClick={(e) => handleMenuClick(e, item.link)} className={styles["list-text"]}>
+//                     {item.label}
+//                   </a>
+//                 </li>
+//               ))}
+//             </ul>
+// 				</nav>
+// 		</header>
+// 	);
+// };  
+
+// export default TpHeader03;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 import React, { useState, useEffect } from "react";
 import styles from "./TpHeader03.module.scss";
 
@@ -1827,19 +1961,7 @@ const hexToRgba = (hex = '#FFFFFF', opacity = 1) => {
     return `rgba(${(c >> 16) & 255},${(c >> 8) & 255},${c & 255},${opacity})`;
 };
 
-const getPageIndexFromLink = (link) => {
-  if (typeof link !== 'string') return null;
-  try {
-    const url = new URL(link, 'http://dummy-base.com');
-    const page = url.searchParams.get('page');
-    return page !== null ? parseInt(page, 10) : null;
-  } catch (e) {
-    console.error("잘못된 링크 형식입니다:", link);
-    return null;
-  }
-}
-
-const TpHeader03 = ({ logo, menuItems = [], setCurrentPageIndex }) => {
+const TpHeader03 = ({ logo, menuItems = [], onNavigate, activePath }) => {
 	const [menuOpen, setMenuOpen] = useState(false);
 	
   useEffect(() => {
@@ -1877,11 +1999,10 @@ const TpHeader03 = ({ logo, menuItems = [], setCurrentPageIndex }) => {
     '--max-width': logo?.maxWidth === null ? 'none' : `${logo?.maxWidth ?? 1200}px`,
   };
 
-  const handleMenuClick = (e, link) => {
+  const handleMenuClick = (e, path) => {
     e.preventDefault();
-    const pageIndex = getPageIndexFromLink(link);
-    if (pageIndex !== null && setCurrentPageIndex) {
-        setCurrentPageIndex(pageIndex);
+    if (onNavigate) {
+        onNavigate(path);
     }
     setMenuOpen(false);
   }
@@ -1897,7 +2018,7 @@ const TpHeader03 = ({ logo, menuItems = [], setCurrentPageIndex }) => {
               <ul className={styles['tpHeader03__nav-list']}>
                 {menuItems.map((item) => (
                   <li key={item.id} className={styles['tpHeader03__nav-item']}>
-                    <a href={item.link} onClick={(e) => handleMenuClick(e, item.link)} className={styles['tpHeader03__nav-link']}>
+                    <a href={item.link} onClick={(e) => handleMenuClick(e, item.link)} className={`${styles['tpHeader03__nav-link']} ${activePath === item.link ? styles.active : ''}`}>
                       {item.label}
                     </a>
                   </li>
@@ -1918,7 +2039,7 @@ const TpHeader03 = ({ logo, menuItems = [], setCurrentPageIndex }) => {
             <ul className={styles.sideMenu__lists}>
               {menuItems.map((item) => (
                 <li key={item.id} className={styles.list}>
-                  <a href={item.link} onClick={(e) => handleMenuClick(e, item.link)} className={styles["list-text"]}>
+                  <a href={item.link} onClick={(e) => handleMenuClick(e, item.link)} className={`${styles["list-text"]} ${activePath === item.link ? styles.active : ''}`}>
                     {item.label}
                   </a>
                 </li>

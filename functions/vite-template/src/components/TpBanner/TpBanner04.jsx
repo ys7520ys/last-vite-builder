@@ -2145,10 +2145,8 @@
 
 
 
-
-
-
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
+import { gsap } from "gsap";
 import styles from "./TpBanner04.module.scss";
 
 const TpBanner04 = ({
@@ -2209,13 +2207,30 @@ const TpBanner04 = ({
         if(video) {
             const handleCanPlay = () => setIsMediaReady(true);
             video.addEventListener('canplay', handleCanPlay);
-            if (video.readyState >= 3) { // 비디오가 이미 로드된 경우 대비
+            if (video.readyState >= 3) {
                 handleCanPlay();
             }
             return () => video.removeEventListener('canplay', handleCanPlay);
         }
     }
   }, [mediaUrl, mediaType]);
+
+  // ✅ [수정] 텍스트 애니메이션 효과 추가
+  useLayoutEffect(() => {
+    if (!sectionRef.current) return;
+    const ctx = gsap.context(() => {
+        // 클래스 이름을 정확하게 참조하도록 수정
+        const elements = [`.${styles.title}`, `.${styles.subTitle}`, `.${styles.btn}`];
+        gsap.from(elements, {
+            opacity: 0,
+            y: 40,
+            duration: 0.8,
+            ease: 'power3.out',
+            stagger: 0.2,
+        });
+    }, sectionRef);
+    return () => ctx.revert();
+  }, [title, subTitle, buttonText]); // 내용이 바뀔 때 애니메이션이 다시 실행되도록 의존성 배열 추가
 
   return (
     <section ref={sectionRef} className={styles.tpBanner04}>

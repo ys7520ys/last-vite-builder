@@ -577,113 +577,6 @@
 
 // export default App;
 
-// import { useEffect, useState } from "react";
-// import { BrowserRouter, Routes, Route, useLocation, useNavigate } from "react-router-dom";
-// import { AnimatePresence } from "framer-motion";
-// import CustomerContent from "./CustomerContent";
-// import TpHeader02 from "./components/TpHeader/TpHeader02";
-// import TpHeader03 from "./components/TpHeader/TpHeader03";
-// import "./App.css";
-
-// const headerMap = {
-//   헤더02: TpHeader02,
-//   헤더03: TpHeader03,
-// };
-
-// // 페이지 내용만 렌더링하고 애니메이션을 적용하는 컴포넌트
-// function PageRenderer({ pageData }) {
-//   const location = useLocation();
-
-//   return (
-//     <AnimatePresence mode="wait" onExitComplete={() => window.scrollTo({ top: 0 })}>
-//       <Routes location={location} key={location.pathname}>
-//         {pageData.pages.map((page) => (
-//           <Route
-//             key={page.id || page.path}
-//             path={page.path}
-//             element={<CustomerContent currentPageData={page} />}
-//           />
-//         ))}
-//       </Routes>
-//     </AnimatePresence>
-//   );
-// }
-
-// // 헤더와 페이지 컨텐츠를 포함하는 전체 레이아웃 컴포넌트
-// function MainLayout({ pageData }) {
-//   const navigate = useNavigate();
-//   const location = useLocation();
-
-//   const handleNavigate = (path) => {
-//     navigate(path);
-//   };
-
-//   const HeaderComponent = headerMap[pageData.headerType];
-
-//   return (
-//     // ✅ 최상위 태그를 <div>로 변경하고, 레이아웃 스타일을 여기로 이동
-//     <div style={{
-//       background: "#111",
-//       minHeight: "100vh",
-//       display: "flex",
-//       flexDirection: "column"
-//     }}>
-//       {/* ✅ HeaderComponent가 <main>의 형제가 됨 */}
-//       {HeaderComponent && (
-//         <HeaderComponent
-//           isPreview
-//           onNavigate={handleNavigate}
-//           menuItems={pageData.menuItems || []}
-//           activePath={location.pathname}
-//           logo={pageData.logo}
-//         />
-//       )}
-//       {/* ✅ <main> 태그가 페이지 컨텐츠만 감싸고, 남은 공간을 채움 */}
-//       <main style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
-//         <PageRenderer pageData={pageData} />
-//       </main>
-//     </div>
-//   );
-// }
-
-// function App() {
-//   const [pageData, setPageData] = useState(null);
-//   const [error, setError] = useState(null);
-
-//   useEffect(() => {
-//     const fetchData = async () => {
-//       try {
-//         const response = await fetch("/data.json");
-//         if (!response.ok) {
-//           throw new Error(`HTTP error! status: ${response.status}`);
-//         }
-//         const data = await response.json();
-//         setPageData(data);
-//       } catch (e) {
-//         console.error("Failed to fetch page data:", e);
-//         setError(e.message);
-//       }
-//     };
-//     fetchData();
-//   }, []);
-
-//   if (error) return <div>Error loading page data: {error}</div>;
-//   if (!pageData) return <div>Loading...</div>;
-  
-//   if (!pageData.pages || pageData.pages.length === 0) {
-//     return <div>페이지 데이터가 없습니다.</div>;
-//   }
-
-//   return (
-//     <BrowserRouter>
-//       <MainLayout pageData={pageData} />
-//     </BrowserRouter>
-//   );
-// }
-
-// export default App;
-
-
 import { useEffect, useState } from "react";
 import { BrowserRouter, Routes, Route, useLocation, useNavigate } from "react-router-dom";
 import { AnimatePresence } from "framer-motion";
@@ -697,6 +590,7 @@ const headerMap = {
   헤더03: TpHeader03,
 };
 
+// 페이지 내용만 렌더링하고 애니메이션을 적용하는 컴포넌트
 function PageRenderer({ pageData }) {
   const location = useLocation();
 
@@ -715,6 +609,7 @@ function PageRenderer({ pageData }) {
   );
 }
 
+// 헤더와 페이지 컨텐츠를 포함하는 전체 레이아웃 컴포넌트
 function MainLayout({ pageData }) {
   const navigate = useNavigate();
   const location = useLocation();
@@ -726,12 +621,14 @@ function MainLayout({ pageData }) {
   const HeaderComponent = headerMap[pageData.headerType];
 
   return (
+    // ✅ 최상위 태그를 <div>로 변경하고, 레이아웃 스타일을 여기로 이동
     <div style={{
       background: "#111",
       minHeight: "100vh",
       display: "flex",
       flexDirection: "column"
     }}>
+      {/* ✅ HeaderComponent가 <main>의 형제가 됨 */}
       {HeaderComponent && (
         <HeaderComponent
           isPreview
@@ -741,7 +638,8 @@ function MainLayout({ pageData }) {
           logo={pageData.logo}
         />
       )}
-      <main style={{ flex: 1, display: 'flex' }}>
+      {/* ✅ <main> 태그가 페이지 컨텐츠만 감싸고, 남은 공간을 채움 */}
+      <main style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
         <PageRenderer pageData={pageData} />
       </main>
     </div>
@@ -773,7 +671,7 @@ function App() {
   if (!pageData) return <div>Loading...</div>;
   
   if (!pageData.pages || pageData.pages.length === 0) {
-    return <div>페이지가 없습니다.</div>;
+    return <div>페이지 데이터가 없습니다.</div>;
   }
 
   return (

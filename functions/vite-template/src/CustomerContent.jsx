@@ -848,6 +848,42 @@
 // }
 
 
+// import AnimatedPage from "./components/AnimatedPage";
+// import TpBanner04 from "./components/TpBanner/TpBanner04";
+// import TpSection04 from "./components/TpSection/TpSection04";
+
+// const componentMap = {
+//   배너04: TpBanner04,
+//   섹션04: TpSection04,
+// };
+
+// export default function CustomerContent({ currentPageData }) {
+//   const { components, path: currentPath } = currentPageData;
+//   const isValidComponents =
+//     Array.isArray(components) && components.length > 0;
+
+//   return (
+//     <AnimatedPage key={currentPath} style={{ flex: 1, display: 'flex' }}>
+//       {isValidComponents ? (
+//         components.map((comp) => {
+//           const Component = componentMap[comp.type];
+//           return Component ? (
+//             <Component key={comp.id} {...comp} isPreview />
+//           ) : (
+//             <div key={comp.id} style={{ padding: "60px", background: "#f0f0f0", color: "red" }}>
+//               ⚠️ 알 수 없는 컴포넌트: <strong>{comp.type}</strong>
+//             </div>
+//           );
+//         })
+//       ) : (
+//         <div style={{ padding: "100px", textAlign: "center", color: "#fff" }}>
+//           ❌ 페이지 구성 요소가 없습니다
+//         </div>
+//       )}
+//     </AnimatedPage>
+//   );
+// }
+
 import AnimatedPage from "./components/AnimatedPage";
 import TpBanner04 from "./components/TpBanner/TpBanner04";
 import TpSection04 from "./components/TpSection/TpSection04";
@@ -863,7 +899,7 @@ export default function CustomerContent({ currentPageData }) {
     Array.isArray(components) && components.length > 0;
 
   return (
-    <AnimatedPage key={currentPath} style={{ flex: 1, display: 'flex' }}>
+    <AnimatedPage key={currentPath}>
       {isValidComponents ? (
         components.map((comp) => {
           const Component = componentMap[comp.type];
@@ -883,7 +919,6 @@ export default function CustomerContent({ currentPageData }) {
     </AnimatedPage>
   );
 }
-
 
 
 

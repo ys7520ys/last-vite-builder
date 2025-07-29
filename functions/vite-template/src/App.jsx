@@ -1114,10 +1114,126 @@
 
 
 
+// import React, { useState, useEffect } from "react";
+// import { Routes, Route, useLocation, useNavigate } from "react-router-dom";
+// import { Helmet } from 'react-helmet-async';
+// import { AnimatePresence } from "framer-motion"; // 1. 애니메이션을 위해 AnimatePresence를 import 합니다.
+// import CustomerContent from "./CustomerContent";
+
+// // 사용할 헤더 컴포넌트를 직접 import 합니다.
+// import TpHeader02 from "./components/TpHeader/TpHeader02";
+// import TpHeader03 from "./components/TpHeader/TpHeader03";
+// // ※ 만약 TpHeader04, 05 등 다른 헤더가 있다면 아래에 추가해주세요.
+
+// // data.json에 저장된 헤더 이름(키)과 실제 컴포넌트(값)를 연결합니다.
+// const headerMap = {
+//   "헤더02": TpHeader02,
+//   "헤더03": TpHeader03,
+// };
+
+// function App() {
+//   const [siteData, setSiteData] = useState(null);
+//   const [loading, setLoading] = useState(true);
+//   const location = useLocation(); // 2. 현재 경로 정보를 가져옵니다. (애니메이션에 필요)
+//   const navigate = useNavigate();
+
+//   useEffect(() => {
+//     const fetchData = async () => {
+//       try {
+//         const response = await fetch("/data.json");
+//         const data = await response.json();
+//         setSiteData(data);
+//       } catch (error) {
+//         console.error("Error fetching site data:", error);
+//       } finally {
+//         setLoading(false);
+//       }
+//     };
+//     fetchData();
+//   }, []);
+
+//   const handleNavigate = (path) => {
+//     if (location.pathname !== path) {
+//       navigate(path);
+//     }
+//   };
+  
+//   if (loading) {
+//     return <div style={{ background: '#111', color: '#fff', display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>사이트를 불러오는 중입니다...</div>;
+//   }
+
+//   if (!siteData) {
+//     return <div style={{ background: '#111', color: '#fff', display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>사이트 데이터를 불러올 수 없습니다.</div>;
+//   }
+
+//   const HeaderComponent = headerMap[siteData.headerType];
+//   const seo = siteData.seo || {};
+//   const currentPage = siteData.pages?.find(p => p.path === location.pathname);
+  
+//   const getPageTitle = () => {
+//     const siteTitle = seo.title || 'Droppy';
+//     if (!currentPage) return siteTitle;
+//     const isMainPage = siteData.pages[0]?.id === currentPage.id;
+//     return isMainPage ? siteTitle : `${currentPage.name} | ${siteTitle}`;
+//   };
+
+//   return (
+//     <>
+//       <Helmet>
+//         <title>{getPageTitle()}</title>
+//         <meta name="description" content={seo.description || 'Droppy로 만든 나만의 웹사이트'} />
+//         {seo.favicon && <link rel="icon" href={seo.favicon} />}
+//         <meta property="og:title" content={getPageTitle()} />
+//         <meta property="og:description" content={seo.description || 'Droppy로 만든 나만의 웹사이트'} />
+//         {seo.ogImage && <meta property="og:image" content={seo.ogImage} />}
+//         <meta property="og:type" content="website" />
+//         <meta name="generator" content="Droppy" />
+//       </Helmet>
+      
+//       <main style={{ background: "#111", margin: 0, padding: 0, minHeight: "100vh", display: 'flex', flexDirection: 'column' }}>
+//         {HeaderComponent && (
+//             <HeaderComponent
+//               isPreview
+//               onNavigate={handleNavigate}
+//               menuItems={siteData.menuItems || []}
+//               activePath={location.pathname}
+//               logo={siteData.logo}
+//             />
+//         )}
+        
+//         {/* 3. AnimatePresence로 Routes를 감싸 애니메이션을 적용합니다. */}
+//         <div style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
+//           <AnimatePresence mode="wait">
+//             <Routes location={location} key={location.pathname}>
+//               {siteData.pages?.map(page => (
+//                 <Route 
+//                   key={page.id}
+//                   path={page.path}
+//                   element={<CustomerContent currentPageData={page} />}
+//                 />
+//               ))}
+//               {siteData.pages && siteData.pages.length > 0 &&
+//                 <Route path="*" element={<CustomerContent currentPageData={siteData.pages[0]} />} />
+//               }
+//             </Routes>
+//           </AnimatePresence>
+//         </div>
+//       </main>
+//     </>
+//   );
+// }
+
+// export default App;
+
+
+
+
+
+
 import React, { useState, useEffect } from "react";
 import { Routes, Route, useLocation, useNavigate } from "react-router-dom";
 import { Helmet } from 'react-helmet-async';
-import { AnimatePresence } from "framer-motion"; // 1. 애니메이션을 위해 AnimatePresence를 import 합니다.
+import { AnimatePresence } from "framer-motion";
 import CustomerContent from "./CustomerContent";
 
 // 사용할 헤더 컴포넌트를 직접 import 합니다.
@@ -1134,7 +1250,7 @@ const headerMap = {
 function App() {
   const [siteData, setSiteData] = useState(null);
   const [loading, setLoading] = useState(true);
-  const location = useLocation(); // 2. 현재 경로 정보를 가져옵니다. (애니메이션에 필요)
+  const location = useLocation();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -1174,6 +1290,7 @@ function App() {
     const siteTitle = seo.title || 'Droppy';
     if (!currentPage) return siteTitle;
     const isMainPage = siteData.pages[0]?.id === currentPage.id;
+    // ✅ '페이지 이름 | 사이트 이름' 순서로 변경했습니다.
     return isMainPage ? siteTitle : `${currentPage.name} | ${siteTitle}`;
   };
 
@@ -1190,7 +1307,8 @@ function App() {
         <meta name="generator" content="Droppy" />
       </Helmet>
       
-      <main style={{ background: "#111", margin: 0, padding: 0, minHeight: "100vh", display: 'flex', flexDirection: 'column' }}>
+      {/* ✅ 가로 스크롤 방지를 위해 overflowX: 'hidden'을 추가했습니다. */}
+      <main style={{ background: "#111", margin: 0, padding: 0, minHeight: "100vh", display: 'flex', flexDirection: 'column', overflowX: 'hidden' }}>
         {HeaderComponent && (
             <HeaderComponent
               isPreview
@@ -1201,7 +1319,6 @@ function App() {
             />
         )}
         
-        {/* 3. AnimatePresence로 Routes를 감싸 애니메이션을 적용합니다. */}
         <div style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
           <AnimatePresence mode="wait">
             <Routes location={location} key={location.pathname}>

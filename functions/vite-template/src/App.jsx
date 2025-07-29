@@ -1324,13 +1324,7 @@ function App() {
   const canonicalUrl = origin + location.pathname;
 
   return (
-    <div style={{
-      width: "100%",
-      overflowX: "hidden",
-      display: 'flex',          // ✅ Flexbox 레이아웃으로 변경
-      flexDirection: 'column',  // ✅ 세로 방향 정렬
-      minHeight: '100vh'        // ✅ 최소 높이를 화면 전체로 설정
-    }}>
+    <>
       <Helmet>
         {/* 
           ✅ 중복 해결: 서버에서 주입하지 않는, 동적으로 변경되어야 하는 태그만 남깁니다.
@@ -1377,7 +1371,7 @@ function App() {
           </Routes>
         </AnimatePresence>
       </main>
-    </div>
+    </>
   );
 }
 

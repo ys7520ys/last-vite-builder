@@ -1111,9 +1111,6 @@
 
 // export default App;
 
-
-
-
 // import React, { useState, useEffect } from "react";
 // import { Routes, Route, useLocation, useNavigate } from "react-router-dom";
 // import { Helmet } from 'react-helmet-async';
@@ -1225,117 +1222,245 @@
 
 // export default App;
 
+// import React, { useState, useEffect } from "react";
+// import { Routes, Route, useLocation, useNavigate } from "react-router-dom";
+// import { Helmet } from 'react-helmet-async';
+// import { AnimatePresence } from "framer-motion";
+// import CustomerContent from "./CustomerContent";
 
+// // 사용할 헤더 컴포넌트를 직접 import 합니다.
+// import TpHeader02 from "./components/TpHeader/TpHeader02";
+// import TpHeader03 from "./components/TpHeader/TpHeader03";
+// // ※ 만약 TpHeader04, 05 등 다른 헤더가 있다면 아래에 추가해주세요.
 
+// // data.json에 저장된 헤더 이름(키)과 실제 컴포넌트(값)를 연결합니다.
+// const headerMap = {
+//   "헤더02": TpHeader02,
+//   "헤더03": TpHeader03,
+// };
 
+// function App() {
+//   const [siteData, setSiteData] = useState(null);
+//   const [loading, setLoading] = useState(true);
+//   const location = useLocation();
+//   const navigate = useNavigate();
 
+//   useEffect(() => {
+//     const fetchData = async () => {
+//       try {
+//         const response = await fetch("/data.json");
+//         const data = await response.json();
+//         setSiteData(data);
+//       } catch (error) {
+//         console.error("Error fetching site data:", error);
+//       } finally {
+//         setLoading(false);
+//       }
+//     };
+//     fetchData();
+//   }, []);
+
+//   const handleNavigate = (path) => {
+//     if (location.pathname !== path) {
+//       navigate(path);
+//     }
+//   };
+  
+//   if (loading) {
+//     return <div style={{ background: '#111', color: '#fff', display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>사이트를 불러오는 중입니다...</div>;
+//   }
+
+//   if (!siteData) {
+//     return <div style={{ background: '#111', color: '#fff', display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>사이트 데이터를 불러올 수 없습니다.</div>;
+//   }
+
+//   const HeaderComponent = headerMap[siteData.headerType];
+//   const seo = siteData.seo || {};
+//   const currentPage = siteData.pages?.find(p => p.path === location.pathname);
+  
+//   const getPageTitle = () => {
+//     const siteTitle = seo.title || 'Droppy';
+//     if (!currentPage) return siteTitle;
+//     const isMainPage = siteData.pages[0]?.id === currentPage.id;
+//     // ✅ '페이지 이름 | 사이트 이름' 순서로 변경했습니다.
+//     return isMainPage ? siteTitle : `${currentPage.name} | ${siteTitle}`;
+//   };
+
+//   return (
+//     <>
+//       <Helmet>
+//         <title>{getPageTitle()}</title>
+//         <meta name="description" content={seo.description || 'Droppy로 만든 나만의 웹사이트'} />
+//         {seo.favicon && <link rel="icon" href={seo.favicon} />}
+//         <meta property="og:title" content={getPageTitle()} />
+//         <meta property="og:description" content={seo.description || 'Droppy로 만든 나만의 웹사이트'} />
+//         {seo.ogImage && <meta property="og:image" content={seo.ogImage} />}
+//         <meta property="og:type" content="website" />
+//         <meta name="generator" content="Droppy" />
+//       </Helmet>
+      
+//       {/* ✅ 가로 스크롤 방지를 위해 overflowX: 'hidden'을 추가했습니다. */}
+//       <main style={{ background: "#111", margin: 0, padding: 0, minHeight: "100vh", display: 'flex', flexDirection: 'column', overflowX: 'hidden' }}>
+//         {HeaderComponent && (
+//             <HeaderComponent
+//               isPreview
+//               onNavigate={handleNavigate}
+//               menuItems={siteData.menuItems || []}
+//               activePath={location.pathname}
+//               logo={siteData.logo}
+//             />
+//         )}
+        
+//         <div style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
+//           <AnimatePresence mode="wait">
+//             <Routes location={location} key={location.pathname}>
+//               {siteData.pages?.map(page => (
+//                 <Route 
+//                   key={page.id}
+//                   path={page.path}
+//                   element={<CustomerContent currentPageData={page} />}
+//                 />
+//               ))}
+//               {siteData.pages && siteData.pages.length > 0 &&
+//                 <Route path="*" element={<CustomerContent currentPageData={siteData.pages[0]} />} />
+//               }
+//             </Routes>
+//           </AnimatePresence>
+//         </div>
+//       </main>
+//     </>
+//   );
+// }
+
+// export default App;
 
 import React, { useState, useEffect } from "react";
 import { Routes, Route, useLocation, useNavigate } from "react-router-dom";
-import { Helmet } from 'react-helmet-async';
+import { Helmet } from "react-helmet-async";
 import { AnimatePresence } from "framer-motion";
 import CustomerContent from "./CustomerContent";
 
-// 사용할 헤더 컴포넌트를 직접 import 합니다.
-import TpHeader02 from "./components/TpHeader/TpHeader02";
-import TpHeader03 from "./components/TpHeader/TpHeader03";
-// ※ 만약 TpHeader04, 05 등 다른 헤더가 있다면 아래에 추가해주세요.
+// 모든 템플릿 컴포넌트를 import 합니다.
+import TpHeader01 from "./components/TpHeader/TpHeader01.jsx";
+import TpHeader02 from "./components/TpHeader/TpHeader02.jsx";
+import TpHeader03 from "./components/TpHeader/TpHeader03.jsx";
+import TpHeader04 from "./components/TpHeader/TpHeader04.jsx";
+import TpBanner01 from "./components/TpBanner/TpBanner01.jsx";
+import TpBanner02 from "./components/TpBanner/TpBanner02.jsx";
+import TpBanner03 from "./components/TpBanner/TpBanner03.jsx";
+import TpBanner04 from "./components/TpBanner/TpBanner04.jsx";
+import TpSection01 from "./components/TpSection/TpSection01.jsx";
+import TpSection02 from "./components/TpSection/TpSection02.jsx";
+import TpSection03 from "./components/TpSection/TpSection03.jsx";
+import TpSection04 from "./components/TpSection/TpSection04.jsx";
+import TpSection05 from "./components/TpSection/TpSection05.jsx";
+import TpSection06 from "./components/TpSection/TpSection06.jsx";
+import TpSection07 from "./components/TpSection/TpSection07.jsx";
+import TpSection08 from "./components/TpSection/TpSection08.jsx";
+import TpSection09 from "./components/TpSection/TpSection09.jsx";
+import TpSection10 from "./components/TpSection/TpSection10.jsx";
+import TpSection11 from "./components/TpSection/TpSection11.jsx";
+import TpSection12 from "./components/TpSection/TpSection12.jsx";
+import TpFooter01 from "./components/TpFooter/TpFooter01.jsx";
 
-// data.json에 저장된 헤더 이름(키)과 실제 컴포넌트(값)를 연결합니다.
-const headerMap = {
-  "헤더02": TpHeader02,
-  "헤더03": TpHeader03,
+// 컴포넌트 파일명을 키로 사용하는 맵
+const componentMap = {
+  TpHeader01, TpHeader02, TpHeader03, TpHeader04,
+  TpBanner01, TpBanner02, TpBanner03, TpBanner04,
+  TpSection01, TpSection02, TpSection03, TpSection04, TpSection05, TpSection06,
+  TpSection07, TpSection08, TpSection09, TpSection10, TpSection11, TpSection12,
+  TpFooter01
+};
+
+// data.json의 한글 이름을 컴포넌트 파일명으로 변환하는 맵
+const nameToComponentMap = {
+  '헤더01': 'TpHeader01', '헤더02': 'TpHeader02', '헤더03': 'TpHeader03', '헤더04': 'TpHeader04',
+  '배너01': 'TpBanner01', '배너02': 'TpBanner02', '배너03': 'TpBanner03', '배너04': 'TpBanner04',
+  '섹션01': 'TpSection01', '섹션02': 'TpSection02', '섹션03': 'TpSection03', '섹션04': 'TpSection04',
+  '섹션05': 'TpSection05', '섹션06': 'TpSection06', '섹션07': 'TpSection07', '섹션08': 'TpSection08',
+  '섹션09': 'TpSection09', '섹션10': 'TpSection10', '섹션11': 'TpSection11', '섹션12': 'TpSection12',
+  '푸터01': 'TpFooter01'
 };
 
 function App() {
   const [siteData, setSiteData] = useState(null);
-  const [loading, setLoading] = useState(true);
   const location = useLocation();
   const navigate = useNavigate();
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch("/data.json");
-        const data = await response.json();
+    fetch("/data.json")
+      .then((res) => res.json())
+      .then((data) => {
         setSiteData(data);
-      } catch (error) {
-        console.error("Error fetching site data:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchData();
-  }, []);
-
-  const handleNavigate = (path) => {
-    if (location.pathname !== path) {
-      navigate(path);
-    }
-  };
-  
-  if (loading) {
-    return <div style={{ background: '#111', color: '#fff', display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>사이트를 불러오는 중입니다...</div>;
-  }
+        // 사이트 첫 로딩 시, 메인 페이지로 자동 이동시킵니다.
+        if (location.pathname === "/") {
+          const mainPage = data.pages.find(p => p.isMain);
+          if (mainPage) {
+            navigate(`/${mainPage.id}`, { replace: true });
+          }
+        }
+      })
+      .catch(error => console.error("Error fetching site data:", error));
+  }, []); // 이 useEffect는 첫 로딩 시 한 번만 실행됩니다.
 
   if (!siteData) {
-    return <div style={{ background: '#111', color: '#fff', display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>사이트 데이터를 불러올 수 없습니다.</div>;
+    return <div>사이트를 불러오는 중입니다...</div>;
   }
 
-  const HeaderComponent = headerMap[siteData.headerType];
-  const seo = siteData.seo || {};
-  const currentPage = siteData.pages?.find(p => p.path === location.pathname);
-  
-  const getPageTitle = () => {
-    const siteTitle = seo.title || 'Droppy';
-    if (!currentPage) return siteTitle;
-    const isMainPage = siteData.pages[0]?.id === currentPage.id;
-    // ✅ '페이지 이름 | 사이트 이름' 순서로 변경했습니다.
-    return isMainPage ? siteTitle : `${currentPage.name} | ${siteTitle}`;
-  };
+  const { pages, seo, header: headerName, footer: footerName } = siteData;
+  const currentPage = pages.find(p => `/${p.id}` === location.pathname);
+
+  // 이름 변환 맵을 통해 정확한 컴포넌트를 찾습니다.
+  const HeaderComponent = componentMap[nameToComponentMap[headerName]];
+  const FooterComponent = componentMap[nameToComponentMap[footerName]];
+
+  // SEO 제목을 설정합니다. (메인 페이지 vs 서브 페이지)
+  const pageTitle = currentPage
+    ? currentPage.isMain
+      ? seo?.title || "사이트"
+      : `${currentPage.name} | ${seo?.title || "사이트"}`
+    : seo?.title || "사이트";
+    
+  // 대표 URL(Canonical URL)을 생성합니다.
+  const origin = siteData?.domain ? `https://${siteData.domain}` : '';
+  const canonicalUrl = origin + location.pathname;
 
   return (
     <>
       <Helmet>
-        <title>{getPageTitle()}</title>
-        <meta name="description" content={seo.description || 'Droppy로 만든 나만의 웹사이트'} />
-        {seo.favicon && <link rel="icon" href={seo.favicon} />}
-        <meta property="og:title" content={getPageTitle()} />
-        <meta property="og:description" content={seo.description || 'Droppy로 만든 나만의 웹사이트'} />
-        {seo.ogImage && <meta property="og:image" content={seo.ogImage} />}
-        <meta property="og:type" content="website" />
-        <meta name="generator" content="Droppy" />
-      </Helmet>
-      
-      {/* ✅ 가로 스크롤 방지를 위해 overflowX: 'hidden'을 추가했습니다. */}
-      <main style={{ background: "#111", margin: 0, padding: 0, minHeight: "100vh", display: 'flex', flexDirection: 'column', overflowX: 'hidden' }}>
-        {HeaderComponent && (
-            <HeaderComponent
-              isPreview
-              onNavigate={handleNavigate}
-              menuItems={siteData.menuItems || []}
-              activePath={location.pathname}
-              logo={siteData.logo}
-            />
-        )}
+        <title>{pageTitle}</title>
+        {seo?.description && <meta name="description" content={seo.description} />}
+        {seo?.favicon && <link rel="icon" href={seo.favicon} />}
         
-        <div style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
-          <AnimatePresence mode="wait">
-            <Routes location={location} key={location.pathname}>
-              {siteData.pages?.map(page => (
-                <Route 
-                  key={page.id}
-                  path={page.path}
-                  element={<CustomerContent currentPageData={page} />}
-                />
-              ))}
-              {siteData.pages && siteData.pages.length > 0 &&
-                <Route path="*" element={<CustomerContent currentPageData={siteData.pages[0]} />} />
-              }
-            </Routes>
-          </AnimatePresence>
-        </div>
+        {/* === 강화된 SEO 태그 === */}
+        <link rel="canonical" href={canonicalUrl} />
+        <meta property="og:title" content={pageTitle} />
+        {seo?.description && <meta property="og:description" content={seo.description} />}
+        {seo?.socialImage && <meta property="og:image" content={seo.socialImage} />}
+        <meta property="og:url" content={canonicalUrl} />
+        <meta property="og:type" content="website" />
+      </Helmet>
+
+      {/* 헤더와 푸터는 페이지 전환 시에도 유지됩니다. */}
+      {HeaderComponent && <HeaderComponent pageData={pages} />}
+      
+      {/* 가로 스크롤 방지 스타일 적용 */}
+      <main style={{ overflowX: 'hidden' }}>
+        <AnimatePresence mode="wait">
+          {/* 페이지 전환 애니메이션을 위해 location과 key를 전달합니다. */}
+          <Routes location={location} key={location.pathname}>
+            {pages.map((page) => (
+              <Route
+                key={page.id}
+                path={`/${page.id}`}
+                element={<CustomerContent pageData={page} />}
+              />
+            ))}
+          </Routes>
+        </AnimatePresence>
       </main>
+
+      {FooterComponent && <FooterComponent />}
     </>
   );
 }

@@ -1323,38 +1323,87 @@ function App() {
   const origin = siteData?.domain ? `https://${siteData.domain}` : '';
   const canonicalUrl = origin + location.pathname;
 
+  // return (
+  //   <>
+  //     <Helmet>
+  //       {/* 
+  //         ✅ 중복 해결: 서버에서 주입하지 않는, 동적으로 변경되어야 하는 태그만 남깁니다.
+  //       */}
+  //       <title>{pageTitle}</title>
+  //       <link rel="canonical" href={canonicalUrl} />
+  //       <meta property="og:title" content={pageTitle} />
+  //       <meta property="og:url" content={canonicalUrl} />
+
+  //       {/* 
+  //         파비콘과 OG 이미지는 사용자가 설정했을 때만 동적으로 추가되어야 하므로 
+  //         클라이언트에서 조건부 렌더링하는 것이 안전합니다.
+  //       */}
+  //       {seo.favicon && <link rel="icon" href={seo.favicon} />}
+  //       {seo.ogImage && <meta property="og:image" content={seo.ogImage} />}
+  //     </Helmet>
+      
+  //     {/* 가로 스크롤 방지를 위해 overflowX 속성 추가 */}
+  //     <main style={{ background: "#111", margin: 0, padding: 0, minHeight: "100vh", overflowX: 'hidden' }}>
+  //       {HeaderComponent && (
+  //           <HeaderComponent
+  //             isPreview
+  //             onNavigate={handleNavigate}
+  //             menuItems={siteData.menuItems || []}
+  //             activePath={location.pathname}
+  //             logo={siteData.logo}
+  //           />
+  //       )}
+
+  //       {/* 페이지 전환 애니메이션 적용 */}
+  //       <AnimatePresence mode="wait">
+  //         <Routes location={location} key={location.pathname}>
+  //           {siteData.pages?.map(page => (
+  //             <Route 
+  //               key={page.id}
+  //               path={page.path}
+  //               element={<CustomerContent currentPageData={page} />}
+  //             />
+  //           ))}
+  //           {/* 일치하는 라우트가 없을 때 기본 페이지로 이동 (안전장치) */}
+  //           {siteData.pages && siteData.pages.length > 0 &&
+  //             <Route path="*" element={<CustomerContent currentPageData={siteData.pages[0]} />} />
+  //           }
+  //         </Routes>
+  //       </AnimatePresence>
+  //     </main>
+  //   </>
+  // );
   return (
-    <>
+    // 1. 최상위 div가 전체 레이아웃을 제어하도록 스타일을 수정합니다.
+    <div style={{
+      width: "100%",
+      display: 'flex',
+      flexDirection: 'column',
+      minHeight: '100vh',
+      background: "#111", // 배경색을 이곳으로 옮겨 앱 전체에 적용합니다.
+    }}>
       <Helmet>
-        {/* 
-          ✅ 중복 해결: 서버에서 주입하지 않는, 동적으로 변경되어야 하는 태그만 남깁니다.
-        */}
         <title>{pageTitle}</title>
         <link rel="canonical" href={canonicalUrl} />
         <meta property="og:title" content={pageTitle} />
         <meta property="og:url" content={canonicalUrl} />
-
-        {/* 
-          파비콘과 OG 이미지는 사용자가 설정했을 때만 동적으로 추가되어야 하므로 
-          클라이언트에서 조건부 렌더링하는 것이 안전합니다.
-        */}
         {seo.favicon && <link rel="icon" href={seo.favicon} />}
         {seo.ogImage && <meta property="og:image" content={seo.ogImage} />}
       </Helmet>
       
-      {/* 가로 스크롤 방지를 위해 overflowX 속성 추가 */}
-      <main style={{ background: "#111", margin: 0, padding: 0, minHeight: "100vh", overflowX: 'hidden' }}>
-        {HeaderComponent && (
-            <HeaderComponent
-              isPreview
-              onNavigate={handleNavigate}
-              menuItems={siteData.menuItems || []}
-              activePath={location.pathname}
-              logo={siteData.logo}
-            />
-        )}
+      {/* 2. 헤더를 main 태그 밖으로 빼냅니다. */}
+      {HeaderComponent && (
+          <HeaderComponent
+            isPreview
+            onNavigate={handleNavigate}
+            menuItems={siteData.menuItems || []}
+            activePath={location.pathname}
+            logo={siteData.logo}
+          />
+      )}
 
-        {/* 페이지 전환 애니메이션 적용 */}
+      {/* 3. main 태그는 헤더를 제외한 '나머지 모든 공간'을 채우도록 스타일을 수정합니다. */}
+      <main style={{ flexGrow: 1, display: 'flex', flexDirection: 'column' }}>
         <AnimatePresence mode="wait">
           <Routes location={location} key={location.pathname}>
             {siteData.pages?.map(page => (
@@ -1364,14 +1413,13 @@ function App() {
                 element={<CustomerContent currentPageData={page} />}
               />
             ))}
-            {/* 일치하는 라우트가 없을 때 기본 페이지로 이동 (안전장치) */}
             {siteData.pages && siteData.pages.length > 0 &&
               <Route path="*" element={<CustomerContent currentPageData={siteData.pages[0]} />} />
             }
           </Routes>
         </AnimatePresence>
       </main>
-    </>
+    </div>
   );
 }
 

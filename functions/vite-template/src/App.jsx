@@ -1111,6 +1111,9 @@
 
 // export default App;
 
+
+
+
 // import React, { useState, useEffect } from "react";
 // import { Routes, Route, useLocation, useNavigate } from "react-router-dom";
 // import { Helmet } from 'react-helmet-async';
@@ -1221,6 +1224,11 @@
 // }
 
 // export default App;
+
+
+
+
+
 
 // import React, { useState, useEffect } from "react";
 // import { Routes, Route, useLocation, useNavigate } from "react-router-dom";
@@ -1340,46 +1348,27 @@ import { Helmet } from "react-helmet-async";
 import { AnimatePresence } from "framer-motion";
 import CustomerContent from "./CustomerContent";
 
-// 모든 템플릿 컴포넌트를 import 합니다.
-import TpHeader01 from "./components/TpHeader/TpHeader01.jsx";
+// =================================================================
+// 1. 실제로 존재하는 컴포넌트 파일만 가져옵니다.
+// =================================================================
 import TpHeader02 from "./components/TpHeader/TpHeader02.jsx";
 import TpHeader03 from "./components/TpHeader/TpHeader03.jsx";
-import TpHeader04 from "./components/TpHeader/TpHeader04.jsx";
-import TpBanner01 from "./components/TpBanner/TpBanner01.jsx";
-import TpBanner02 from "./components/TpBanner/TpBanner02.jsx";
-import TpBanner03 from "./components/TpBanner/TpBanner03.jsx";
-import TpBanner04 from "./components/TpBanner/TpBanner04.jsx";
-import TpSection01 from "./components/TpSection/TpSection01.jsx";
-import TpSection02 from "./components/TpSection/TpSection02.jsx";
-import TpSection03 from "./components/TpSection/TpSection03.jsx";
-import TpSection04 from "./components/TpSection/TpSection04.jsx";
-import TpSection05 from "./components/TpSection/TpSection05.jsx";
-import TpSection06 from "./components/TpSection/TpSection06.jsx";
-import TpSection07 from "./components/TpSection/TpSection07.jsx";
-import TpSection08 from "./components/TpSection/TpSection08.jsx";
-import TpSection09 from "./components/TpSection/TpSection09.jsx";
-import TpSection10 from "./components/TpSection/TpSection10.jsx";
-import TpSection11 from "./components/TpSection/TpSection11.jsx";
-import TpSection12 from "./components/TpSection/TpSection12.jsx";
-import TpFooter01 from "./components/TpFooter/TpFooter01.jsx";
+// import TpBanner04 from "./components/TpBanner/TpBanner04.jsx";
+// import TpSection04 from "./components/TpSection/TpSection04.jsx";
+// ※ 푸터(Footer) 컴포넌트는 파일이 없으므로 가져오지 않습니다.
 
-// 컴포넌트 파일명을 키로 사용하는 맵
+// =================================================================
+// 2. data.json의 이름과 실제 컴포넌트를 연결합니다.
+// =================================================================
 const componentMap = {
-  TpHeader01, TpHeader02, TpHeader03, TpHeader04,
-  TpBanner01, TpBanner02, TpBanner03, TpBanner04,
-  TpSection01, TpSection02, TpSection03, TpSection04, TpSection05, TpSection06,
-  TpSection07, TpSection08, TpSection09, TpSection10, TpSection11, TpSection12,
-  TpFooter01
-};
-
-// data.json의 한글 이름을 컴포넌트 파일명으로 변환하는 맵
-const nameToComponentMap = {
-  '헤더01': 'TpHeader01', '헤더02': 'TpHeader02', '헤더03': 'TpHeader03', '헤더04': 'TpHeader04',
-  '배너01': 'TpBanner01', '배너02': 'TpBanner02', '배너03': 'TpBanner03', '배너04': 'TpBanner04',
-  '섹션01': 'TpSection01', '섹션02': 'TpSection02', '섹션03': 'TpSection03', '섹션04': 'TpSection04',
-  '섹션05': 'TpSection05', '섹션06': 'TpSection06', '섹션07': 'TpSection07', '섹션08': 'TpSection08',
-  '섹션09': 'TpSection09', '섹션10': 'TpSection10', '섹션11': 'TpSection11', '섹션12': 'TpSection12',
-  '푸터01': 'TpFooter01'
+  // 헤더
+  "헤더02": TpHeader02,
+  "헤더03": TpHeader03,
+  // 배너
+  // "배너04": TpBanner04,
+  // 섹션
+  // "섹션04": TpSection04,
+  // 푸터
 };
 
 function App() {
@@ -1392,7 +1381,6 @@ function App() {
       .then((res) => res.json())
       .then((data) => {
         setSiteData(data);
-        // 사이트 첫 로딩 시, 메인 페이지로 자동 이동시킵니다.
         if (location.pathname === "/") {
           const mainPage = data.pages.find(p => p.isMain);
           if (mainPage) {
@@ -1401,27 +1389,27 @@ function App() {
         }
       })
       .catch(error => console.error("Error fetching site data:", error));
-  }, []); // 이 useEffect는 첫 로딩 시 한 번만 실행됩니다.
+  }, []);
 
   if (!siteData) {
     return <div>사이트를 불러오는 중입니다...</div>;
   }
 
   const { pages, seo, header: headerName, footer: footerName } = siteData;
+  
+  // 3. 이름에 맞는 헤더/푸터 컴포넌트를 찾습니다.
+  const HeaderComponent = componentMap[headerName];
+  const FooterComponent = componentMap[footerName];
+  
   const currentPage = pages.find(p => `/${p.id}` === location.pathname);
 
-  // 이름 변환 맵을 통해 정확한 컴포넌트를 찾습니다.
-  const HeaderComponent = componentMap[nameToComponentMap[headerName]];
-  const FooterComponent = componentMap[nameToComponentMap[footerName]];
-
-  // SEO 제목을 설정합니다. (메인 페이지 vs 서브 페이지)
+  // 4. SEO를 위한 제목과 대표 URL을 설정합니다.
   const pageTitle = currentPage
     ? currentPage.isMain
       ? seo?.title || "사이트"
       : `${currentPage.name} | ${seo?.title || "사이트"}`
     : seo?.title || "사이트";
     
-  // 대표 URL(Canonical URL)을 생성합니다.
   const origin = siteData?.domain ? `https://${siteData.domain}` : '';
   const canonicalUrl = origin + location.pathname;
 
@@ -1429,25 +1417,21 @@ function App() {
     <>
       <Helmet>
         <title>{pageTitle}</title>
-        {seo?.description && <meta name="description" content={seo.description} />}
-        {seo?.favicon && <link rel="icon" href={seo.favicon} />}
-        
-        {/* === 강화된 SEO 태그 === */}
+        <meta name="description" content={seo?.description} />
+        <link rel="icon" href={seo?.favicon} />
         <link rel="canonical" href={canonicalUrl} />
         <meta property="og:title" content={pageTitle} />
-        {seo?.description && <meta property="og:description" content={seo.description} />}
-        {seo?.socialImage && <meta property="og:image" content={seo.socialImage} />}
+        <meta property="og:description" content={seo?.description} />
+        <meta property="og:image" content={seo?.socialImage} />
         <meta property="og:url" content={canonicalUrl} />
         <meta property="og:type" content="website" />
       </Helmet>
 
-      {/* 헤더와 푸터는 페이지 전환 시에도 유지됩니다. */}
       {HeaderComponent && <HeaderComponent pageData={pages} />}
       
-      {/* 가로 스크롤 방지 스타일 적용 */}
+      {/* 5. 가로 스크롤 방지 및 애니메이션을 적용합니다. */}
       <main style={{ overflowX: 'hidden' }}>
         <AnimatePresence mode="wait">
-          {/* 페이지 전환 애니메이션을 위해 location과 key를 전달합니다. */}
           <Routes location={location} key={location.pathname}>
             {pages.map((page) => (
               <Route

@@ -1376,29 +1376,17 @@
 // }
 
 // export default App;
-
-
-
-
-
-
-// SEO + 가로 너비의 침해 수정
 import React, { useState, useEffect } from "react";
 import { Routes, Route, useLocation, useNavigate } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import { AnimatePresence } from "framer-motion";
 import CustomerContent from "./CustomerContent";
 
-// 실제 존재하는 컴포넌트만 가져옵니다.
+// 실제 존재하는 컴포넌트만 정확하게 import 합니다.
 import TpHeader02 from "./components/TpHeader/TpHeader02";
 import TpHeader03 from "./components/TpHeader/TpHeader03";
 import TpBanner04 from "./components/TpBanner/TpBanner04";
 import TpSection04 from "./components/TpSection/TpSection04";
-import TpSection05 from "./components/TpSection/TpSection05.jsx";
-import TpSection06 from "./components/TpSection/TpSection06.jsx";
-import TpSection07 from "./components/TpSection/TpSection07.jsx";
-import TpSection08 from "./components/TpSection/TpSection08.jsx";
-import TpSection09 from "./components/TpSection/TpSection09.jsx";
 import TpFooter01 from "./components/TpFooter/TpFooter01.jsx";
 
 const componentMap = {
@@ -1406,11 +1394,6 @@ const componentMap = {
   "헤더03": TpHeader03,
   "배너04": TpBanner04,
   "섹션04": TpSection04,
-  "섹션05": TpSection05,
-  "섹션06": TpSection06,
-  "섹션07": TpSection07,
-  "섹션08": TpSection08,
-  "섹션09": TpSection09,
   "푸터01": TpFooter01,
 };
 
@@ -1461,7 +1444,6 @@ function App() {
   const FooterComponent = componentMap[footer?.id];
 
   return (
-    // 이 div가 앱 전체를 감싸서 가로 스크롤 및 콘텐츠 넘침을 방지합니다.
     <div style={{ width: "100%", overflowX: "hidden" }}>
       <Helmet>
         <title>{pageTitle}</title>
@@ -1478,7 +1460,7 @@ function App() {
               <Route
                 key={page.id}
                 path={page.path}
-                element={<CustomerContent pageData={page} siteData={siteData} />}
+                element={<CustomerContent pageData={page} siteData={siteData} componentMap={componentMap} />}
               />
             ))}
           </Routes>

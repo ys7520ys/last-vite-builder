@@ -1126,7 +1126,132 @@
 //   );
 // }
 
+
+// // SEO의 값으로 성공함
+// // export default App;
+// import React, { useState, useEffect } from "react";
+// import { Routes, Route, useLocation, useNavigate } from "react-router-dom";
+// import { Helmet } from 'react-helmet-async';
+// import { AnimatePresence } from "framer-motion";
+// import CustomerContent from "./CustomerContent";
+
+// // 1. 안전한 컴포넌트 임포트: 동적 대신 정적 import 사용
+// import TpHeader02 from "./components/TpHeader/TpHeader02";
+// import TpHeader03 from "./components/TpHeader/TpHeader03";
+
+// // 2. 이름 기반 컴포넌트 매핑
+// const nameToHeaderMap = {
+//   "헤더02": TpHeader02,
+//   "헤더03": TpHeader03,
+// };
+
+// function App() {
+//   const [siteData, setSiteData] = useState(null);
+//   const [loading, setLoading] = useState(true);
+//   const location = useLocation();
+//   const navigate = useNavigate();
+
+//   useEffect(() => {
+//     const fetchData = async () => {
+//       try {
+//         const response = await fetch("/data.json");
+//         const data = await response.json();
+//         setSiteData(data);
+//       } catch (error) {
+//         console.error("Error fetching site data:", error);
+//       } finally {
+//         setLoading(false);
+//       }
+//     };
+//     fetchData();
+//   }, []);
+
+//   const handleNavigate = (path) => {
+//     if (location.pathname !== path) {
+//       navigate(path);
+//     }
+//   };
+  
+//   // 3. 로딩 및 데이터 오류 처리 (빈 화면 방지)
+//   if (loading) {
+//     return <div style={{ background: '#111', color: '#fff', display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>사이트를 불러오는 중입니다...</div>;
+//   }
+
+//   if (!siteData) {
+//     return <div style={{ background: '#111', color: '#fff', display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>사이트 데이터를 불러올 수 없습니다.</div>;
+//   }
+
+//   // 4. 안전한 데이터 접근 및 컴포넌트 선택
+//   const HeaderComponent = nameToHeaderMap[siteData.headerType];
+//   const seo = siteData.seo || {};
+  
+//   // 5. 개선된 페이지 제목 로직
+//   // - 기본 제목은 SEO 설정에 따릅니다.
+//   // - 서브 페이지의 경우 '페이지명 | 사이트 제목' 형식을 사용합니다.
+//   const siteTitle = seo.title || '사이트';
+//   const currentPage = siteData.pages?.find(p => p.path === location.pathname);
+  
+//   let pageTitle = siteTitle;
+//   // 현재 페이지가 있고, 서브페이지(path가 '/'가 아님)일 경우에만 제목을 변경합니다.
+//   if (currentPage && currentPage.path !== '/') {
+//     pageTitle = `${currentPage.name || '페이지'} | ${siteTitle}`;
+//   }
+
+//   const origin = siteData?.domain ? `https://${siteData.domain}` : '';
+//   const canonicalUrl = origin + location.pathname;
+
+//   return (
+//     <>
+//       <Helmet>
+//         <title>{pageTitle}</title>
+//         <meta name="description" content={seo.description || 'Droppy로 만든 나만의 웹사이트'} />
+//         {seo.favicon && <link rel="icon" href={seo.favicon} />}
+        
+//         {/* 강화된 SEO 및 소셜 공유 태그 */}
+//         <link rel="canonical" href={canonicalUrl} />
+//         <meta property="og:title" content={pageTitle} />
+//         <meta property="og:description" content={seo.description || 'Droppy로 만든 나만의 웹사이트'} />
+//         {seo.ogImage && <meta property="og:image" content={seo.ogImage} />}
+//         <meta property="og:url" content={canonicalUrl} />
+//         <meta property="og:type" content="website" />
+//         <meta name="generator" content="Droppy" />
+//       </Helmet>
+      
+//       {/* 가로 스크롤 방지를 위해 overflowX 속성 추가 */}
+//       <main style={{ background: "#111", margin: 0, padding: 0, minHeight: "100vh", overflowX: 'hidden' }}>
+//         {HeaderComponent && (
+//             <HeaderComponent
+//               isPreview
+//               onNavigate={handleNavigate}
+//               menuItems={siteData.menuItems || []}
+//               activePath={location.pathname}
+//               logo={siteData.logo}
+//             />
+//         )}
+
+//         {/* 페이지 전환 애니메이션 적용 */}
+//         <AnimatePresence mode="wait">
+//           <Routes location={location} key={location.pathname}>
+//             {siteData.pages?.map(page => (
+//               <Route 
+//                 key={page.id}
+//                 path={page.path}
+//                 element={<CustomerContent currentPageData={page} />}
+//               />
+//             ))}
+//             {/* 일치하는 라우트가 없을 때 기본 페이지로 이동 (안전장치) */}
+//             {siteData.pages && siteData.pages.length > 0 &&
+//               <Route path="*" element={<CustomerContent currentPageData={siteData.pages[0]} />} />
+//             }
+//           </Routes>
+//         </AnimatePresence>
+//       </main>
+//     </>
+//   );
+// }
+
 // export default App;
+// (확인x)
 import React, { useState, useEffect } from "react";
 import { Routes, Route, useLocation, useNavigate } from "react-router-dom";
 import { Helmet } from 'react-helmet-async';
@@ -1201,18 +1326,20 @@ function App() {
   return (
     <>
       <Helmet>
+        {/* 
+          ✅ 중복 해결: 서버에서 주입하지 않는, 동적으로 변경되어야 하는 태그만 남깁니다.
+        */}
         <title>{pageTitle}</title>
-        <meta name="description" content={seo.description || 'Droppy로 만든 나만의 웹사이트'} />
-        {seo.favicon && <link rel="icon" href={seo.favicon} />}
-        
-        {/* 강화된 SEO 및 소셜 공유 태그 */}
         <link rel="canonical" href={canonicalUrl} />
         <meta property="og:title" content={pageTitle} />
-        <meta property="og:description" content={seo.description || 'Droppy로 만든 나만의 웹사이트'} />
-        {seo.ogImage && <meta property="og:image" content={seo.ogImage} />}
         <meta property="og:url" content={canonicalUrl} />
-        <meta property="og:type" content="website" />
-        <meta name="generator" content="Droppy" />
+
+        {/* 
+          파비콘과 OG 이미지는 사용자가 설정했을 때만 동적으로 추가되어야 하므로 
+          클라이언트에서 조건부 렌더링하는 것이 안전합니다.
+        */}
+        {seo.favicon && <link rel="icon" href={seo.favicon} />}
+        {seo.ogImage && <meta property="og:image" content={seo.ogImage} />}
       </Helmet>
       
       {/* 가로 스크롤 방지를 위해 overflowX 속성 추가 */}

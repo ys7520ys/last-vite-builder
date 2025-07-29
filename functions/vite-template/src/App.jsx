@@ -785,102 +785,226 @@
 
 // export default App;
 
-import { useEffect, useState } from "react";
-import { BrowserRouter, Routes, Route, useLocation, useNavigate } from "react-router-dom";
-import { AnimatePresence } from "framer-motion";
+
+
+
+
+
+
+
+
+
+
+
+
+//성공함
+// import { useEffect, useState } from "react";
+// import { BrowserRouter, Routes, Route, useLocation, useNavigate } from "react-router-dom";
+// import { AnimatePresence } from "framer-motion";
+// import CustomerContent from "./CustomerContent";
+// import TpHeader02 from "./components/TpHeader/TpHeader02";
+// import TpHeader03 from "./components/TpHeader/TpHeader03";
+// import "./App.css";
+
+// const headerMap = {
+//   헤더02: TpHeader02,
+//   헤더03: TpHeader03,
+// };
+
+// function PageRenderer({ pageData }) {
+//   const location = useLocation();
+
+//   return (
+//     <AnimatePresence mode="wait" onExitComplete={() => window.scrollTo({ top: 0 })}>
+//       <Routes location={location} key={location.pathname}>
+//         {pageData.pages.map((page) => (
+//           <Route
+//             key={page.id || page.path}
+//             path={page.path}
+//             element={<CustomerContent currentPageData={page} />}
+//           />
+//         ))}
+//       </Routes>
+//     </AnimatePresence>
+//   );
+// }
+
+// function MainLayout({ pageData }) {
+//   const navigate = useNavigate();
+//   const location = useLocation();
+
+//   const handleNavigate = (path) => {
+//     navigate(path);
+//   };
+
+//   const HeaderComponent = headerMap[pageData.headerType];
+
+//   return (
+//     <div style={{
+//       background: "#111",
+//       minHeight: "100vh",
+//       display: "flex",
+//       flexDirection: "column"
+//     }}>
+//       {HeaderComponent && (
+//         <HeaderComponent
+//           isPreview
+//           onNavigate={handleNavigate}
+//           menuItems={pageData.menuItems || []}
+//           activePath={location.pathname}
+//           logo={pageData.logo}
+//         />
+//       )}
+//       <main style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
+//         <PageRenderer pageData={pageData} />
+//       </main>
+//     </div>
+//   );
+// }
+
+// function App() {
+//   const [pageData, setPageData] = useState(null);
+//   const [error, setError] = useState(null);
+
+//   useEffect(() => {
+//     const fetchData = async () => {
+//       try {
+//         const response = await fetch("/data.json");
+//         if (!response.ok) {
+//           throw new Error(`HTTP error! status: ${response.status}`);
+//         }
+//         const data = await response.json();
+//         setPageData(data);
+//       } catch (e) {
+//         console.error("Failed to fetch page data:", e);
+//         setError(e.message);
+//       }
+//     };
+//     fetchData();
+//   }, []);
+
+//   if (error) return <div>Error loading page data: {error}</div>;
+//   if (!pageData) return <div>Loading...</div>;
+  
+//   if (!pageData.pages || pageData.pages.length === 0) {
+//     return <div>페이지가 없습니다.</div>;
+//   }
+
+//   return (
+//     <BrowserRouter>
+//       <MainLayout pageData={pageData} />
+//     </BrowserRouter>
+//   );
+// }
+
+// export default App;
+
+
+
+
+
+
+
+
+
+
+//SEO를 위한 수정
+import React, { useState, useEffect } from "react";
+import { Routes, Route, useLocation, useNavigate } from "react-router-dom";
+import { Helmet } from 'react-helmet-async';
 import CustomerContent from "./CustomerContent";
-import TpHeader02 from "./components/TpHeader/TpHeader02";
-import TpHeader03 from "./components/TpHeader/TpHeader03";
-import "./App.css";
 
-const headerMap = {
-  헤더02: TpHeader02,
-  헤더03: TpHeader03,
-};
-
-function PageRenderer({ pageData }) {
-  const location = useLocation();
-
-  return (
-    <AnimatePresence mode="wait" onExitComplete={() => window.scrollTo({ top: 0 })}>
-      <Routes location={location} key={location.pathname}>
-        {pageData.pages.map((page) => (
-          <Route
-            key={page.id || page.path}
-            path={page.path}
-            element={<CustomerContent currentPageData={page} />}
-          />
-        ))}
-      </Routes>
-    </AnimatePresence>
-  );
-}
-
-function MainLayout({ pageData }) {
-  const navigate = useNavigate();
-  const location = useLocation();
-
-  const handleNavigate = (path) => {
-    navigate(path);
-  };
-
-  const HeaderComponent = headerMap[pageData.headerType];
-
-  return (
-    <div style={{
-      background: "#111",
-      minHeight: "100vh",
-      display: "flex",
-      flexDirection: "column"
-    }}>
-      {HeaderComponent && (
-        <HeaderComponent
-          isPreview
-          onNavigate={handleNavigate}
-          menuItems={pageData.menuItems || []}
-          activePath={location.pathname}
-          logo={pageData.logo}
-        />
-      )}
-      <main style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
-        <PageRenderer pageData={pageData} />
-      </main>
-    </div>
-  );
-}
+// 동적으로 헤더 컴포넌트를 가져오기 위한 설정
+const headerModules = import.meta.glob('./components/TpHeader/*.jsx');
 
 function App() {
-  const [pageData, setPageData] = useState(null);
-  const [error, setError] = useState(null);
+  const [siteData, setSiteData] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [HeaderComponent, setHeaderComponent] = useState(null);
+  const location = useLocation();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await fetch("/data.json");
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
         const data = await response.json();
-        setPageData(data);
-      } catch (e) {
-        console.error("Failed to fetch page data:", e);
-        setError(e.message);
+        setSiteData(data);
+      } catch (error) {
+        console.error("Error fetching site data:", error);
+      } finally {
+        setLoading(false);
       }
     };
     fetchData();
   }, []);
 
-  if (error) return <div>Error loading page data: {error}</div>;
-  if (!pageData) return <div>Loading...</div>;
+  useEffect(() => {
+    if (siteData?.headerType) {
+      const headerPath = `./components/TpHeader/${siteData.headerType}.jsx`;
+      if (headerModules[headerPath]) {
+        headerModules[headerPath]().then(mod => {
+          setHeaderComponent(() => mod.default);
+        });
+      }
+    }
+  }, [siteData?.headerType]);
+
+  const handleNavigate = (path) => {
+    if (location.pathname !== path) {
+      navigate(path);
+    }
+  };
   
-  if (!pageData.pages || pageData.pages.length === 0) {
-    return <div>페이지가 없습니다.</div>;
+  if (loading) {
+    return <div style={{ background: '#111', color: '#fff', display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>사이트를 불러오는 중입니다...</div>;
   }
 
+  if (!siteData) {
+    return <div style={{ background: '#111', color: '#fff', display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>사이트 데이터를 불러올 수 없습니다.</div>;
+  }
+
+  const seo = siteData.seo || {};
+  const currentPage = siteData.pages?.find(p => p.path === location.pathname);
+
   return (
-    <BrowserRouter>
-      <MainLayout pageData={pageData} />
-    </BrowserRouter>
+    <>
+      <Helmet>
+        <title>{currentPage?.name ? `${currentPage.name} | ${seo.title || 'Droppy'}` : seo.title || 'Droppy'}</title>
+        <meta name="description" content={seo.description || 'Droppy로 만든 나만의 웹사이트'} />
+        {seo.favicon && <link rel="icon" href={seo.favicon} />}
+        <meta property="og:title" content={seo.title || 'Droppy'} />
+        <meta property="og:description" content={seo.description || 'Droppy로 만든 나만의 웹사이트'} />
+        {seo.ogImage && <meta property="og:image" content={seo.ogImage} />}
+        <meta property="og:type" content="website" />
+        <meta name="generator" content="Droppy" />
+      </Helmet>
+      
+      <main style={{ background: "#111", margin: 0, padding: 0, minHeight: "100vh" }}>
+        {HeaderComponent && (
+            <HeaderComponent
+              isPreview
+              onNavigate={handleNavigate}
+              menuItems={siteData.menuItems || []}
+              activePath={location.pathname}
+              logo={siteData.logo}
+            />
+        )}
+        <Routes>
+          {siteData.pages?.map(page => (
+            <Route 
+              key={page.id}
+              path={page.path}
+              element={<CustomerContent currentPageData={page} />}
+            />
+          ))}
+          {/* 일치하는 라우트가 없을 때 기본 페이지로 리디렉션 */}
+          {siteData.pages && siteData.pages.length > 0 &&
+            <Route path="*" element={<CustomerContent currentPageData={siteData.pages[0]} />} />
+          }
+        </Routes>
+      </main>
+    </>
   );
 }
 

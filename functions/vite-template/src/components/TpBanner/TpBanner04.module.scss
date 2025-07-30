@@ -1045,6 +1045,7 @@
 
 // 각 텍스트 요소의 기본 스타일
 .title {
+  margin: 0; // 👈 추가: 브라우저 기본 여백 제거
   font-size: var(--base-font-size, 65px);
   font-weight: 700;
   transition: font-size 0.3s ease;
@@ -1052,6 +1053,7 @@
 }
 
 .subTitle {
+  margin: 0; // 👈 추가: 브라우저 기본 여백 제거
   font-size: var(--base-font-size, 22px);
   color: #eeeeee;
   transition: font-size 0.3s ease;
@@ -1068,7 +1070,7 @@
   background-color: rgba(0, 0, 0, 0.5);
   cursor: pointer;
   padding: 18px 30px;
-  transition: background-color 0.3s, color 0.3s, transform 0.3s, font-size 0.3s, padding 0.3s;
+  transition: background-color 0.3s, color 0.3s, transform 0.1s, font-size 0.3s, padding 0.3s;
 
   &:hover {
     background-color: white;

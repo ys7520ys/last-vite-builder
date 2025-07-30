@@ -2435,6 +2435,181 @@
 // export default TpBanner04;
 //gsap 수정본
 // 성공함
+// import React, { useEffect, useRef, useState } from "react";
+// import { gsap } from "gsap";
+// import styles from "./TpBanner04.module.scss";
+
+// const TpBanner04 = ({
+//   mediaUrl,
+//   mediaType = "video",
+//   title = "건강한 하루의 시작",
+//   subTitle = "신선한 재료로 만들어지는 건강한 습관",
+//   buttonText = "지금 문의하기",
+//   align = "center",
+//   styles: initialStyles = {},
+// }) => {
+  
+//   const defaultStyles = {
+//     customFonts: [],
+//     title: { fontSize: 48, color: '#ffffff', marginBottom: 20, fontFamily: "'Pretendard', sans-serif" },
+//     subTitle: { fontSize: 18, color: '#ffffff', marginBottom: 30, fontFamily: "'Pretendard', sans-serif" },
+//     button: { fontSize: 16, color: '#ffffff', backgroundColor: '#3182f6', fontFamily: "'Pretendard', sans-serif" },
+//   };
+
+//   const bannerStyles = {
+//     ...defaultStyles,
+//     ...initialStyles,
+//     title: { ...defaultStyles.title, ...(initialStyles.title || {}) },
+//     subTitle: { ...defaultStyles.subTitle, ...(initialStyles.subTitle || {}) },
+//     button: { ...defaultStyles.button, ...(initialStyles.button || {}) },
+//   };
+  
+//   const { customFonts = [] } = bannerStyles;
+  
+//   const sectionRef = useRef(null);
+//   const videoRef = useRef(null);
+//   const [isMediaReady, setIsMediaReady] = useState(false);
+
+//   useEffect(() => {
+//     if (customFonts && customFonts.length > 0) {
+//       const styleId = `custom-banner-fonts`;
+//       let styleTag = document.getElementById(styleId);
+//       if (!styleTag) {
+//         styleTag = document.createElement('style');
+//         styleTag.id = styleId;
+//         document.head.appendChild(styleTag);
+//       }
+//       styleTag.innerHTML = customFonts.map(font => font.code || '').join('\n');
+//     }
+//   }, [customFonts]);
+  
+//   useEffect(() => {
+//     setIsMediaReady(false);
+//     if (!mediaUrl) return;
+
+//     if (mediaType === 'image') {
+//       const img = new Image();
+//       img.src = mediaUrl;
+//       img.onload = () => setIsMediaReady(true);
+//       img.onerror = () => console.error("배너 이미지 로딩 실패:", mediaUrl);
+//     } else if (mediaType === 'video') {
+//         const video = videoRef.current;
+//         if(video) {
+//             const handleCanPlay = () => setIsMediaReady(true);
+//             video.addEventListener('canplay', handleCanPlay);
+//             if (video.readyState >= 3) {
+//                 handleCanPlay();
+//             }
+//             return () => video.removeEventListener('canplay', handleCanPlay);
+//         }
+//     }
+//   }, [mediaUrl, mediaType]);
+
+//   // ✅ 화면에 보일 때만 애니메이션을 실행하도록 수정된 부분입니다.
+//   useEffect(() => {
+//     const section = sectionRef.current;
+//     if (!section) return;
+
+//     // 1. 애니메이션 대상 요소들을 선택합니다.
+//     const elements = [
+//       section.querySelector(`.${styles.title}`),
+//       section.querySelector(`.${styles.subTitle}`),
+//       section.querySelector(`.${styles.btn}`),
+//     ].filter(Boolean);
+
+//     // 2. 초기 상태를 설정합니다 (투명하고, 아래에 위치).
+//     gsap.set(elements, { opacity: 0, y: 30 });
+
+//     // 3. Intersection Observer로 section이 화면에 나타나는지 감시합니다.
+//     const observer = new IntersectionObserver(
+//       (entries) => {
+//         entries.forEach((entry) => {
+//           // 4. section이 화면에 20% 이상 보이면 애니메이션을 실행합니다.
+//           if (entry.isIntersecting) {
+//             gsap.to(elements, {
+//               opacity: 1,
+//               y: 0,
+//               duration: 0.8,
+//               ease: 'power3.out',
+//               stagger: 0.2,
+//             });
+//             // 5. 애니메이션은 한 번만 실행되도록 감시를 중단합니다.
+//             observer.unobserve(section);
+//           }
+//         });
+//       },
+//       { threshold: 0.6 } // 요소가 20% 보였을 때 콜백을 실행합니다.
+//     );
+
+//     observer.observe(section);
+
+//     // 6. 컴포넌트가 사라질 때 observer를 정리합니다.
+//     return () => {
+//       if (section) {
+//         observer.unobserve(section);
+//       }
+//     };
+//   }, [title, subTitle, buttonText, align]);
+
+
+//   return (
+//     <section ref={sectionRef} className={styles.tpBanner04}>
+//       {mediaType === "video" && mediaUrl ? (
+//         <video
+//           ref={videoRef}
+//           key={mediaUrl}
+//           autoPlay loop muted playsInline preload="auto"
+//           className={styles.background}
+//           style={{ opacity: isMediaReady ? 1 : 0 }}
+//         >
+//           <source src={mediaUrl} type="video/mp4" />
+//         </video>
+//       ) : mediaType === "image" && mediaUrl ? (
+//         <div
+//           key={mediaUrl}
+//           className={styles.background}
+//           style={{
+//             backgroundImage: `url(${mediaUrl})`,
+//             backgroundSize: 'cover',
+//             backgroundPosition: 'center',
+//             opacity: isMediaReady ? 1 : 0,
+//           }}
+//         />
+//       ) : null}
+
+//       <div className={styles.text} style={{ textAlign: align }}>
+//         <h2 className={styles.title} style={{
+//           color: bannerStyles.title.color,
+//           fontFamily: bannerStyles.title.fontFamily,
+//           '--base-font-size': `${bannerStyles.title.fontSize}px`,
+//           marginBottom: `${bannerStyles.title.marginBottom}px`,
+//         }}>
+//           {title && title.split("\n").map((line, i) => <span key={i}>{line}<br /></span>)}
+//         </h2>
+//         <p className={styles.subTitle} style={{
+//           color: bannerStyles.subTitle.color,
+//           fontFamily: bannerStyles.subTitle.fontFamily,
+//           '--base-font-size': `${bannerStyles.subTitle.fontSize}px`,
+//           marginBottom: `${bannerStyles.subTitle.marginBottom}px`,
+//         }}>
+//           {subTitle && subTitle.split("\n").map((line, i) => <span key={i}>{line}<br /></span>)}
+//         </p>
+//         {buttonText && (
+//           <button className={styles.btn} style={{
+//             color: bannerStyles.button.color,
+//             backgroundColor: bannerStyles.button.backgroundColor,
+//             fontFamily: bannerStyles.button.fontFamily,
+//             '--base-font-size': `${bannerStyles.button.fontSize}px`,
+//           }}>
+//             {buttonText}
+//           </button>
+//         )}
+//       </div>
+//     </section>
+//   );
+// };
+
+// export default TpBanner04;
 import React, { useEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
 import styles from "./TpBanner04.module.scss";
@@ -2505,26 +2680,21 @@ const TpBanner04 = ({
     }
   }, [mediaUrl, mediaType]);
 
-  // ✅ 화면에 보일 때만 애니메이션을 실행하도록 수정된 부분입니다.
   useEffect(() => {
     const section = sectionRef.current;
     if (!section) return;
 
-    // 1. 애니메이션 대상 요소들을 선택합니다.
     const elements = [
       section.querySelector(`.${styles.title}`),
       section.querySelector(`.${styles.subTitle}`),
       section.querySelector(`.${styles.btn}`),
     ].filter(Boolean);
 
-    // 2. 초기 상태를 설정합니다 (투명하고, 아래에 위치).
     gsap.set(elements, { opacity: 0, y: 30 });
 
-    // 3. Intersection Observer로 section이 화면에 나타나는지 감시합니다.
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
-          // 4. section이 화면에 20% 이상 보이면 애니메이션을 실행합니다.
           if (entry.isIntersecting) {
             gsap.to(elements, {
               opacity: 1,
@@ -2533,17 +2703,15 @@ const TpBanner04 = ({
               ease: 'power3.out',
               stagger: 0.2,
             });
-            // 5. 애니메이션은 한 번만 실행되도록 감시를 중단합니다.
             observer.unobserve(section);
           }
         });
       },
-      { threshold: 0.6 } // 요소가 20% 보였을 때 콜백을 실행합니다.
+      { threshold: 0.2 } 
     );
 
     observer.observe(section);
 
-    // 6. 컴포넌트가 사라질 때 observer를 정리합니다.
     return () => {
       if (section) {
         observer.unobserve(section);

@@ -1047,14 +1047,12 @@
 .title {
   font-size: var(--base-font-size, 65px);
   font-weight: 700;
-  margin-bottom: 18px;
   transition: font-size 0.3s ease;
   word-break: keep-all;
 }
 
 .subTitle {
   font-size: var(--base-font-size, 22px);
-  margin-bottom: 25px;
   color: #eeeeee;
   transition: font-size 0.3s ease;
   word-break: keep-all;

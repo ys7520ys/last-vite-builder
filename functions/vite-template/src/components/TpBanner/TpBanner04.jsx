@@ -2871,10 +2871,10 @@ const TpBanner04 = ({
             gsap.to(elements, {
               opacity: 1,
               y: 0,
-              duration: 0.8,
-              ease: 'power3.out',
-              stagger: 0.2,
-            });
+            duration: 0.8,
+            ease: 'power3.out',
+            stagger: 0.2,
+        });
             observer.unobserve(section);
           }
         });

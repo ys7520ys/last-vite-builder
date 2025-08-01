@@ -1291,7 +1291,7 @@ function App() {
 
   const handleNavigate = (path) => {
     if (location.pathname !== path) {
-      navigate(path);
+    navigate(path);
     }
   };
   
@@ -1393,11 +1393,11 @@ function App() {
       
       {/* 2. 헤더를 main 태그 밖으로 빼냅니다. */}
       {HeaderComponent && (
-          <HeaderComponent
-            isPreview
-            onNavigate={handleNavigate}
+        <HeaderComponent
+          isPreview
+          onNavigate={handleNavigate}
             menuItems={siteData.menuItems || []}
-            activePath={location.pathname}
+          activePath={location.pathname}
             logo={siteData.logo}
           />
       )}

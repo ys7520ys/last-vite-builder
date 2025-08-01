@@ -1109,6 +1109,151 @@
 //     padding: 12px 20px;
 //   }
 // }
+
+
+
+
+
+
+
+//성공공
+// .tpBanner04 {
+//   position: relative;
+//   width: 100%;
+//   height: 100vh;
+//   overflow: hidden;
+//   padding: 0 50px;
+//   background-color: black;
+//   box-sizing: border-box;
+
+//   &:hover .background {
+//     filter: brightness(50%);
+//   }
+// }
+
+// .background {
+//   position: absolute;
+//   top: 0; left: 0; width: 100%; height: 100%;
+//   object-fit: cover;
+//   z-index: 1;
+//   filter: brightness(80%);
+//   transition: filter 0.3s ease, opacity 0.8s ease;
+// }
+
+// .text {
+//   position: relative;
+//   z-index: 2;
+//   top: 50%;
+//   transform: translateY(-50%);
+//   color: white;
+//   font-family: 'Pretendard', sans-serif;
+//   white-space: pre-line;
+// }
+
+// .title {
+//   margin: 0;
+//   font-size: var(--base-font-size, 65px);
+//   font-weight: 700;
+//   transition: font-size 0.3s ease;
+//   word-break: keep-all;
+// }
+
+// .subTitle {
+//   margin: 0;
+//   font-size: var(--base-font-size, 22px);
+//   color: #eeeeee;
+//   transition: font-size 0.3s ease;
+//   word-break: keep-all;
+// }
+
+// .btn {
+//   font-size: var(--base-font-size, 18px);
+//   border-radius: 100px;
+//   border: none;
+//   outline: none;
+//   font-weight: 600;
+//   color: white;
+//   background-color: rgba(0, 0, 0, 0.5);
+//   transition: background-color 0.3s, color 0.3s, transform 0.3s, font-size 0.3s, padding 0.3s;
+//   cursor: pointer;
+//   padding: 18px 30px;
+
+//   &:hover {
+//     background-color: white;
+//     color: black;
+//     transform: scale(1.1);
+//   }
+// }
+
+// // 미디어 쿼리를 사용한 반응형 스타일
+// @media (max-width: 1200px) { // 태블릿
+//   .title {
+//     font-size: calc(var(--base-font-size, 65px) * 0.7);
+//   }
+//   .subTitle {
+//     font-size: calc(var(--base-font-size, 22px) * 0.85);
+//   }
+//   .btn {
+//     font-size: calc(var(--base-font-size, 18px) * 0.9);
+//     padding: 15px 25px;
+//   }
+// }
+
+// @media (max-width: 768px) { // 모바일
+//   .tpBanner04 {
+//     padding: 100px 20px 50px;
+//   }
+//   .title {
+//     font-size: calc(var(--base-font-size, 65px) * 0.5);
+//   }
+//   .subTitle {
+//     font-size: calc(var(--base-font-size, 22px) * 0.7);
+//   }
+//   .btn {
+//     font-size: calc(var(--base-font-size, 18px) * 0.8);
+//     padding: 12px 20px;
+//   }
+// }
+
+
+
+
+// --- 반응형 비율 설정 ---
+@mixin tablet-styles {
+  .title {
+    font-size: calc(var(--base-font-size, 48px) * 0.6);
+    margin-bottom: calc(var(--base-margin-bottom, 20px) * 0.6);
+  }
+  .subTitle {
+    font-size: calc(var(--base-font-size, 18px) * 0.6);
+    margin-bottom: calc(var(--base-margin-bottom, 30px) * 0.6);
+  }
+  .btn {
+    font-size: calc(var(--base-font-size, 16px) * 0.6);
+    padding: calc(18px * 0.6) calc(30px * 0.6);
+  }
+}
+
+@mixin mobile-styles {
+  .tpBanner04 {
+    padding: 100px 20px 50px;
+  }
+  .title {
+    font-size: calc(var(--base-font-size, 48px) * 0.4);
+    margin-bottom: calc(var(--base-margin-bottom, 20px) * 0.4);
+  }
+  .subTitle {
+    font-size: calc(var(--base-font-size, 18px) * 0.4);
+    margin-bottom: calc(var(--base-margin-bottom, 30px) * 0.4);
+  }
+  .btn {
+    font-size: calc(var(--base-font-size, 16px) * 0.4);
+    padding: calc(18px * 0.4) calc(30px * 0.4);
+  }
+}
+
+
+// --- 기본 스타일 (PC 기준) ---
 .tpBanner04 {
   position: relative;
   width: 100%;
@@ -1144,22 +1289,24 @@
 
 .title {
   margin: 0;
-  font-size: var(--base-font-size, 65px);
+  font-size: var(--base-font-size, 48px);
+  margin-bottom: var(--base-margin-bottom, 20px);
   font-weight: 700;
-  transition: font-size 0.3s ease;
+  transition: font-size 0.3s ease, margin-bottom 0.3s ease;
   word-break: keep-all;
 }
 
 .subTitle {
   margin: 0;
-  font-size: var(--base-font-size, 22px);
+  font-size: var(--base-font-size, 18px);
+  margin-bottom: var(--base-margin-bottom, 30px);
   color: #eeeeee;
-  transition: font-size 0.3s ease;
+  transition: font-size 0.3s ease, margin-bottom 0.3s ease;
   word-break: keep-all;
 }
 
 .btn {
-  font-size: var(--base-font-size, 18px);
+  font-size: var(--base-font-size, 16px);
   border-radius: 100px;
   border: none;
   outline: none;
@@ -1177,32 +1324,11 @@
   }
 }
 
-// 미디어 쿼리를 사용한 반응형 스타일
+// --- 미디어 쿼리를 사용한 반응형 스타일 ---
 @media (max-width: 1200px) { // 태블릿
-  .title {
-    font-size: calc(var(--base-font-size, 65px) * 0.7);
-  }
-  .subTitle {
-    font-size: calc(var(--base-font-size, 22px) * 0.85);
-  }
-  .btn {
-    font-size: calc(var(--base-font-size, 18px) * 0.9);
-    padding: 15px 25px;
-  }
+  @include tablet-styles;
 }
 
 @media (max-width: 768px) { // 모바일
-  .tpBanner04 {
-    padding: 100px 20px 50px;
-  }
-  .title {
-    font-size: calc(var(--base-font-size, 65px) * 0.5);
-  }
-  .subTitle {
-    font-size: calc(var(--base-font-size, 22px) * 0.7);
-  }
-  .btn {
-    font-size: calc(var(--base-font-size, 18px) * 0.8);
-    padding: 12px 20px;
-  }
+  @include mobile-styles;
 }

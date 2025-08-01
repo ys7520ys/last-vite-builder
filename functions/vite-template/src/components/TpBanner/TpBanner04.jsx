@@ -2610,6 +2610,178 @@
 // };
 
 // export default TpBanner04;
+
+
+
+//성공공
+// import React, { useEffect, useRef, useState } from "react";
+// import { gsap } from "gsap";
+// import styles from "./TpBanner04.module.scss";
+
+// const TpBanner04 = ({
+//   mediaUrl,
+//   mediaType = "video",
+//   title = "건강한 하루의 시작",
+//   subTitle = "신선한 재료로 만들어지는 건강한 습관",
+//   buttonText = "지금 문의하기",
+//   align = "center",
+//   styles: initialStyles = {},
+// }) => {
+  
+//   const defaultStyles = {
+//     customFonts: [],
+//     title: { fontSize: 48, color: '#ffffff', marginBottom: 20, fontFamily: "'Pretendard', sans-serif" },
+//     subTitle: { fontSize: 18, color: '#ffffff', marginBottom: 30, fontFamily: "'Pretendard', sans-serif" },
+//     button: { fontSize: 16, color: '#ffffff', backgroundColor: '#3182f6', fontFamily: "'Pretendard', sans-serif" },
+//   };
+
+//   const bannerStyles = {
+//     ...defaultStyles,
+//     ...initialStyles,
+//     title: { ...defaultStyles.title, ...(initialStyles.title || {}) },
+//     subTitle: { ...defaultStyles.subTitle, ...(initialStyles.subTitle || {}) },
+//     button: { ...defaultStyles.button, ...(initialStyles.button || {}) },
+//   };
+  
+//   const { customFonts = [] } = bannerStyles;
+  
+//   const sectionRef = useRef(null);
+//   const videoRef = useRef(null);
+//   const [isMediaReady, setIsMediaReady] = useState(false);
+
+//   useEffect(() => {
+//     if (customFonts && customFonts.length > 0) {
+//       const styleId = `custom-banner-fonts`;
+//       let styleTag = document.getElementById(styleId);
+//       if (!styleTag) {
+//         styleTag = document.createElement('style');
+//         styleTag.id = styleId;
+//         document.head.appendChild(styleTag);
+//       }
+//       styleTag.innerHTML = customFonts.map(font => font.code || '').join('\n');
+//     }
+//   }, [customFonts]);
+  
+//   useEffect(() => {
+//     setIsMediaReady(false);
+//     if (!mediaUrl) return;
+
+//     if (mediaType === 'image') {
+//       const img = new Image();
+//       img.src = mediaUrl;
+//       img.onload = () => setIsMediaReady(true);
+//       img.onerror = () => console.error("배너 이미지 로딩 실패:", mediaUrl);
+//     } else if (mediaType === 'video') {
+//         const video = videoRef.current;
+//         if(video) {
+//             const handleCanPlay = () => setIsMediaReady(true);
+//             video.addEventListener('canplay', handleCanPlay);
+//             if (video.readyState >= 3) {
+//                 handleCanPlay();
+//             }
+//             return () => video.removeEventListener('canplay', handleCanPlay);
+//         }
+//     }
+//   }, [mediaUrl, mediaType]);
+
+//   useEffect(() => {
+//     const section = sectionRef.current;
+//     if (!section) return;
+
+//     const elements = [
+//       section.querySelector(`.${styles.title}`),
+//       section.querySelector(`.${styles.subTitle}`),
+//       section.querySelector(`.${styles.btn}`),
+//     ].filter(Boolean);
+
+//     gsap.set(elements, { opacity: 0, y: 30 });
+
+//     const observer = new IntersectionObserver(
+//       (entries) => {
+//         entries.forEach((entry) => {
+//           if (entry.isIntersecting) {
+//             gsap.to(elements, {
+//               opacity: 1,
+//               y: 0,
+//               duration: 0.8,
+//               ease: 'power3.out',
+//               stagger: 0.2,
+//             });
+//             observer.unobserve(section);
+//           }
+//         });
+//       },
+//       { threshold: 0.2 } 
+//     );
+
+//     observer.observe(section);
+
+//     return () => {
+//       if (section) {
+//         observer.unobserve(section);
+//       }
+//     };
+//   }, [title, subTitle, buttonText, align]);
+
+
+//   return (
+//     <section ref={sectionRef} className={styles.tpBanner04}>
+//       {mediaType === "video" && mediaUrl ? (
+//         <video
+//           ref={videoRef}
+//           key={mediaUrl}
+//           autoPlay loop muted playsInline preload="auto"
+//           className={styles.background}
+//           style={{ opacity: isMediaReady ? 1 : 0 }}
+//         >
+//           <source src={mediaUrl} type="video/mp4" />
+//         </video>
+//       ) : mediaType === "image" && mediaUrl ? (
+//         <div
+//           key={mediaUrl}
+//           className={styles.background}
+//           style={{
+//             backgroundImage: `url(${mediaUrl})`,
+//             backgroundSize: 'cover',
+//             backgroundPosition: 'center',
+//             opacity: isMediaReady ? 1 : 0,
+//           }}
+//         />
+//       ) : null}
+
+//       <div className={styles.text} style={{ textAlign: align }}>
+//         <h2 className={styles.title} style={{
+//           color: bannerStyles.title.color,
+//           fontFamily: bannerStyles.title.fontFamily,
+//           '--base-font-size': `${bannerStyles.title.fontSize}px`,
+//           marginBottom: `${bannerStyles.title.marginBottom}px`,
+//         }}>
+//           {title && title.split("\n").map((line, i) => <span key={i}>{line}<br /></span>)}
+//         </h2>
+//         <p className={styles.subTitle} style={{
+//           color: bannerStyles.subTitle.color,
+//           fontFamily: bannerStyles.subTitle.fontFamily,
+//           '--base-font-size': `${bannerStyles.subTitle.fontSize}px`,
+//           marginBottom: `${bannerStyles.subTitle.marginBottom}px`,
+//         }}>
+//           {subTitle && subTitle.split("\n").map((line, i) => <span key={i}>{line}<br /></span>)}
+//         </p>
+//         {buttonText && (
+//           <button className={styles.btn} style={{
+//             color: bannerStyles.button.color,
+//             backgroundColor: bannerStyles.button.backgroundColor,
+//             fontFamily: bannerStyles.button.fontFamily,
+//             '--base-font-size': `${bannerStyles.button.fontSize}px`,
+//           }}>
+//             {buttonText}
+//           </button>
+//         )}
+//       </div>
+//     </section>
+//   );
+// };
+
+// export default TpBanner04;
 import React, { useEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
 import styles from "./TpBanner04.module.scss";
@@ -2750,7 +2922,7 @@ const TpBanner04 = ({
           color: bannerStyles.title.color,
           fontFamily: bannerStyles.title.fontFamily,
           '--base-font-size': `${bannerStyles.title.fontSize}px`,
-          marginBottom: `${bannerStyles.title.marginBottom}px`,
+          '--base-margin-bottom': `${bannerStyles.title.marginBottom}px`,
         }}>
           {title && title.split("\n").map((line, i) => <span key={i}>{line}<br /></span>)}
         </h2>
@@ -2758,7 +2930,7 @@ const TpBanner04 = ({
           color: bannerStyles.subTitle.color,
           fontFamily: bannerStyles.subTitle.fontFamily,
           '--base-font-size': `${bannerStyles.subTitle.fontSize}px`,
-          marginBottom: `${bannerStyles.subTitle.marginBottom}px`,
+          '--base-margin-bottom': `${bannerStyles.subTitle.marginBottom}px`,
         }}>
           {subTitle && subTitle.split("\n").map((line, i) => <span key={i}>{line}<br /></span>)}
         </p>
